@@ -18,7 +18,12 @@ export default new Vuex.Store<State>({
   state: stateBase,
   mutations: {
     saveUser (state:State, user:User) {
+      state.users.push(user)
+    },
+    removeUser (state:State, userToRemove:User) {
+      const index = state.users.findIndex(user => user.username === userToRemove.username)
 
+      delete state.users[index]
     }
   },
   actions: {

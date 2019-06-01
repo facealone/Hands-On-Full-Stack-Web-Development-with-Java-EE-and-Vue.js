@@ -13,7 +13,7 @@
           <td>{{user.username}}</td>
           <td>{{user.role}}</td>
           <td><a :href="'/user/update/' + user.username">Update</a></td>
-          <td><a v-on:click="this.remove(user)">Delete</a></td>
+          <td><a v-on:click="remove(user)" href="#">Delete</a></td>
         </tr>
       </tbody>
     </table>
@@ -28,7 +28,7 @@ import { User } from '../entities/User'
 
 @Component
 export default class UserList extends Vue {
-  private users:User[] = [];
+  users:User[] = [];
   // https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks
 
   // lifecycle hook
@@ -40,8 +40,12 @@ export default class UserList extends Vue {
     this.users = this.$store.state.users
   }
 
-  remove (user:User) {
+  remove (userToRemove:User) {
+    this.$store.commit('removeUser', userToRemove)
 
+    const index = this.users.findIndex(user => user.username === userToRemove.username)
+
+    delete this.users[index]
   }
 }
 </script>

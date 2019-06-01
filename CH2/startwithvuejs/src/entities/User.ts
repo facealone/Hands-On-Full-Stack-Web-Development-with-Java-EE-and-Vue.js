@@ -1,10 +1,19 @@
 export class User {
-    private username: string;
-    private password: string;
-    private role: string;
-    constructor(username: string, password: string, role: string) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    private _username: string;
+    private _password: string;
+    private _role: string;
+    constructor (username: string, password: string, role: string) {
+      this._username = username
+      this._password = password
+      this._role = role
+    }
+    get username () {
+      return this._username
+    }
+    get password () {
+      return this._password
+    }
+    get role () {
+      return this._role
     }
 }

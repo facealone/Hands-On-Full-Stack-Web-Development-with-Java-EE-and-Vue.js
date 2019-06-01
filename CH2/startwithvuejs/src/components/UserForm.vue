@@ -21,6 +21,8 @@ export default class UserForm extends Vue {
 
   save () {
     let user:User = new User(this.userName, this.password, this.role)
+
+    this.$store.commit('saveUser', user)
   }
 }
 </script>
