@@ -1,15 +1,44 @@
 <template>
-  <div class="hello">
-    <input v-model="name" placeholder="edit me">
-    <input v-model="email" placeholder="edit me" :readonly = "mode == 'update'">
-    <input v-model="password" placeholder="edit me">
-    <input v-model="role" placeholder="edit me">
-    <button v-on:click="save">Save</button>
+  <div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input v-model="user.name" type="text" class="form-control" id="name" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select class="custom-select" id="role" v-model="user.role">
+          <option selected value="ADMIN">ADMIN</option>
+          <option value="USER">USER</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          v-model="user.email"
+          type="email"
+          class="form-control"
+          id="email"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+          :readonly="updateMode"
+        >
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          v-model="user.password"
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+        >
+      </div>
+      <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { User } from '../entities/User'
 import { Role } from '../entities/Role'
 
@@ -17,24 +46,15 @@ import { Role } from '../entities/Role'
 
 @Component
 export default class UserForm extends Vue {
-  @Prop() private mode:string = 'create'
-  @Prop() private user!:User
-  private name:string = ''
-  private email:string = ''
-  private password:string = ''
-  private role:Role = Role.USER
-
-  mounted () {
-    this.name = this.user!.name
-    this.email = this.user!.email
-    this.password = this.user!.password
-    this.role = this.user!.role
-  }
+  @Prop() private readonly type!: string
+  @Prop({ default: () => User.emptyUser() }) private readonly user!: User
 
   save () {
-    let user:User = new User(this.name, this.email, this.password, this.role)
+    this.$emit('userFilled', this.user)
+  }
 
-    this.$emit('saveUser', user)
+  get updateMode () {
+    return this.type === 'update'
   }
 }
 </script>

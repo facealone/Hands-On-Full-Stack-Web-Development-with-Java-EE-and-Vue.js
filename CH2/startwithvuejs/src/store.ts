@@ -8,10 +8,10 @@ Vue.use(Vuex)
 
 const stateBase: State = {
   users: [
-    new User('Daniel Pelaez', 'danielpelaez@email.com', 'password123', Role.ADMIN),
-    new User('Hector Hurtado', 'hectorhurtado@email.com', 'password123', Role.USER),
-    new User('William Agreda', 'williamagreda@email.com', 'password123', Role.USER),
-    new User('Roger Salazar', 'rogersalazar@email.com', 'password123', Role.USER)
+    User.newUser('Daniel Pelaez', 'danielpelaez@email.com', 'password123', Role.ADMIN),
+    User.newUser('Hector Hurtado', 'hectorhurtado@email.com', 'password123', Role.USER),
+    User.newUser('William Agreda', 'williamagreda@email.com', 'password123', Role.USER),
+    User.newUser('Roger Salazar', 'rogersalazar@email.com', 'password123', Role.USER)
   ]
 }
 // https://github.com/ktsn/vuex-class
@@ -25,6 +25,11 @@ export default new Vuex.Store<State>({
       const index = state.users.findIndex(user => user.email === userToRemove.email)
 
       Vue.delete(state.users, index)
+    },
+    updateUser (state:State, userToUpdate:User) {
+      let user:User | undefined = state.users.find(user => user.email === userToUpdate.email)
+
+      user!.copyUser(userToUpdate)
     }
   },
   actions: {

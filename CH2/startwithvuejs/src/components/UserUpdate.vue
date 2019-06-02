@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserForm v-on:update="update($event)" mode="update" :user="user"></UserForm>
+    <UserForm v-on:userFilled="update($event)" :user="user" :type="type"></UserForm>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ import { User } from '../entities/User'
   }
 })
 export default class UserUpdate extends Vue {
-  private user!:User;
+  private user:User = User.emptyUser()
+  private type:string = 'update'
 
   // lifecycle hook
   mounted () {
@@ -25,7 +26,9 @@ export default class UserUpdate extends Vue {
   }
 
   getUser (email:string) {
-    this.user = this.$store.getters.getUserByEmail(email)
+    let userToUpdate:User = this.$store.getters.getUserByEmail(email)
+
+    this.user.copyUser(userToUpdate)
   }
 
   update (user:User) {

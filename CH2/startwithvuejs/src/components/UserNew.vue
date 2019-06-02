@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserForm v-on:saveUser="save($event)"></UserForm>
+    <UserForm v-on:userFilled="save($event)"></UserForm>
   </div>
 </template>
 

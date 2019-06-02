@@ -1,26 +1,32 @@
 import { Role } from '../entities/Role'
 
 export class User {
-    private _name: string;
-    private _email: string;
-    private _password: string;
-    private _role: Role;
-    constructor (name: string, email: string, password: string, role: Role) {
-      this._name = name
-      this._email = email
-      this._password = password
-      this._role = role
+    name: string = ''
+    email: string = ''
+    password: string = ''
+    role: Role = Role.USER
+
+    static emptyUser () {
+      let user:User = new User()
+
+      return user
     }
-    get name () {
-      return this._name
+
+    static newUser (name: string, email: string, password: string, role: Role) {
+      let user:User = new User()
+
+      user.name = name
+      user.email = email
+      user.password = password
+      user.role = role
+
+      return user
     }
-    get email () {
-      return this._email
-    }
-    get password () {
-      return this._password
-    }
-    get role () {
-      return this._role
+
+    copyUser (userToCopy: User) {
+      this.name = userToCopy.name
+      this.email = userToCopy.email
+      this.password = userToCopy.password
+      this.role = userToCopy.role
     }
 }
