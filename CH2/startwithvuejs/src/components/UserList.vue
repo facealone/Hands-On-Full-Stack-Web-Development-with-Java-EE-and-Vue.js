@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <table>
+    <table class="table  table-dark">
       <thead>
         <tr>
           <th>Name</th>
@@ -27,6 +27,8 @@
 </template>
 
 <script lang="ts">
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { User } from '../entities/User'
 
