@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <input v-model="userName" placeholder="edit me">
+    <input v-model="name" placeholder="edit me">
+    <input v-model="email" placeholder="edit me">
     <input v-model="password" placeholder="edit me">
     <input v-model="role" placeholder="edit me">
     <button v-on:click="save">Save</button>
@@ -10,17 +11,19 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { User } from '../entities/User'
+import { Role } from '../entities/Role'
 
 // https://github.com/vuejs/vue-class-component
 
 @Component
 export default class UserForm extends Vue {
-  private userName:string = ''
+  private name:string = ''
+  private email:string = ''
   private password:string = ''
-  private role:string = ''
+  private role:Role = Role.USER
 
   save () {
-    let user:User = new User(this.userName, this.password, this.role)
+    let user:User = new User(this.name, this.email, this.password, this.role)
 
     this.$store.commit('saveUser', user)
   }

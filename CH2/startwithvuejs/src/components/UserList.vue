@@ -3,14 +3,20 @@
     <table>
       <thead>
         <tr>
-          <th>User Name</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
           <th>Role</th>
+          <th>Action</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <!--https://vuejs.org/v2/guide/list.html#Maintaining-State-->
-        <tr v-for="user in users" v-bind:key="user.username">
-          <td>{{user.username}}</td>
+        <tr v-for="user in users" v-bind:key="user.email">
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.password}}</td>
           <td>{{user.role}}</td>
           <td><a :href="'/user/update/' + user.username">Update</a></td>
           <td><a v-on:click="remove(user)" href="#">Delete</a></td>
@@ -42,10 +48,6 @@ export default class UserList extends Vue {
 
   remove (userToRemove:User) {
     this.$store.commit('removeUser', userToRemove)
-
-    const index = this.users.findIndex(user => user.username === userToRemove.username)
-
-    delete this.users[index]
   }
 }
 </script>
