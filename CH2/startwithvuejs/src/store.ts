@@ -29,5 +29,10 @@ export default new Vuex.Store<State>({
   },
   actions: {
 
+  },
+  getters: {
+    getUserByEmail: (state) => (email:string) => {
+      return state.users.find(user => user.email === email)
+    }
   }
 })

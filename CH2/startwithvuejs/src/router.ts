@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import User from './views/User.vue'
 import UserList from './components/UserList.vue'
-import UserForm from './components/UserForm.vue'
+import UserNew from './components/UserNew.vue'
+import UserUpdate from './components/UserUpdate.vue'
 
 Vue.use(Router)
 
@@ -22,14 +23,24 @@ export default new Router({
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
-          path: 'list',
+          path: '',
+          name: 'user_list',
           component: UserList
         },
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
-          path: 'create',
-          component: UserForm
+          path: 'new',
+          name: 'user_new',
+          component: UserNew
+        },
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: ':email',
+          name: 'user_update',
+          props: (route) => { return { email: route.params.email } },
+          component: UserUpdate
         }
       ]
     },

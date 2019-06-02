@@ -1,0 +1,24 @@
+<template>
+  <div>
+    <UserForm v-on:saveUser="save($event)"></UserForm>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import UserForm from '@/components/UserForm.vue'
+import { User } from '../entities/User'
+
+// https://github.com/vuejs/vue-class-component
+
+@Component({
+  components: {
+    UserForm
+  }
+})
+export default class UserNew extends Vue {
+  save (user:User) {
+    this.$store.commit('saveUser', user)
+  }
+}
+</script>

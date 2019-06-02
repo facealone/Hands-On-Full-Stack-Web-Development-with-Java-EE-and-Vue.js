@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <input v-model="name" placeholder="edit me">
-    <input v-model="email" placeholder="edit me">
+    <input v-model="email" placeholder="edit me" :readonly = "mode == 'update'">
     <input v-model="password" placeholder="edit me">
     <input v-model="role" placeholder="edit me">
     <button v-on:click="save">Save</button>
@@ -17,33 +17,24 @@ import { Role } from '../entities/Role'
 
 @Component
 export default class UserForm extends Vue {
+  @Prop() private mode:string = 'create'
+  @Prop() private user!:User
   private name:string = ''
   private email:string = ''
   private password:string = ''
   private role:Role = Role.USER
 
+  mounted () {
+    this.name = this.user!.name
+    this.email = this.user!.email
+    this.password = this.user!.password
+    this.role = this.user!.role
+  }
+
   save () {
     let user:User = new User(this.name, this.email, this.password, this.role)
 
-    this.$store.commit('saveUser', user)
+    this.$emit('saveUser', user)
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

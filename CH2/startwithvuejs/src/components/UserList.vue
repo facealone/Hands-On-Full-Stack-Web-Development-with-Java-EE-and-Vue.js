@@ -18,7 +18,7 @@
           <td>{{user.email}}</td>
           <td>{{user.password}}</td>
           <td>{{user.role}}</td>
-          <td><a :href="'/user/update/' + user.username">Update</a></td>
+          <td><router-link  :to="{ name: 'user_update', params: { email: user.email }}">Update</router-link></td>
           <td><a v-on:click="remove(user)" href="#">Delete</a></td>
         </tr>
       </tbody>
