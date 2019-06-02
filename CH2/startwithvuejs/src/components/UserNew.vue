@@ -19,6 +19,8 @@ import { User } from '../entities/User'
 export default class UserNew extends Vue {
   save (user:User) {
     this.$store.commit('saveUser', user)
+
+    this.$router.push({ name: 'user_list' })
   }
 }
 </script>

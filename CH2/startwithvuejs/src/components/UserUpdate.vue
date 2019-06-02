@@ -33,6 +33,8 @@ export default class UserUpdate extends Vue {
 
   update (user:User) {
     this.$store.commit('updateUser', user)
+
+    this.$router.push({ name: 'user_list' })
   }
 }
 </script>

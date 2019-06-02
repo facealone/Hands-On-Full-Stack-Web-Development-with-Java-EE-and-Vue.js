@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div class="nav">
-      <router-link to="/user/new">Create</router-link>
-    </div>
+  <div class="container">
+    <h1 class="text-center">Users Management Console</h1>
     <router-view/>
   </div>
 </template>

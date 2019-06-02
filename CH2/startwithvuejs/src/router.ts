@@ -17,13 +17,12 @@ export default new Router({
     },
     {
       path: '/user',
-      name: 'user',
       component: User,
       children: [
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
-          path: '',
+          path: '/',
           name: 'user_list',
           component: UserList
         },

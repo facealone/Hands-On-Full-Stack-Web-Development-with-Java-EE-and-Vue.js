@@ -1,8 +1,16 @@
 <template>
-  <div>
+  <div class="row">
+    <div class="col-sm">
       <div class="form-group">
         <label for="name">Name</label>
-        <input v-model="user.name" type="text" class="form-control" id="name" placeholder="Name">
+        <input
+          v-model="user.name"
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="Name"
+          required
+        >
       </div>
       <div class="form-group">
         <label for="role">Role</label>
@@ -21,6 +29,7 @@
           aria-describedby="emailHelp"
           placeholder="Enter email"
           :readonly="updateMode"
+          required
         >
       </div>
       <div class="form-group">
@@ -31,9 +40,11 @@
           class="form-control"
           id="password"
           placeholder="Password"
+          required
         >
       </div>
       <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
+    </div>
   </div>
 </template>
 
