@@ -1,4 +1,12 @@
 <template>
+<div>
+  <div class="row">
+    <div class="col-sm">
+      <div v-if="errorMessage" class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm">
       <div class="form-group">
@@ -43,9 +51,21 @@
           required
         >
       </div>
+      <div class="form-group">
+        <label for="password">Repeat Password</label>
+        <input
+          v-model="repeatPassword"
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+          required
+        >
+      </div>
       <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -60,8 +80,47 @@ export default class UserForm extends Vue {
   @Prop() private readonly type!: string
   @Prop({ default: () => User.emptyUser() }) private readonly user!: User
 
+  private repeatPassword:string = ''
+  private errorMessage:string = ''
+
   save () {
-    this.$emit('userFilled', this.user)
+    if (this.isValid(this.user)) {
+      this.$emit('userFilled', this.user)
+    }
+  }
+
+  isValid (user:User) {
+    if (user.name === '') {
+      this.errorMessage = 'Name is required'
+
+      return false
+    }
+
+    if (user.email === '') {
+      this.errorMessage = 'Email is required'
+
+      return false
+    }
+
+    if (user.email === '') {
+      this.errorMessage = 'Email is required'
+
+      return false
+    }
+
+    if (user.password === '') {
+      this.errorMessage = 'Password is required'
+
+      return false
+    }
+
+    if (user.password !== this.repeatPassword) {
+      this.errorMessage = "Passwords don't match"
+
+      return false
+    }
+
+    return true
   }
 
   get updateMode () {

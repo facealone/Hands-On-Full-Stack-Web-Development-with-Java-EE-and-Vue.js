@@ -14,7 +14,7 @@ const stateBase: State = {
     User.newUser('Roger Salazar', 'rogersalazar@email.com', 'password123', Role.USER)
   ]
 }
-// https://github.com/ktsn/vuex-class
+
 export default new Vuex.Store<State>({
   state: stateBase,
   mutations: {
