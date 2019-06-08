@@ -41,12 +41,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { User } from '../entities/User'
 
-// https://github.com/vuejs/vue-class-component
-
 @Component
 export default class UserList extends Vue {
-  users:User[] = [];
-  // https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks
+  users:User[] = []
 
   // lifecycle hook
   mounted () {
