@@ -5,11 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import UserForm from '@/components/UserForm.vue'
 import { User } from '../entities/User'
-
-// https://github.com/vuejs/vue-class-component
 
 @Component({
   components: {

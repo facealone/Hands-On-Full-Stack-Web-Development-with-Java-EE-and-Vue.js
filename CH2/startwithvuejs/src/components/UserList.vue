@@ -19,7 +19,6 @@
             </tr>
           </thead>
           <tbody>
-            <!--https://vuejs.org/v2/guide/list.html#Maintaining-State-->
             <tr v-for="user in users" v-bind:key="user.email">
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
@@ -38,7 +37,7 @@
 <script lang="ts">
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { User } from '../entities/User'
 
 @Component

@@ -69,11 +69,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { User } from '../entities/User'
 import { Role } from '../entities/Role'
-
-// https://github.com/vuejs/vue-class-component
 
 @Component
 export default class UserForm extends Vue {
