@@ -57,7 +57,7 @@
           v-model="repeatPassword"
           type="password"
           class="form-control"
-          id="password"
+          id="repeatPassword"
           placeholder="Password"
           required
         >

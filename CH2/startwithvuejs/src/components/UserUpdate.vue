@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import UserForm from '@/components/UserForm.vue'
 import { User } from '../entities/User'
 
@@ -15,12 +15,13 @@ import { User } from '../entities/User'
   }
 })
 export default class UserUpdate extends Vue {
+  @Prop() private readonly email!: string
+
   private user:User = User.emptyUser()
   private type:string = 'update'
 
-  // lifecycle hook
   mounted () {
-    this.getUser(this.$route.params.email)
+    this.getUser(this.email)
   }
 
   getUser (email:string) {
