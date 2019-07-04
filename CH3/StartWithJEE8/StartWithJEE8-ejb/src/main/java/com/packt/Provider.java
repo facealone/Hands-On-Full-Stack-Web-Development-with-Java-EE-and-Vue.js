@@ -14,15 +14,15 @@ import javax.persistence.PersistenceContext;
  * @author daniel
  */
 public class Provider {
-    @PersistenceContext    
+    //@PersistenceContext
     private EntityManager em;
 
-    @Produces
+    //@Produces
     public EntityManager getEntityManager() {
         return em;
     }
     
-    @Produces
+    //@Produces
     public UserDAO getUserDAO(EntityManager entityManager) {
         return new UserDAO(entityManager);
     }
