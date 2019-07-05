@@ -17,11 +17,15 @@ import javax.persistence.TypedQuery;
  *
  * @author martin
  */
-@Stateless
-@LocalBean
+//@Stateless
+//@LocalBean
 public class NewSessionBean {
-@PersistenceContext
+//@PersistenceContext
     private EntityManager em;
+    
+    public NewSessionBean(EntityManager em){
+        this.em=em;
+    }
     public Collection<User> allUsers() {
         return em.createNamedQuery("User.findAll", User.class).getResultList();
     }
