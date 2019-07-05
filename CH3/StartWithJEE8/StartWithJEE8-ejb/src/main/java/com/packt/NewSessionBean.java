@@ -26,6 +26,11 @@ public class NewSessionBean {
         return em.createNamedQuery("User.findAll", User.class).getResultList();
     }
 
+    
+    public User save(User user) {
+        em.persist(user);
+        return user;
+    }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 

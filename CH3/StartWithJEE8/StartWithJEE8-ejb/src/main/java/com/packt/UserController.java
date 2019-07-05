@@ -12,6 +12,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 /**
@@ -25,5 +26,10 @@ public class UserController {
     @GET
     public Collection<User> allUsers() {
         return newSessionBean.allUsers();
+    }
+    
+    @POST
+    public User save(User user) {
+        return newSessionBean.save(user);
     }
 }

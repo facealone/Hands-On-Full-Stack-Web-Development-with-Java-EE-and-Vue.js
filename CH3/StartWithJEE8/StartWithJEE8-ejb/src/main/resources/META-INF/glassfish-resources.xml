@@ -9,6 +9,7 @@
         <property name="dataBaseName" value="pactkmysql"/>
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
         <property name="useSSL" value="false"/>
+        <property name="allowPublicKeyRetrieval" value="true"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:module/packtmysql" object-type="user" pool-name="mysql_rootPool"/>
 </resources>
