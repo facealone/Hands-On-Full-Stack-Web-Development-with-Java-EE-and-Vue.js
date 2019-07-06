@@ -26,7 +26,7 @@ public class NewSessionBean {
     public NewSessionBean(EntityManager em){
         this.em=em;
     }
-    public Collection<User> allUsers() {
+    public List<User> allUsers() {
         return em.createNamedQuery("User.findAll", User.class).getResultList();
     }
 

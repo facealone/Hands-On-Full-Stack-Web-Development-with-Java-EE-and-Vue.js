@@ -7,6 +7,7 @@ package com.packt;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -29,7 +30,7 @@ public class UserController {
     @Inject
     private NewSessionBean newSessionBean;
     @GET
-    public Collection<User> allUsers() {
+    public List<User> allUsers() {
         return newSessionBean.allUsers();
     }
     

@@ -5,23 +5,17 @@
  */
 package com.packt;
 
-import java.util.Collection;
-import javax.ejb.embeddable.EJBContainer;
+import java.util.Arrays;
+import java.util.List;
 import javax.inject.Inject;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  *
@@ -45,6 +39,17 @@ public class UserControllerTest {
 
     @Test
     public void getAllUsers() {
-        userController.allUsers();
+        User daniel = new User();
+        daniel.setId(1);
+        daniel.setName("daniel");
+        
+        User hector = new User();
+        hector.setId(2);
+        hector.setName("hector");
+        
+        List<User> users = userController.allUsers();
+         
+        assertThat(users).isEqualTo(Arrays.asList(daniel, hector));
+
     }
 }
