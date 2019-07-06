@@ -1,6 +1,1 @@
-
-CREATE TABL `User` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-)
+CREATE TABLE "USER_DATA" ( ID int PRIMARY KEY, NAME varchar(100) DEFAULT NULL)

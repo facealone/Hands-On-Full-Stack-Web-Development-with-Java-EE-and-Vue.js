@@ -1,6 +1,1 @@
-
-INSERT INTO pactkmysql.`User` (name) VALUES 
-('daniel')
-,('Product 5')
-,('Product 525252')
-;
+INSERT INTO "USER_DATA" (ID, NAME) VALUES (1, 'daniel'),(2, 'Product 5'),(3, 'Product 525252')
