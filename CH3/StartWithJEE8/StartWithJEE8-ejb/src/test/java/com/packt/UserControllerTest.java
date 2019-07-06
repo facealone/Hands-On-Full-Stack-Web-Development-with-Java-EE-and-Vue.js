@@ -32,7 +32,6 @@ public class UserControllerTest {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClasses(UserController.class, User.class, NewSessionBean.class, Provider.class)
                 .addAsResource("META-INF/persistence.xml")
-                .addAsResource("META-INF/create.sql")
                 .addAsResource("META-INF/data.sql")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
