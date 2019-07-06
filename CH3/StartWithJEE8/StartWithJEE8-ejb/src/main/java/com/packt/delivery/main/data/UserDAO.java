@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.packt;
+package com.packt.delivery.main.data;
 
+import com.packt.delivery.main.data.structure.UserData;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -13,25 +14,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-/**
- *
- * @author martin
- */
-//@Stateless
-//@LocalBean
-public class NewSessionBean {
-//@PersistenceContext
-    private EntityManager em;
+public class UserDAO {
+    private final EntityManager em;
     
-    public NewSessionBean(EntityManager em){
+    public UserDAO(EntityManager em){
         this.em=em;
     }
-    public List<User> allUsers() {
-        return em.createNamedQuery("User.findAll", User.class).getResultList();
+    public List<UserData> allUsers() {
+        return em.createNamedQuery("UserData.findAll", UserData.class).getResultList();
     }
 
     
-    public User save(User user) {
+    public UserData save(UserData user) {
         em.persist(user);
         return user;
     }

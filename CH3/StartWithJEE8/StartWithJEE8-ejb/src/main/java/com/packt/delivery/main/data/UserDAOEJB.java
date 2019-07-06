@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.packt;
+package com.packt.delivery.main.data;
 
+import com.packt.delivery.main.data.structure.UserData;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,23 +20,17 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
-/**
- *
- * @author daniel
- */
 @Stateless
 @LocalBean
-@Path("users")
-public class UserController {
+public class UserDAOEJB {
     @Inject
-    private NewSessionBean newSessionBean;
-    @GET
-    public List<User> allUsers() {
+    private UserDAO newSessionBean;
+    
+    public List<UserData> allUsers() {
         return newSessionBean.allUsers();
     }
     
-    @POST
-    public User save(User user) {
+    public UserData save(UserData user) {
         return newSessionBean.save(user);
     }
 }
