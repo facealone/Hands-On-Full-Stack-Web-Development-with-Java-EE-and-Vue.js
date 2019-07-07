@@ -2,7 +2,7 @@ package com.packt.delivery.main.repository.user;
 
 import com.packt.delivery.abstraction.entity.User;
 import com.packt.delivery.abstraction.repository.UserRepository;
-import com.packt.delivery.main.repository.Infrastructure;
+import com.packt.delivery.main.Infrastructure;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;

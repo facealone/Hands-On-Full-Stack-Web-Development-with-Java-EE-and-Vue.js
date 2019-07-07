@@ -1,9 +1,8 @@
 
-package com.packt.delivery.main.repository;
+package com.packt.delivery.main;
 
 import java.lang.annotation.Documented;
 import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
