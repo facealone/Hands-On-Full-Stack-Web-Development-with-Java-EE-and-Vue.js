@@ -47,31 +47,24 @@ public class DeliveryRepositoryEJBTest {
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
     }
     
-    /*@Test
+    @Test
     @InSequence(2)
     public void save_new_getAll() {
-        User daniel = new User("email1@email.com", "pass1", null);
-        User hector = new User("email2@email.com", "pass2", null);
-        User william = new User("email3@email.com", "pass3", null);
-
-        william = deliveryRepository.save(william);
+        FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl");
         
-        List<User> users = deliveryRepository.getAll();
-      
-        assertThat(users).isEqualTo(Arrays.asList(daniel, hector, william));
+        Item item1 = new Item(1, 1, foodProduct);
+        Delivery delivery1 = new Delivery(1, "Street 50", "555233564", 23600, 100, Arrays.asList(item1));
+        
+        Item newItem = new Item(null, 2, foodProduct);
+        Delivery newDelivery = new Delivery(null, "Street 89", "55587412", 20100, 100, Arrays.asList(newItem));
+        
+        Item expectedItem = new Item(2, 2, foodProduct);
+        Delivery expectedDelivery = new Delivery(2, "Street 89", "55587412", 20100, 100, Arrays.asList(expectedItem));
+
+        newDelivery = deliveryRepository.save(newDelivery);
+        
+        List<Delivery> deliveries = deliveryRepository.getAll();
+
+        assertThat(deliveries).isEqualTo(Arrays.asList(delivery1, expectedDelivery));
     }
-    
-    @Test
-    @InSequence(3)
-    public void update_new_getAll() {
-        User daniel = new User("email1@email.com", "pass1", null);
-        User hector = new User("email2@email.com", "pass2", null);
-        User william = new User("email3@email.com", "pass4", null);
-
-        william = deliveryRepository.update(william);
-        
-        List<User> users = deliveryRepository.getAll();
-      
-        assertThat(users).isEqualTo(Arrays.asList(daniel, hector, william));
-    }*/
 }

@@ -66,7 +66,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
         itemData.setAmount(item.getAmount());
         itemData.setFoodProduct(foodProductData);
 
-        return new ItemData();
+        return itemData;
     }
 
     private Delivery convertDeliveryDataToDelivery(DeliveryData deliveryData) {
