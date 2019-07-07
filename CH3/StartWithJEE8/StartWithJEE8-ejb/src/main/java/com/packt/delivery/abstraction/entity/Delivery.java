@@ -21,6 +21,30 @@ public class Delivery implements Serializable {
         this.itemList = itemList;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public int getFee() {
+        return fee;
+    }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

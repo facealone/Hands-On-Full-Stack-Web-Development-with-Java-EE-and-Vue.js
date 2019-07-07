@@ -20,6 +20,30 @@ public class FoodProduct implements Serializable {
         this.imageUrl = imageUrl;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

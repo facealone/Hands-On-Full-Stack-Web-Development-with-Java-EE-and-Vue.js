@@ -68,9 +68,8 @@ public class FoodServiceData implements Serializable {
     private int deliveryFee;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "active")
-    private String active;
+    private boolean active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foodService")
     private List<FoodProductData> foodProductList;
     @JoinColumn(name = "email", referencedColumnName = "email", insertable = false, updatable = false)
@@ -84,7 +83,7 @@ public class FoodServiceData implements Serializable {
         this.email = email;
     }
 
-    public FoodServiceData(String email, String name, String address, String foodType, int deliveryFee, String active) {
+    public FoodServiceData(String email, String name, String address, String foodType, int deliveryFee, boolean active) {
         this.email = email;
         this.name = name;
         this.address = address;
@@ -133,11 +132,11 @@ public class FoodServiceData implements Serializable {
         this.deliveryFee = deliveryFee;
     }
 
-    public String getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

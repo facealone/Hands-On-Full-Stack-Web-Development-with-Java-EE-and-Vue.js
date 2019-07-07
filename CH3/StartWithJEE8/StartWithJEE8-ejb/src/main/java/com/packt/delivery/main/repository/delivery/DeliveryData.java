@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,7 +63,7 @@ public class DeliveryData implements Serializable {
     @NotNull
     @Column(name = "fee")
     private int fee;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery", fetch = FetchType.EAGER)
     private List<ItemData> itemList;
 
     public DeliveryData() {

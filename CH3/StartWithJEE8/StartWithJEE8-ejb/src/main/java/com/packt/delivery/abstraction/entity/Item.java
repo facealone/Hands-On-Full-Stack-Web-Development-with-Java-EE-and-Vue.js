@@ -6,10 +6,24 @@ import java.util.Objects;
 public class Item implements Serializable {
     private final Integer id;
     private final int amount;
+    private final FoodProduct foodProduct;
 
-    public Item(Integer id, int amount) {
+    public Item(Integer id, int amount, FoodProduct foodProduct) {
         this.id = id;
         this.amount = amount;
+        this.foodProduct = foodProduct;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public FoodProduct getFoodProduct() {
+        return foodProduct;
     }
 
     @Override
