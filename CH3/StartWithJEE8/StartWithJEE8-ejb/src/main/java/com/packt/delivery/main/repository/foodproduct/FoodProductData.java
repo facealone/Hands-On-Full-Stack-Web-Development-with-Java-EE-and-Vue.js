@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.packt.delivery.main.data.structure;
+package com.packt.delivery.main.repository.foodproduct;
 
+import com.packt.delivery.main.repository.foodservice.FoodServiceData;
+import com.packt.delivery.main.repository.item.ItemData;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

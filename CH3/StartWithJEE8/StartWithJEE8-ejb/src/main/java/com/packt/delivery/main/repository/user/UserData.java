@@ -5,7 +5,7 @@
  */
 package com.packt.delivery.main.repository.user;
 
-import com.packt.delivery.main.data.structure.FoodServiceData;
+import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
