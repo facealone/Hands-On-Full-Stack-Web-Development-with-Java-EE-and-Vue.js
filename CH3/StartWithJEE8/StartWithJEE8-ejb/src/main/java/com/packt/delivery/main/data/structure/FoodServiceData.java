@@ -5,6 +5,7 @@
  */
 package com.packt.delivery.main.data.structure;
 
+import com.packt.delivery.main.repository.user.UserData;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

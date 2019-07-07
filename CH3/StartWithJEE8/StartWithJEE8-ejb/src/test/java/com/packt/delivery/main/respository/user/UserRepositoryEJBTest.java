@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.packt.delivery.main.data;
+package com.packt.delivery.main.respository.user;
 
-import com.packt.delivery.main.data.structure.UserData;
+import com.packt.delivery.abstraction.entity.User;
+import com.packt.delivery.abstraction.repository.UserRepository;
+import com.packt.delivery.main.repository.Infrastructure;
+import com.packt.delivery.main.repository.user.UserRepositoryEJB;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
@@ -18,20 +16,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.*;
 
-/**
- *
- * @author daniel
- */
 @RunWith(Arquillian.class)
-public class UserDAOEJBTest {
-    
+public class UserRepositoryEJBTest {
+
     @Inject
-    private UserDAOEJB userDAOEJB;
+    @Infrastructure
+    private UserRepository userRepository;
 
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage("com.packt.delivery.main.data")
+                .addPackages(true, "com.packt.delivery")
                 .addAsResource("META-INF/persistence.xml")
                 .addAsResource("META-INF/data.sql")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -39,16 +34,11 @@ public class UserDAOEJBTest {
 
     @Test
     public void getAllUsers() {
-        UserData daniel = new UserData();
-        daniel.setEmail("email1@email.com");
-        daniel.setPassword("pass1");
-        
-        UserData hector = new UserData();
-        hector.setEmail("email2@email.com");
-        hector.setPassword("pass2");
-        
-        List<UserData> users = userDAOEJB.allUsers();
-         
+        User daniel = new User("email1@email.com", "pass1", null);
+        User hector = new User("email2@email.com", "pass2", null);
+
+        List<User> users = userRepository.getAll();
+
         assertThat(users).isEqualTo(Arrays.asList(daniel, hector));
 
     }
