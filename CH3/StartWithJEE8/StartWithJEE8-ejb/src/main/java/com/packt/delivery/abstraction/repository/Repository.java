@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface Repository<T> {
     List<T> getAll();
-    T save(T user);
-    T update(T user);
+    T save(T t);
+    T update(T t);
 }

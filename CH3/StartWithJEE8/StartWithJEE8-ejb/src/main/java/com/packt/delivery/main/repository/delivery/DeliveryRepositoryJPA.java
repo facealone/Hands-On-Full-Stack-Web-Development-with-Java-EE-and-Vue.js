@@ -31,7 +31,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
     public Delivery update(Delivery delivery) {
         DeliveryData deliveryData = convertDeliveryToDeliveryData(delivery);
 
-        entityManager.merge(deliveryData);
+        deliveryData = entityManager.merge(deliveryData);
 
         return convertDeliveryDataToDelivery(deliveryData);
     }
@@ -58,6 +58,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
 
     private DeliveryData convertDeliveryToDeliveryData(Delivery delivery) {
         DeliveryData deliveryData = new DeliveryData();
+        deliveryData.setId(delivery.getId());
         deliveryData.setFee(delivery.getFee());
         deliveryData.setPhone(delivery.getPhone());
         deliveryData.setAddress(delivery.getAddress());
@@ -76,6 +77,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
         foodProductData.setId(item.getFoodProduct().getId());
 
         ItemData itemData = new ItemData();
+        itemData.setId(item.getId());
         itemData.setAmount(item.getAmount());
         itemData.setFoodProduct(foodProductData);
 
