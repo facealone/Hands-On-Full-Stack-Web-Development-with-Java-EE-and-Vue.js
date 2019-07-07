@@ -29,4 +29,9 @@ public class DeliveryRepositoryEJB implements DeliveryRepository{
     public Delivery update(Delivery delivery) {
         return deliveryRepositoryJPA.update(delivery);
     }
+
+    @Override
+    public List<Delivery> getDeliveriesByEmailAndState(String email, String state) {
+        return deliveryRepositoryJPA.getDeliveriesByEmailAndState(email, state);
+    }
 }

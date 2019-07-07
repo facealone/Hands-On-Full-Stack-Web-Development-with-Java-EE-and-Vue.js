@@ -44,6 +44,17 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
                 .map(this::convertDeliveryDataToDelivery)
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<Delivery> getDeliveriesByEmailAndState(String email, String state) {
+        return entityManager.createNamedQuery("DeliveryData.findByEmailAndState", DeliveryData.class)
+                .setParameter("state", state)
+                .setParameter("email", email)
+                .getResultList()
+                .stream()
+                .map(this::convertDeliveryDataToDelivery)
+                .collect(Collectors.toList());
+    }    
 
     private DeliveryData convertDeliveryToDeliveryData(Delivery delivery) {
         DeliveryData deliveryData = new DeliveryData();

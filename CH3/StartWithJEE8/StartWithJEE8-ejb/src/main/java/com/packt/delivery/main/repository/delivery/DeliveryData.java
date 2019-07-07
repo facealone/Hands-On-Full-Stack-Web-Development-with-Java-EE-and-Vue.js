@@ -35,7 +35,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DeliveryData.findByAddress", query = "SELECT d FROM DeliveryData d WHERE d.address = :address"),
     @NamedQuery(name = "DeliveryData.findByPhone", query = "SELECT d FROM DeliveryData d WHERE d.phone = :phone"),
     @NamedQuery(name = "DeliveryData.findByTotal", query = "SELECT d FROM DeliveryData d WHERE d.total = :total"),
-    @NamedQuery(name = "DeliveryData.findByFee", query = "SELECT d FROM DeliveryData d WHERE d.fee = :fee")})
+    @NamedQuery(name = "DeliveryData.findByFee", query = "SELECT d FROM DeliveryData d WHERE d.fee = :fee"),
+    @NamedQuery(name = "DeliveryData.findByEmailAndState", query = "SELECT d FROM DeliveryData d WHERE d.email = :email and d.state = :state")})
 public class DeliveryData implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -67,4 +67,16 @@ public class DeliveryRepositoryEJBTest {
 
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery1, expectedDelivery));
     }
+    
+    @Test
+    @InSequence(3)
+    public void getDeliveriesByEmailAndState_emailAndState_list() {
+        FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl");
+        Item item = new Item(1, 1, foodProduct);
+        Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
+
+        List<Delivery> deliveries = deliveryRepository.getDeliveriesByEmailAndState("email5@email.com", "PENDING");
+
+        assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
+    }
 }
