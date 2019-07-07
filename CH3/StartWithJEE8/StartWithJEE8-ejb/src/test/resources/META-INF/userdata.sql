@@ -1,1 +1,0 @@
-INSERT INTO "USER_DATA" (EMAIL, PASSWORD) VALUES ('email1@email.com', 'pass1'),('email2@email.com', 'pass2')

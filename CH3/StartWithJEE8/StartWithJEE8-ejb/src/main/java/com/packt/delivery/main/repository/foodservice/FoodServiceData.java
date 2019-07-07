@@ -73,7 +73,7 @@ public class FoodServiceData implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foodService")
     private List<FoodProductData> foodProductList;
     @JoinColumn(name = "email", referencedColumnName = "email", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private UserData userData;
 
     public FoodServiceData() {

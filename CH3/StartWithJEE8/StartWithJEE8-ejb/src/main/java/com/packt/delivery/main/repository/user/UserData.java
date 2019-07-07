@@ -45,7 +45,7 @@ public class UserData implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "password")
     private String password;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userData")
+    @OneToOne(mappedBy = "userData")
     private FoodServiceData foodService;
 
     public UserData() {

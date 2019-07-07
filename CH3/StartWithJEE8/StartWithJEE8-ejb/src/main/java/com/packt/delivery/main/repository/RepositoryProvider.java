@@ -1,7 +1,7 @@
 package com.packt.delivery.main.repository;
 
 import com.packt.delivery.main.repository.delivery.DeliveryRepositoryJPA;
-import com.packt.delivery.main.repository.user.UserRepositoryJPA;
+import com.packt.delivery.main.repository.foodservice.FoodServiceRepositoryJPA;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Produces;
@@ -20,8 +20,8 @@ public class RepositoryProvider {
     }
     
     @Produces
-    public UserRepositoryJPA getUserRepositoryJPA(EntityManager entityManager) {
-        return new UserRepositoryJPA(entityManager);
+    public FoodServiceRepositoryJPA getFoodServiceRepositoryJPA(EntityManager entityManager) {
+        return new FoodServiceRepositoryJPA(entityManager);
     }
     
     @Produces
