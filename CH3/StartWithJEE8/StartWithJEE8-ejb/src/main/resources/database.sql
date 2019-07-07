@@ -4,6 +4,8 @@ CREATE TABLE `DELIVERY` (
   `phone` varchar(100) NOT NULL,
   `total` int(11) NOT NULL,
   `fee` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

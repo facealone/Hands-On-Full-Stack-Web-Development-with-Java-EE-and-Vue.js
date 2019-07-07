@@ -63,6 +63,17 @@ public class DeliveryData implements Serializable {
     @NotNull
     @Column(name = "fee")
     private int fee;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "email")
+    private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "state")
+    private String state;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery", fetch = FetchType.EAGER)
     private List<ItemData> itemList;
 
@@ -87,6 +98,40 @@ public class DeliveryData implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+
+    public List<ItemData> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<ItemData> itemList) {
+        this.itemList = itemList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DeliveryData)) {
+            return false;
+        }
+        DeliveryData other = (DeliveryData) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.packt.delivery.main.data.structure.Delivery[ id=" + id + " ]";
     }
 
     public String getAddress() {
@@ -121,37 +166,20 @@ public class DeliveryData implements Serializable {
         this.fee = fee;
     }
 
-    public List<ItemData> getItemList() {
-        return itemList;
+    public String getEmail() {
+        return email;
     }
 
-    public void setItemList(List<ItemData> itemList) {
-        this.itemList = itemList;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public String getState() {
+        return state;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DeliveryData)) {
-            return false;
-        }
-        DeliveryData other = (DeliveryData) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.packt.delivery.main.data.structure.Delivery[ id=" + id + " ]";
+    public void setState(String state) {
+        this.state = state;
     }
     
 }

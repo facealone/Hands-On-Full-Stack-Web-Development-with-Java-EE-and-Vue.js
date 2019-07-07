@@ -40,7 +40,7 @@ public class DeliveryRepositoryEJBTest {
     public void getAll_basicData_same() {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl");
         Item item = new Item(1, 1, foodProduct);
-        Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, Arrays.asList(item));
+        Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
 
         List<Delivery> deliveries = deliveryRepository.getAll();
 
@@ -53,13 +53,13 @@ public class DeliveryRepositoryEJBTest {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl");
         
         Item item1 = new Item(1, 1, foodProduct);
-        Delivery delivery1 = new Delivery(1, "Street 50", "555233564", 23600, 100, Arrays.asList(item1));
+        Delivery delivery1 = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item1));
         
         Item newItem = new Item(null, 2, foodProduct);
-        Delivery newDelivery = new Delivery(null, "Street 89", "55587412", 20100, 100, Arrays.asList(newItem));
+        Delivery newDelivery = new Delivery(null, "Street 89", "55587412", 20100, 100, "email10@email.com", "PENDING", Arrays.asList(newItem));
         
         Item expectedItem = new Item(2, 2, foodProduct);
-        Delivery expectedDelivery = new Delivery(2, "Street 89", "55587412", 20100, 100, Arrays.asList(expectedItem));
+        Delivery expectedDelivery = new Delivery(2, "Street 89", "55587412", 20100, 100, "email10@email.com", "PENDING", Arrays.asList(expectedItem));
 
         newDelivery = deliveryRepository.save(newDelivery);
         

@@ -10,14 +10,18 @@ public class Delivery implements Serializable {
     private final String phone;
     private final int total;
     private final int fee;
+    private final String email;
+    private final String state;
     private final List<Item> itemList;
 
-    public Delivery(Integer id, String address, String phone, int total, int fee, List<Item> itemList) {
+    public Delivery(Integer id, String address, String phone, int total, int fee, String email, String state, List<Item> itemList) {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.total = total;
         this.fee = fee;
+        this.email = email;
+        this.state = state;
         this.itemList = itemList;
     }
 
@@ -41,19 +45,29 @@ public class Delivery implements Serializable {
         return fee;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getState() {
+        return state;
+    }
+
     public List<Item> getItemList() {
         return itemList;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.address);
-        hash = 37 * hash + Objects.hashCode(this.phone);
-        hash = 37 * hash + this.total;
-        hash = 37 * hash + this.fee;
-        hash = 37 * hash + Objects.hashCode(this.itemList);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.address);
+        hash = 59 * hash + Objects.hashCode(this.phone);
+        hash = 59 * hash + this.total;
+        hash = 59 * hash + this.fee;
+        hash = 59 * hash + Objects.hashCode(this.email);
+        hash = 59 * hash + Objects.hashCode(this.state);
+        hash = 59 * hash + Objects.hashCode(this.itemList);
         return hash;
     }
 
@@ -81,6 +95,12 @@ public class Delivery implements Serializable {
         if (!Objects.equals(this.phone, other.phone)) {
             return false;
         }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -92,7 +112,7 @@ public class Delivery implements Serializable {
 
     @Override
     public String toString() {
-        return "Delivery{" + "id=" + id + ", address=" + address + ", phone=" + phone + ", total=" + total + ", fee=" + fee + ", itemList=" + itemList + '}';
+        return "Delivery{" + "id=" + id + ", address=" + address + ", phone=" + phone + ", total=" + total + ", fee=" + fee + ", email=" + email + ", state=" + state + ", itemList=" + itemList + '}';
     }
 
 }

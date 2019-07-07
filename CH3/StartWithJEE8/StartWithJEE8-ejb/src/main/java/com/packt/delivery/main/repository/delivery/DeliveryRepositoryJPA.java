@@ -51,6 +51,8 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
         deliveryData.setPhone(delivery.getPhone());
         deliveryData.setAddress(delivery.getAddress());
         deliveryData.setTotal(delivery.getTotal());
+        deliveryData.setEmail(delivery.getEmail());
+        deliveryData.setState(delivery.getState());
         deliveryData.setItemList(delivery.getItemList()
                 .stream()
                 .map(this::convertItemToItemData)
@@ -75,7 +77,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
                 .map(this::convertItemDataToItem)
                 .collect(Collectors.toList());
 
-        return new Delivery(deliveryData.getId(), deliveryData.getAddress(), deliveryData.getPhone(), deliveryData.getTotal(), deliveryData.getFee(), items);
+        return new Delivery(deliveryData.getId(), deliveryData.getAddress(), deliveryData.getPhone(), deliveryData.getTotal(), deliveryData.getFee(), deliveryData.getEmail(), deliveryData.getState(), items);
     }
 
     private Item convertItemDataToItem(ItemData itemData) {
