@@ -5,11 +5,9 @@
  */
 package com.packt.delivery.main.repository.foodservice;
 
-import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -49,10 +47,6 @@ public class UserData implements Serializable {
     private FoodServiceData foodService;
 
     public UserData() {
-    }
-
-    public UserData(String email) {
-        this.email = email;
     }
 
     public UserData(String email, String password) {

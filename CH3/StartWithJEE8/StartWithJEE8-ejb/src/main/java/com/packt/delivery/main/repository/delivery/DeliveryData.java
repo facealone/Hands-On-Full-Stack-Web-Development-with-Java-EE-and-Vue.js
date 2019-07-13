@@ -80,18 +80,6 @@ public class DeliveryData implements Serializable {
     public DeliveryData() {
     }
 
-    public DeliveryData(Integer id) {
-        this.id = id;
-    }
-
-    public DeliveryData(Integer id, String address, String phone, int total, int fee) {
-        this.id = id;
-        this.address = address;
-        this.phone = phone;
-        this.total = total;
-        this.fee = fee;
-    }
-
     public Integer getId() {
         return id;
     }

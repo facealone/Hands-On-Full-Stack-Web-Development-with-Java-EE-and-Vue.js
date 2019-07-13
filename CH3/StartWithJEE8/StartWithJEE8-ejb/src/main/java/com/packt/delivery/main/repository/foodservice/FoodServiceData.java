@@ -78,19 +78,6 @@ public class FoodServiceData implements Serializable {
     public FoodServiceData() {
     }
 
-    public FoodServiceData(String email) {
-        this.email = email;
-    }
-
-    public FoodServiceData(String email, String name, String address, String foodType, int deliveryFee, boolean active) {
-        this.email = email;
-        this.name = name;
-        this.address = address;
-        this.foodType = foodType;
-        this.deliveryFee = deliveryFee;
-        this.active = active;
-    }
-
     public String getEmail() {
         return email;
     }

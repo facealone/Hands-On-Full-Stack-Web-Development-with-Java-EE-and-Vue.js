@@ -80,19 +80,6 @@ public class FoodProductData implements Serializable {
     public FoodProductData() {
     }
 
-    public FoodProductData(Integer id) {
-        this.id = id;
-    }
-
-    public FoodProductData(Integer id, String name, int price, String description, String imageUrl, boolean active) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.active = active;
-    }
-
     public Integer getId() {
         return id;
     }

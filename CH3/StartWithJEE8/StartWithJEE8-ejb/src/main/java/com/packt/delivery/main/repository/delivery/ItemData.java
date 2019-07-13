@@ -52,15 +52,6 @@ public class ItemData implements Serializable {
     public ItemData() {
     }
 
-    public ItemData(Integer id) {
-        this.id = id;
-    }
-
-    public ItemData(Integer id, int amount) {
-        this.id = id;
-        this.amount = amount;
-    }
-
     public Integer getId() {
         return id;
     }

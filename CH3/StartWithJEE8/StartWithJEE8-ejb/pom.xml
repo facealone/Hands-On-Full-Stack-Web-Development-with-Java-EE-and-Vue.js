@@ -192,6 +192,12 @@
                                             <minimum>0.8</minimum>
                                         </limit>
                                     </limits>
+                                    <excludes>
+                                        <exclude>*Data_</exclude>
+                                        <exclude>*Data</exclude>
+                                        <exclude>*Provider</exclude>
+                                        <exclude>com.packt.delivery.abstraction.entity.*</exclude>
+                                    </excludes>
                                 </rule>
                             </rules>
                         </configuration>
