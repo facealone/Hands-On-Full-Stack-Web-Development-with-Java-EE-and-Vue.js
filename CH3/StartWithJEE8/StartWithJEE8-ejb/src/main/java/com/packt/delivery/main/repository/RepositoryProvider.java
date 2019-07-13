@@ -1,6 +1,7 @@
 package com.packt.delivery.main.repository;
 
 import com.packt.delivery.main.repository.delivery.DeliveryRepositoryJPA;
+import com.packt.delivery.main.repository.foodproduct.FoodProductRepositoryJPA;
 import com.packt.delivery.main.repository.foodservice.FoodServiceRepositoryJPA;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -27,5 +28,10 @@ public class RepositoryProvider {
     @Produces
     public DeliveryRepositoryJPA getDeliveryRepositoryJPA(EntityManager entityManager) {
         return new DeliveryRepositoryJPA(entityManager);
+    }
+    
+    @Produces
+    public FoodProductRepositoryJPA getFoodProductRepositoryJPA(EntityManager entityManager) {
+        return new FoodProductRepositoryJPA(entityManager);
     }
 }

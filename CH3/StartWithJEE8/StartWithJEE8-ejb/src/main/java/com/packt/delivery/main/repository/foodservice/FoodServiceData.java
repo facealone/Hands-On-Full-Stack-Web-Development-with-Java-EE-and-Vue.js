@@ -6,7 +6,6 @@
 package com.packt.delivery.main.repository.foodservice;
 
 import com.packt.delivery.main.repository.foodproduct.FoodProductData;
-import com.packt.delivery.main.repository.user.UserData;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

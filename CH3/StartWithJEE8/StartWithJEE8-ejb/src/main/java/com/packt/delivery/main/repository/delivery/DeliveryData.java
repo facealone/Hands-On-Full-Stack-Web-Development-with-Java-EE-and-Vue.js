@@ -5,7 +5,6 @@
  */
 package com.packt.delivery.main.repository.delivery;
 
-import com.packt.delivery.main.repository.item.ItemData;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

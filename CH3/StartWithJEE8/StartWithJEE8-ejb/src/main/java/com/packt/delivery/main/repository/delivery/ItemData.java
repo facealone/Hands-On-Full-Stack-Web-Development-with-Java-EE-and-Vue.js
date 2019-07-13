@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.packt.delivery.main.repository.item;
+package com.packt.delivery.main.repository.delivery;
 
 import com.packt.delivery.main.repository.foodproduct.FoodProductData;
 import com.packt.delivery.main.repository.delivery.DeliveryData;

@@ -1,8 +1,6 @@
 package com.packt.delivery.main.repository.foodservice;
 
-import com.packt.delivery.abstraction.entity.Delivery;
 import com.packt.delivery.abstraction.entity.FoodService;
-import com.packt.delivery.main.repository.user.*;
 import com.packt.delivery.abstraction.entity.User;
 import com.packt.delivery.abstraction.repository.FoodServiceRepository;
 import java.util.Collections;

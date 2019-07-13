@@ -5,7 +5,7 @@ import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.abstraction.entity.Item;
 import com.packt.delivery.abstraction.repository.DeliveryRepository;
 import com.packt.delivery.main.repository.foodproduct.FoodProductData;
-import com.packt.delivery.main.repository.item.ItemData;
+import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -95,8 +95,9 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
 
     private Item convertItemDataToItem(ItemData itemData) {
         FoodProductData foodProductData = itemData.getFoodProduct();
+        FoodServiceData foodServiceData = foodProductData.getFoodService();
 
-        FoodProduct foodProduct = new FoodProduct(foodProductData.getId(), foodProductData.getName(), foodProductData.getPrice(), foodProductData.getDescription(), foodProductData.getActive(), foodProductData.getImageUrl());
+        FoodProduct foodProduct = new FoodProduct(foodProductData.getId(), foodProductData.getName(), foodProductData.getPrice(), foodProductData.getDescription(), foodProductData.getActive(), foodProductData.getImageUrl(), foodServiceData.getEmail());
 
         return new Item(itemData.getId(), itemData.getAmount(), foodProduct);
     }

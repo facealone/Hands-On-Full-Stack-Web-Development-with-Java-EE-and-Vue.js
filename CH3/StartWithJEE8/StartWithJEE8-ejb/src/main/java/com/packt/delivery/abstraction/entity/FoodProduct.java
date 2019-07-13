@@ -10,14 +10,16 @@ public class FoodProduct implements Serializable {
     private final String description;
     private final boolean active;
     private final String imageUrl;
+    private final String foodService;
 
-    public FoodProduct(Integer id, String name, int price, String description, boolean active, String imageUrl) {
+    public FoodProduct(Integer id, String name, int price, String description, boolean active, String imageUrl, String foodService) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.active = active;
         this.imageUrl = imageUrl;
+        this.foodService = foodService;
     }
 
     public Integer getId() {
@@ -44,15 +46,20 @@ public class FoodProduct implements Serializable {
         return imageUrl;
     }
 
+    public String getFoodService() {
+        return foodService;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.name);
-        hash = 29 * hash + this.price;
-        hash = 29 * hash + Objects.hashCode(this.description);
-        hash = 29 * hash + (this.active ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.imageUrl);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + this.price;
+        hash = 71 * hash + Objects.hashCode(this.description);
+        hash = 71 * hash + (this.active ? 1 : 0);
+        hash = 71 * hash + Objects.hashCode(this.imageUrl);
+        hash = 71 * hash + Objects.hashCode(this.foodService);
         return hash;
     }
 
@@ -83,6 +90,9 @@ public class FoodProduct implements Serializable {
         if (!Objects.equals(this.imageUrl, other.imageUrl)) {
             return false;
         }
+        if (!Objects.equals(this.foodService, other.foodService)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -91,7 +101,7 @@ public class FoodProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "FoodProduct{" + "id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + ", active=" + active + ", imageUrl=" + imageUrl + '}';
+        return "FoodProduct{" + "id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + ", active=" + active + ", imageUrl=" + imageUrl + ", foodService=" + foodService + '}';
     }
 
     

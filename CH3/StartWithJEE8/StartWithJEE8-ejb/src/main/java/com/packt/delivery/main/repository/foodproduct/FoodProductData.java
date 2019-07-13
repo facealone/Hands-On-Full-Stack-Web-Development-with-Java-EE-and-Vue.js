@@ -6,7 +6,7 @@
 package com.packt.delivery.main.repository.foodproduct;
 
 import com.packt.delivery.main.repository.foodservice.FoodServiceData;
-import com.packt.delivery.main.repository.item.ItemData;
+import com.packt.delivery.main.repository.delivery.ItemData;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -38,7 +38,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "FoodProductData.findByPrice", query = "SELECT f FROM FoodProductData f WHERE f.price = :price"),
     @NamedQuery(name = "FoodProductData.findByDescription", query = "SELECT f FROM FoodProductData f WHERE f.description = :description"),
     @NamedQuery(name = "FoodProductData.findByImageUrl", query = "SELECT f FROM FoodProductData f WHERE f.imageUrl = :imageUrl"),
-    @NamedQuery(name = "FoodProductData.findByActive", query = "SELECT f FROM FoodProductData f WHERE f.active = :active")})
+    @NamedQuery(name = "FoodProductData.findByActive", query = "SELECT f FROM FoodProductData f WHERE f.active = :active"),
+    @NamedQuery(name = "FoodProductData.findByFoodService", query = "SELECT f FROM FoodProductData f WHERE f.foodService.email = :email")})
 public class FoodProductData implements Serializable {
 
     private static final long serialVersionUID = 1L;
