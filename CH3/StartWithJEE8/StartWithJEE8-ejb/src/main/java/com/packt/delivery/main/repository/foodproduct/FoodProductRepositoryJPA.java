@@ -43,7 +43,7 @@ public class FoodProductRepositoryJPA implements FoodProductRepository {
     }
     
     @Override
-    public List<FoodProduct> getFoodProductsByFoodService(String email) {
+    public List<FoodProduct> getByFoodService(String email) {
         return entityManager.createNamedQuery("FoodProductData.findByFoodService", FoodProductData.class)
                 .setParameter("email", email)
                 .getResultList()

@@ -4,5 +4,5 @@ import com.packt.delivery.abstraction.entity.FoodProduct;
 import java.util.List;
 
 public interface FoodProductRepository extends Repository<FoodProduct>{
-    List<FoodProduct> getFoodProductsByFoodService(String email);
+    List<FoodProduct> getByFoodService(String email);
 }

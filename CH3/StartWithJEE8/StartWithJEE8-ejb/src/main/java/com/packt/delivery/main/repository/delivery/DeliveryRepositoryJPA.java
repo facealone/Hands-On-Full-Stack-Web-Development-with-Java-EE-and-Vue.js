@@ -46,7 +46,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
     }
     
     @Override
-    public List<Delivery> getDeliveriesByEmailAndState(String email, String state) {
+    public List<Delivery> getByEmailAndState(String email, String state) {
         return entityManager.createNamedQuery("DeliveryData.findByEmailAndState", DeliveryData.class)
                 .setParameter("state", state)
                 .setParameter("email", email)
@@ -95,6 +95,9 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
 
     private Item convertItemDataToItem(ItemData itemData) {
         FoodProductData foodProductData = itemData.getFoodProduct();
+        
+        foodProductData = entityManager.find(FoodProductData.class, foodProductData.getId());
+        
         FoodServiceData foodServiceData = foodProductData.getFoodService();
 
         FoodProduct foodProduct = new FoodProduct(foodProductData.getId(), foodProductData.getName(), foodProductData.getPrice(), foodProductData.getDescription(), foodProductData.getActive(), foodProductData.getImageUrl(), foodServiceData.getEmail());

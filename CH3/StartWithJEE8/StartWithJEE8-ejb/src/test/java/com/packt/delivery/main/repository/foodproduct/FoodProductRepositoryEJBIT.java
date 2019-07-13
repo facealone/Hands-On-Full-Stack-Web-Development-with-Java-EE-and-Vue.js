@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class FoodProductRepositoryEJBTest {
+public class FoodProductRepositoryEJBIT {
     
     @Inject
     @Infrastructure
@@ -81,7 +81,7 @@ public class FoodProductRepositoryEJBTest {
         
         FoodProduct foodProduct2 = new FoodProduct(2, "Pizza", 23500, "Cheese Pizza Old", true, "imageUrl2", "email1@email.com");
         
-        List<FoodProduct> foodProducts = foodProductRepository.getFoodProductsByFoodService("email1@email.com");
+        List<FoodProduct> foodProducts = foodProductRepository.getByFoodService("email1@email.com");
 
         assertThat(foodProducts).isEqualTo(Arrays.asList(foodProduct1, foodProduct2));
     }

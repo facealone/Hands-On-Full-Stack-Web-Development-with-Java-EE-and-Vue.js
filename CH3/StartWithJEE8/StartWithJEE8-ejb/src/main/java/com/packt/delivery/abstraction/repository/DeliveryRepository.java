@@ -4,5 +4,5 @@ import com.packt.delivery.abstraction.entity.Delivery;
 import java.util.List;
 
 public interface DeliveryRepository extends Repository<Delivery>{
-    List<Delivery> getDeliveriesByEmailAndState(String email, String state);
+    List<Delivery> getByEmailAndState(String email, String state);
 }

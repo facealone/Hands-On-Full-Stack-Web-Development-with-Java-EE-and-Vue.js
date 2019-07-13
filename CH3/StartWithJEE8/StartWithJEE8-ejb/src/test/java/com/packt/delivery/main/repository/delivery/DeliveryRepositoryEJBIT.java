@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class DeliveryRepositoryEJBTest {
+public class DeliveryRepositoryEJBIT {
     
     @Inject
     @Infrastructure
@@ -47,7 +47,7 @@ public class DeliveryRepositoryEJBTest {
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
     }
     
-    //@Test
+    @Test
     @InSequence(2)
     public void save_new_getAll() {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
@@ -68,7 +68,7 @@ public class DeliveryRepositoryEJBTest {
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery1, expectedDelivery));
     }
     
-    //@Test
+    @Test
     @InSequence(3)
     public void update_state_updated() {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
@@ -86,14 +86,14 @@ public class DeliveryRepositoryEJBTest {
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery1, expectedDelivery));
     }
     
-    //@Test
+    @Test
     @InSequence(4)
     public void getDeliveriesByEmailAndState_emailAndState_list() {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
         Item item = new Item(1, 1, foodProduct);
         Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
 
-        List<Delivery> deliveries = deliveryRepository.getDeliveriesByEmailAndState("email5@email.com", "PENDING");
+        List<Delivery> deliveries = deliveryRepository.getByEmailAndState("email5@email.com", "PENDING");
 
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
     }

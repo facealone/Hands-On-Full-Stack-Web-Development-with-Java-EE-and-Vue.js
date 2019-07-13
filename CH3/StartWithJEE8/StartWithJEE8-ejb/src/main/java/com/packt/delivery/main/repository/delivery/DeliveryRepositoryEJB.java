@@ -31,7 +31,7 @@ public class DeliveryRepositoryEJB implements DeliveryRepository{
     }
 
     @Override
-    public List<Delivery> getDeliveriesByEmailAndState(String email, String state) {
-        return deliveryRepositoryJPA.getDeliveriesByEmailAndState(email, state);
+    public List<Delivery> getByEmailAndState(String email, String state) {
+        return deliveryRepositoryJPA.getByEmailAndState(email, state);
     }
 }

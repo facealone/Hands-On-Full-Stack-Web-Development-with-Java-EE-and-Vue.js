@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(Arquillian.class)
-public class FoodServiceRepositoryEJBTest {
+public class FoodServiceRepositoryEJBIT {
     
     @Inject
     @Infrastructure
@@ -84,7 +84,7 @@ public class FoodServiceRepositoryEJBTest {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
         
-        List<FoodService> foodServices = foodServiceRepository.getFoodServicesByFoodType("PIZZA");
+        List<FoodService> foodServices = foodServiceRepository.getByFoodType("PIZZA");
 
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
     }

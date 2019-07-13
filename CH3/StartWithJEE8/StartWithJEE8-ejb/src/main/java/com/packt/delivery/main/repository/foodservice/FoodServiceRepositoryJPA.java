@@ -45,7 +45,7 @@ public class FoodServiceRepositoryJPA implements FoodServiceRepository {
     
 
     @Override
-    public List<FoodService> getFoodServicesByFoodType(String foodType) {
+    public List<FoodService> getByFoodType(String foodType) {
         return entityManager.createNamedQuery("FoodServiceData.findByFoodType", FoodServiceData.class)
                 .setParameter("foodType", foodType)
                 .getResultList()
