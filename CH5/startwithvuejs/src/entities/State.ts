@@ -1,5 +1,5 @@
-import { User } from '../entities/User'
+import { FoodProduct } from './FoodProduct'
 
 export class State {
-    users: User[] = [];
+    foodProducts: FoodProduct[] = [];
 }

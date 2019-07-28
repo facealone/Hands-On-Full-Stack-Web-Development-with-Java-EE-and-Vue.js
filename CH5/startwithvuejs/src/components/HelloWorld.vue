@@ -16,7 +16,7 @@
     <p>
       To start, click here:
     </p>
-    <router-link to="/user" class="btn btn-primary">User CRUD</router-link>
+    <router-link to="/food_product" class="btn btn-primary">FoodProduct CRUD</router-link>
   </div>
 </template>
 

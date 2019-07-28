@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import User from './views/User.vue'
-import UserList from './components/UserList.vue'
-import UserNew from './components/UserNew.vue'
-import UserUpdate from './components/UserUpdate.vue'
+import FoodProduct from './views/FoodProduct.vue'
+import FoodProductList from './components/FoodProductList.vue'
+import FoodProductNew from './components/FoodProductNew.vue'
+import FoodProductUpdate from './components/FoodProductUpdate.vue'
 
 Vue.use(Router)
 
@@ -16,24 +16,24 @@ export default new Router({
       component: Home
     },
     {
-      path: '/user',
-      component: User,
+      path: '/food_product',
+      component: FoodProduct,
       children: [
         {
           path: '/',
-          name: 'user_list',
-          component: UserList
+          name: 'food_product_list',
+          component: FoodProductList
         },
         {
           path: 'new',
-          name: 'user_new',
-          component: UserNew
+          name: 'food_product_new',
+          component: FoodProductNew
         },
         {
-          path: ':email',
-          name: 'user_update',
-          props: (route) => { return { email: route.params.email } },
-          component: UserUpdate
+          path: ':id',
+          name: 'food_product_update',
+          props: (route) => { return { id: route.params.id } },
+          component: FoodProductUpdate
         }
       ]
     },

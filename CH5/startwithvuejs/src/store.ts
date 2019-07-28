@@ -1,43 +1,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { User } from './entities/User'
-import { Role } from './entities/Role'
+import { FoodProduct } from './entities/FoodProduct'
 import { State } from './entities/State'
 
 Vue.use(Vuex)
 
 const stateBase: State = {
-  users: [
-    User.newUser('Daniel Pelaez', 'danielpelaez@email.com', 'password123', Role.ADMIN),
-    User.newUser('Hector Hurtado', 'hectorhurtado@email.com', 'password123', Role.USER),
-    User.newUser('William Agreda', 'williamagreda@email.com', 'password123', Role.USER),
-    User.newUser('Roger Salazar', 'rogersalazar@email.com', 'password123', Role.USER)
+  foodProducts: [
+    FoodProduct.newFoodProduct(1, 'Daniel Pelaez', 'danielpelaez@email.com', 1.2, 'image'),
+    FoodProduct.newFoodProduct(2, 'Hector Hurtado', 'hectorhurtado@email.com', 1.2, 'image'),
+    FoodProduct.newFoodProduct(3, 'William Agreda', 'williamagreda@email.com', 1.2, 'image'),
+    FoodProduct.newFoodProduct(4, 'Roger Salazar', 'rogersalazar@email.com', 1.2, 'image')
   ]
 }
 
 export default new Vuex.Store<State>({
   state: stateBase,
   mutations: {
-    saveUser (state:State, user:User) {
-      state.users.push(user)
+    saveFoodProduct (state:State, foodProduct:FoodProduct) {
+      state.foodProducts.push(foodProduct)
     },
-    removeUser (state:State, userToRemove:User) {
-      const index = state.users.findIndex(user => user.email === userToRemove.email)
+    removeFoodProduct (state:State, foodProductToRemove:FoodProduct) {
+      const index = state.foodProducts.findIndex(foodProduct => foodProduct.id === foodProductToRemove.id)
 
-      Vue.delete(state.users, index)
+      Vue.delete(state.foodProducts, index)
     },
-    updateUser (state:State, userToUpdate:User) {
-      let user:User | undefined = state.users.find(user => user.email === userToUpdate.email)
+    updateFoodProduct (state:State, foodProductToUpdate:FoodProduct) {
+      let foodProduct:FoodProduct | undefined = state.foodProducts.find(foodProduct => foodProduct.id === foodProductToUpdate.id)
 
-      user!.copyUser(userToUpdate)
+      foodProduct!.copyFoodProduct(foodProductToUpdate)
     }
   },
   actions: {
 
   },
   getters: {
-    getUserByEmail: (state) => (email:string) => {
-      return state.users.find(user => user.email === email)
+    getFoodProductById: (state) => (id:number) => {
+      return state.foodProducts.find(foodProduct => foodProduct.id === id)
     }
   }
 })
