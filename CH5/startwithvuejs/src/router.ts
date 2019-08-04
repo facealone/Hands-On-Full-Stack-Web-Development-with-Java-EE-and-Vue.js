@@ -9,6 +9,7 @@ import FoodService from './views/FoodService.vue'
 import FoodServiceView from './components/foodService/FoodServiceView.vue'
 import FoodServiceNew from './components/foodService/FoodServiceNew.vue'
 import FoodServiceUpdate from './components/foodService/FoodServiceUpdate.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/food_product',

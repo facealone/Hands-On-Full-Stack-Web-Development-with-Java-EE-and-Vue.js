@@ -18,7 +18,8 @@ const stateBase: State = {
     FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 1.2, 'pass'),
     FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINIZZE', 1.2, 'pass'),
     FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINIZZE', 1.2, 'pass')
-  ]
+  ],
+  currentFoodServiceLoggedIn: ''
 }
 
 export default new Vuex.Store<State>({
@@ -50,6 +51,9 @@ export default new Vuex.Store<State>({
       let foodService:FoodService | undefined = state.foodServices.find(foodService => foodService.email === foodServiceToUpdate.email)
 
       foodService!.copyFoodService(foodServiceToUpdate)
+    },
+    setCurrentFoodServiceLoggedIn (state:State, foodService:string) {
+      state.currentFoodServiceLoggedIn = foodService
     }
   },
   actions: {
@@ -64,6 +68,12 @@ export default new Vuex.Store<State>({
     },
     getFoodServiceByEmail: (state) => (email:string) => {
       return state.foodServices.find(foodService => foodService.email === email)
+    },
+    getFoodServiceByEmailAndPassword: (state) => (email:string, password:string) => {
+      return state.foodServices.find(foodService => foodService.email === email && foodService.password === password)
+    },
+    getCurrentFoodServiceLoggedIn: (state) => () => {
+      return state.currentFoodServiceLoggedIn
     }
   }
 })

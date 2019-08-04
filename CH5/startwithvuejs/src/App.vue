@@ -1,13 +1,28 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/food_service">Settings</router-link> |
+      <router-link to="/">Home</router-link>
+      <template v-if="!isLoggedIn"> | <router-link to="/login">Login</router-link></template>
+      <template v-if="isLoggedIn"> | <router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template> |
       <router-link to="/about">About</router-link> |
     </div>
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+export default class App extends Vue {
+  get isLoggedIn () {
+    return this.$store.getters.getCurrentFoodServiceLoggedIn() !== ''
+  }
+  get loggedIn () {
+    return this.$store.getters.getCurrentFoodServiceLoggedIn()
+  }
+}
+</script>
 
 <style>
 #app {
