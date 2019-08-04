@@ -38,7 +38,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { Component, Vue } from 'vue-property-decorator'
-import { FoodProduct } from '../entities/FoodProduct'
+import { FoodProduct } from '../../entities/FoodProduct'
 
 @Component
 export default class FoodProductList extends Vue {

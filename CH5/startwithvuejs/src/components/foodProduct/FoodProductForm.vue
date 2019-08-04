@@ -72,7 +72,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { FoodProduct } from '../entities/FoodProduct'
+import { FoodProduct } from '../../entities/FoodProduct'
 
 @Component
 export default class FoodProductForm extends Vue {

@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import FoodProduct from './views/FoodProduct.vue'
-import FoodProductList from './components/FoodProductList.vue'
-import FoodProductNew from './components/FoodProductNew.vue'
-import FoodProductUpdate from './components/FoodProductUpdate.vue'
+import FoodProductList from './components/foodProduct/FoodProductList.vue'
+import FoodProductNew from './components/foodProduct/FoodProductNew.vue'
+import FoodProductUpdate from './components/foodProduct/FoodProductUpdate.vue'
 
 Vue.use(Router)
 

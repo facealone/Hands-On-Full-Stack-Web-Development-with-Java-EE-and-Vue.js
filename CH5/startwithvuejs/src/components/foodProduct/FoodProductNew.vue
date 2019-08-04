@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import FoodProductForm from '@/components/FoodProductForm.vue'
-import { FoodProduct } from '../entities/FoodProduct'
+import FoodProductForm from '@/components/foodProduct/FoodProductForm.vue'
+import { FoodProduct } from '../../entities/FoodProduct'
 
 @Component({
   components: {
