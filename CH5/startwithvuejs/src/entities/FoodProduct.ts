@@ -5,6 +5,7 @@ export class FoodProduct {
     description: string = ''
     price: number = 0.0
     image: string = ''
+    foodService: string = ''
 
     static emptyFoodProduct () {
       let foodProduct:FoodProduct = new FoodProduct()
@@ -12,7 +13,7 @@ export class FoodProduct {
       return foodProduct
     }
 
-    static newFoodProduct (id: number, name: string, description: string, price: number, image: string) {
+    static newFoodProduct (id: number, name: string, description: string, price: number, image: string, foodService: string) {
       let foodProduct:FoodProduct = new FoodProduct()
 
       foodProduct.id = id
@@ -20,6 +21,7 @@ export class FoodProduct {
       foodProduct.description = description
       foodProduct.price = price
       foodProduct.image = image
+      foodProduct.foodService = foodService
 
       return foodProduct
     }
@@ -30,5 +32,6 @@ export class FoodProduct {
       this.description = foodProductToCopy.description
       this.price = foodProductToCopy.price
       this.image = foodProductToCopy.image
+      this.foodService = foodProductToCopy.foodService
     }
 }

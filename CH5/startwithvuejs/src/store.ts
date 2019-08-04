@@ -8,10 +8,10 @@ Vue.use(Vuex)
 
 const stateBase: State = {
   foodProducts: [
-    FoodProduct.newFoodProduct(1, 'Daniel Pelaez', 'danielpelaez@email.com', 1.2, 'image'),
-    FoodProduct.newFoodProduct(2, 'Hector Hurtado', 'hectorhurtado@email.com', 1.2, 'image'),
-    FoodProduct.newFoodProduct(3, 'William Agreda', 'williamagreda@email.com', 1.2, 'image'),
-    FoodProduct.newFoodProduct(4, 'Roger Salazar', 'rogersalazar@email.com', 1.2, 'image')
+    FoodProduct.newFoodProduct(1, 'Daniel Pelaez', 'danielpelaez@email.com', 1.2, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(2, 'Hector Hurtado', 'hectorhurtado@email.com', 1.2, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(3, 'William Agreda', 'williamagreda@email.com', 1.2, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(4, 'Roger Salazar', 'rogersalazar@email.com', 1.2, 'image', 'email2@email.com')
   ],
   foodServices: [
     FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1.2, 'pass'),
@@ -25,6 +25,7 @@ export default new Vuex.Store<State>({
   state: stateBase,
   mutations: {
     saveFoodProduct (state:State, foodProduct:FoodProduct) {
+      foodProduct.id = state.foodProducts.length + 1
       state.foodProducts.push(foodProduct)
     },
     removeFoodProduct (state:State, foodProductToRemove:FoodProduct) {
@@ -57,6 +58,9 @@ export default new Vuex.Store<State>({
   getters: {
     getFoodProductById: (state) => (id:number) => {
       return state.foodProducts.find(foodProduct => foodProduct.id === id)
+    },
+    getFoodProductByFoodService: (state) => (foodService:string) => {
+      return state.foodProducts.filter(foodProduct => foodProduct.foodService === foodService)
     },
     getFoodServiceByEmail: (state) => (email:string) => {
       return state.foodServices.find(foodService => foodService.email === email)

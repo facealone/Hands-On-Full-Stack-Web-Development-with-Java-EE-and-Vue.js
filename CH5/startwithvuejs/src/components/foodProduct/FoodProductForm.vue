@@ -32,7 +32,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="description">description</label>
+          <label for="description">Description</label>
           <input
             v-model="foodProduct.description"
             type="text"
@@ -43,7 +43,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="price">price</label>
+          <label for="price">Price</label>
           <input
             v-model="foodProduct.price"
             type="text"
@@ -54,7 +54,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="image">image</label>
+          <label for="image">Image</label>
           <input
             v-model="foodProduct.image"
             type="text"
@@ -62,6 +62,17 @@
             id="image"
             placeholder="Image"
             required
+          >
+        </div>
+        <div class="form-group">
+          <label for="foodService">Food Service</label>
+          <input
+            v-model="foodService"
+            type="text"
+            class="form-control"
+            id="foodService"
+            placeholder="foodService"
+            readonly
           >
         </div>
         <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
@@ -77,12 +88,14 @@ import { FoodProduct } from '../../entities/FoodProduct'
 @Component
 export default class FoodProductForm extends Vue {
   @Prop() private readonly type!: string
+  @Prop() private readonly foodService!: string
   @Prop({ default: () => FoodProduct.emptyFoodProduct() }) private readonly foodProduct!: FoodProduct
 
   private errorMessage:string = ''
 
   save () {
     if (this.isValid(this.foodProduct)) {
+      this.foodProduct.foodService = this.foodService
       this.$emit('foodProductFilled', this.foodProduct)
     }
   }

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <FoodProductForm v-on:foodProductFilled="save($event)"></FoodProductForm>
+    <FoodProductForm v-on:foodProductFilled="save($event)" :foodService="foodService"></FoodProductForm>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import FoodProductForm from '@/components/foodProduct/FoodProductForm.vue'
 import { FoodProduct } from '../../entities/FoodProduct'
 
@@ -15,10 +15,12 @@ import { FoodProduct } from '../../entities/FoodProduct'
   }
 })
 export default class FoodProductNew extends Vue {
+  @Prop() private readonly foodService!: string
+
   save (foodProduct:FoodProduct) {
     this.$store.commit('saveFoodProduct', foodProduct)
 
-    this.$router.push({ name: 'food_product_list' })
+    this.$router.push({ name: 'food_service_view', params: { email: this.foodService } })
   }
 }
 </script>

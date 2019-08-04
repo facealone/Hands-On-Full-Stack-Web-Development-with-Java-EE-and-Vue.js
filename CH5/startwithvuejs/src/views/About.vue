@@ -1,5 +1,5 @@
 <template>
   <div class="about">
-    <h1>User CRUD example using Vuex</h1>
+    <h1>Welcome to the New Packt Delivery App</h1>
   </div>
 </template>

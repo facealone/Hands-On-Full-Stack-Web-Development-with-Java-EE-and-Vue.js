@@ -1,8 +1,9 @@
 <template>
   <div>
+    <h2 class="text-center">Food Products</h2>
     <div class="row">
       <div class="col-sm">
-       <router-link to="/food_product/new" class="btn btn-primary">Create New FoodProduct</router-link>
+       <router-link :to="{ name: 'food_product_new', params: { foodService: foodService }}" class="btn btn-primary">Create New FoodProduct</router-link>
       </div>
     </div>
     <div class="row mt-2">
@@ -37,20 +38,21 @@
 <script lang="ts">
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { FoodProduct } from '../../entities/FoodProduct'
 
 @Component
 export default class FoodProductList extends Vue {
+  @Prop() private readonly foodService!: string
   foodProducts:FoodProduct[] = []
 
   // lifecycle hook
   mounted () {
-    this.getFoodProducts()
+    this.getFoodProducts(this.foodService)
   }
 
-  getFoodProducts () {
-    this.foodProducts = this.$store.state.foodProducts
+  getFoodProducts (foodService: string) {
+    this.foodProducts = this.$store.getters.getFoodProductByFoodService(foodService)
   }
 
   remove (foodProductToRemove:FoodProduct) {

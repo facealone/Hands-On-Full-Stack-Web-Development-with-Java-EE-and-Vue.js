@@ -29,8 +29,9 @@ export default new Router({
           component: FoodProductList
         },
         {
-          path: 'new',
+          path: 'new/:foodService',
           name: 'food_product_new',
+          props: (route) => { return { foodService: route.params.foodService } },
           component: FoodProductNew
         },
         {

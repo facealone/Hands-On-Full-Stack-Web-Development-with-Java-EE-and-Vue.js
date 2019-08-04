@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FoodProductForm v-on:foodProductFilled="update($event)" :foodProduct="foodProduct" :type="type"></FoodProductForm>
+    <FoodProductForm v-on:foodProductFilled="update($event)" :foodProduct="foodProduct"  :foodService="foodProduct.foodService" :type="type"></FoodProductForm>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default class FoodProductUpdate extends Vue {
   update (foodProduct:FoodProduct) {
     this.$store.commit('updateFoodProduct', foodProduct)
 
-    this.$router.push({ name: 'food_product_list' })
+    this.$router.push({ name: 'food_service_view', params: { email: foodProduct.foodService } })
   }
 }
 </script>
