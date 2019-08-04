@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FoodProduct } from './entities/FoodProduct'
+import { FoodService } from './entities/FoodService'
 import { State } from './entities/State'
 
 Vue.use(Vuex)
@@ -11,6 +12,12 @@ const stateBase: State = {
     FoodProduct.newFoodProduct(2, 'Hector Hurtado', 'hectorhurtado@email.com', 1.2, 'image'),
     FoodProduct.newFoodProduct(3, 'William Agreda', 'williamagreda@email.com', 1.2, 'image'),
     FoodProduct.newFoodProduct(4, 'Roger Salazar', 'rogersalazar@email.com', 1.2, 'image')
+  ],
+  foodServices: [
+    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1.2, 'pass'),
+    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 1.2, 'pass'),
+    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINIZZE', 1.2, 'pass'),
+    FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINIZZE', 1.2, 'pass')
   ]
 }
 
@@ -29,6 +36,19 @@ export default new Vuex.Store<State>({
       let foodProduct:FoodProduct | undefined = state.foodProducts.find(foodProduct => foodProduct.id === foodProductToUpdate.id)
 
       foodProduct!.copyFoodProduct(foodProductToUpdate)
+    },
+    saveFoodService (state:State, foodService:FoodService) {
+      state.foodServices.push(foodService)
+    },
+    removeFoodService (state:State, foodServiceToRemove:FoodService) {
+      const index = state.foodServices.findIndex(foodService => foodService.email === foodServiceToRemove.email)
+
+      Vue.delete(state.foodServices, index)
+    },
+    updateFoodService (state:State, foodServiceToUpdate:FoodService) {
+      let foodService:FoodService | undefined = state.foodServices.find(foodService => foodService.email === foodServiceToUpdate.email)
+
+      foodService!.copyFoodService(foodServiceToUpdate)
     }
   },
   actions: {
@@ -37,6 +57,9 @@ export default new Vuex.Store<State>({
   getters: {
     getFoodProductById: (state) => (id:number) => {
       return state.foodProducts.find(foodProduct => foodProduct.id === id)
+    },
+    getFoodServiceByEmail: (state) => (email:string) => {
+      return state.foodServices.find(foodService => foodService.email === email)
     }
   }
 })

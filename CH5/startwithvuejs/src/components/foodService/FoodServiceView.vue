@@ -1,0 +1,82 @@
+<template>
+<div>
+  <div class="row">
+    <div class="col-sm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            v-model="foodService.email"
+            type="text"
+            class="form-control"
+            id="email"
+            placeholder="email"
+            disabled
+          >
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            v-model="foodService.name"
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Name"
+            disabled
+          >
+        </div>
+        <div class="form-group">
+          <label for="address">address</label>
+          <input
+            v-model="foodService.address"
+            type="text"
+            class="form-control"
+            id="address"
+            placeholder="address"
+            disabled
+          >
+        </div>
+        <div class="form-group">
+          <label for="foodType">Type of Food</label>
+          <select class="custom-select" id="foodType" v-model="foodService.foodType" disabled>
+            <option selected value="PIZZA">PIZZA</option>
+            <option value="CHINNIZE">CHINNIZE</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="deliveryFee">Fee for Delivery</label>
+          <input
+            v-model="foodService.deliveryFee"
+            type="text"
+            class="form-control"
+            id="deliveryFee"
+            placeholder="deliveryFee"
+            disabled
+          >
+        </div>
+        <router-link  :to="{ name: 'food_service_update', params: { email: foodService.email }}">Update</router-link>
+      </div>
+    </div>
+</div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { FoodService } from '../../entities/FoodService'
+
+@Component
+export default class FoodServiceView extends Vue {
+  @Prop() private readonly email!: string
+
+  private foodService:FoodService = FoodService.emptyFoodService()
+
+  mounted () {
+    this.getFoodService(this.email)
+  }
+
+  getFoodService (email:string) {
+    let foodServiceToUpdate:FoodService = this.$store.getters.getFoodServiceByEmail(email)
+
+    this.foodService.copyFoodService(foodServiceToUpdate)
+  }
+}
+</script>

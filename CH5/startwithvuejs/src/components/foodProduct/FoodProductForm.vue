@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-sm">
         <div class="form-group" v-if="updateMode">
-          <label for="name">Id</label>
+          <label for="id">Id</label>
           <input
             v-model="foodProduct.id"
             type="text"
@@ -79,7 +79,6 @@ export default class FoodProductForm extends Vue {
   @Prop() private readonly type!: string
   @Prop({ default: () => FoodProduct.emptyFoodProduct() }) private readonly foodProduct!: FoodProduct
 
-  private repeatPassword:string = ''
   private errorMessage:string = ''
 
   save () {
