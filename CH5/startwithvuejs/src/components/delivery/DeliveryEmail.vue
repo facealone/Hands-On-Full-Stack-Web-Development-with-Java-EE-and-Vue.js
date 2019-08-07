@@ -40,7 +40,7 @@ export default class DeliveryEmail extends Vue {
       return
     }
 
-    this.$store.commit('setCurrentFoodServiceLoggedIn', this.email)
+    this.$store.commit('setCurrentDeliveryEmail', this.email)
     this.$router.push({ name: 'food_service_list', params: { email: this.email } })
   }
 }

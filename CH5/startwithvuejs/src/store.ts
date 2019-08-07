@@ -2,23 +2,26 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { FoodProduct } from './entities/FoodProduct'
 import { FoodService } from './entities/FoodService'
+import { Item } from './entities/Item'
 import { State } from './entities/State'
+import { Cart } from './entities/Cart'
 
 Vue.use(Vuex)
 
 const stateBase: State = {
   foodProducts: [
-    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 1.2, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 1.2, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 1.2, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(4, 'Rice', 'Rice double', 1.2, 'image', 'email2@email.com')
+    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 16, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 12, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 14, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(4, 'Rice', 'Rice double', 11, 'image', 'email2@email.com')
   ],
   foodServices: [
-    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1.2, 'image', 'pass'),
-    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 1.2, 'image', 'pass'),
-    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 1.2, 'image', 'pass'),
-    FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINESE', 1.2, 'image', 'pass')
+    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'image', 'pass'),
+    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 2, 'image', 'pass'),
+    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 2, 'image', 'pass'),
+    FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINESE', 3, 'image', 'pass')
   ],
+  cart: Cart.emptyCart(),
   currentFoodServiceLoggedIn: '',
   currentDeliveryEmail: ''
 }
@@ -58,6 +61,14 @@ export default new Vuex.Store<State>({
     },
     setCurrentDeliveryEmail (state:State, currentDeliveryEmail:string) {
       state.currentDeliveryEmail = currentDeliveryEmail
+    },
+    saveItemToCart (state:State, item:Item) {
+      state.cart.items.push(item)
+    },
+    removeItemFromCart (state:State, itemToRemove:Item) {
+      const index = state.cart.items.findIndex(item => item.foodProduct.id === itemToRemove.foodProduct.id)
+
+      Vue.delete(state.cart.items, index)
     }
   },
   actions: {
@@ -81,6 +92,9 @@ export default new Vuex.Store<State>({
     },
     getCurrentFoodServiceLoggedIn: (state) => () => {
       return state.currentFoodServiceLoggedIn
+    },
+    getCurrentDeliveryEmail: (state) => () => {
+      return state.currentDeliveryEmail
     }
   }
 })

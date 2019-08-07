@@ -14,6 +14,7 @@ import Delivery from './views/Delivery.vue'
 import DeliveryEmail from './components/delivery/DeliveryEmail.vue'
 import FoodServiceList from './components/delivery/FoodServiceList.vue'
 import FoodProductsByService from './components/delivery/FoodProductsByService.vue'
+import CartItems from './components/delivery/CartItems.vue'
 
 Vue.use(Router)
 
@@ -94,6 +95,12 @@ export default new Router({
           name: 'food_products_by_service',
           props: (route) => { return { foodService: route.params.foodService } },
           component: FoodProductsByService
+        },
+        {
+          path: 'cart/:foodService',
+          name: 'cart',
+          props: (route) => { return { foodService: route.params.foodService } },
+          component: CartItems
         }
       ]
     },
