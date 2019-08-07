@@ -8,10 +8,10 @@ Vue.use(Vuex)
 
 const stateBase: State = {
   foodProducts: [
-    FoodProduct.newFoodProduct(1, 'Daniel Pelaez', 'danielpelaez@email.com', 1.2, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(2, 'Hector Hurtado', 'hectorhurtado@email.com', 1.2, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(3, 'William Agreda', 'williamagreda@email.com', 1.2, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(4, 'Roger Salazar', 'rogersalazar@email.com', 1.2, 'image', 'email2@email.com')
+    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 1.2, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 1.2, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 1.2, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(4, 'Rice', 'Rice double', 1.2, 'image', 'email2@email.com')
   ],
   foodServices: [
     FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1.2, 'image', 'pass'),

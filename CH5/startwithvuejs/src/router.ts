@@ -13,6 +13,7 @@ import Login from './views/Login.vue'
 import Delivery from './views/Delivery.vue'
 import DeliveryEmail from './components/delivery/DeliveryEmail.vue'
 import FoodServiceList from './components/delivery/FoodServiceList.vue'
+import FoodProductsByService from './components/delivery/FoodProductsByService.vue'
 
 Vue.use(Router)
 
@@ -84,10 +85,15 @@ export default new Router({
           component: DeliveryEmail
         },
         {
-          path: ':email',
+          path: 'food_service',
           name: 'food_service_list',
-          props: (route) => { return { email: route.params.email } },
           component: FoodServiceList
+        },
+        {
+          path: 'food_service/:foodService',
+          name: 'food_products_by_service',
+          props: (route) => { return { foodService: route.params.foodService } },
+          component: FoodProductsByService
         }
       ]
     },

@@ -29,7 +29,7 @@
           <tbody>
             <tr v-for="foodService in foodServices" v-bind:key="foodService.email">
               <td>{{foodService.image}}</td>
-              <td>{{foodService.name}}</td>
+              <td><router-link  :to="{ name: 'food_products_by_service', params: { foodService: foodService.email }}">{{foodService.name}}</router-link></td>
               <td>{{foodService.address}}</td>
               <td>{{foodService.foodType}}</td>
               <td>{{foodService.deliveryFee}}</td>
@@ -49,7 +49,6 @@ import { FoodService } from '../../entities/FoodService'
 
 @Component
 export default class FoodServiceList extends Vue {
-  @Prop() private readonly deliveryEmail!: string
   foodServices:FoodService[] = []
   foodType:string = 'ALL'
 

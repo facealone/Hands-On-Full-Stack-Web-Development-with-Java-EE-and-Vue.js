@@ -17,7 +17,6 @@
             class="form-control"
             id="email"
             placeholder="email"
-            :readonly="updateMode"
             required
           >
         </div>
