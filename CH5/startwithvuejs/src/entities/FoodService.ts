@@ -5,6 +5,7 @@ export class FoodService {
     address: string = ''
     foodType: string = ''
     deliveryFee: number = 0.0
+    image: string = ''
     password: string = ''
 
     static emptyFoodService () {
@@ -13,7 +14,7 @@ export class FoodService {
       return foodService
     }
 
-    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, password: string) {
+    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: string, password: string) {
       let foodService:FoodService = new FoodService()
 
       foodService.email = email
@@ -21,6 +22,7 @@ export class FoodService {
       foodService.address = address
       foodService.foodType = foodType
       foodService.deliveryFee = deliveryFee
+      foodService.image = image
       foodService.password = password
 
       return foodService
@@ -32,6 +34,7 @@ export class FoodService {
       this.address = foodServiceToCopy.address
       this.foodType = foodServiceToCopy.foodType
       this.deliveryFee = foodServiceToCopy.deliveryFee
+      this.image = foodServiceToCopy.image
       this.password = foodServiceToCopy.password
     }
 }

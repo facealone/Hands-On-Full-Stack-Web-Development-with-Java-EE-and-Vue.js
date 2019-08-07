@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/delivery">Delivery</router-link>
       <template v-if="!isLoggedIn"> | <router-link to="/login">Login</router-link></template>
       <template v-if="isLoggedIn"> | <router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template> |
       <router-link to="/about">About</router-link> |

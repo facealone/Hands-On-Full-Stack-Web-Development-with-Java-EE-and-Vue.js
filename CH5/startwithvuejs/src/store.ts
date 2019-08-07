@@ -14,12 +14,13 @@ const stateBase: State = {
     FoodProduct.newFoodProduct(4, 'Roger Salazar', 'rogersalazar@email.com', 1.2, 'image', 'email2@email.com')
   ],
   foodServices: [
-    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1.2, 'pass'),
-    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 1.2, 'pass'),
-    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINIZZE', 1.2, 'pass'),
-    FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINIZZE', 1.2, 'pass')
+    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1.2, 'image', 'pass'),
+    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 1.2, 'image', 'pass'),
+    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 1.2, 'image', 'pass'),
+    FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINESE', 1.2, 'image', 'pass')
   ],
-  currentFoodServiceLoggedIn: ''
+  currentFoodServiceLoggedIn: '',
+  currentDeliveryEmail: ''
 }
 
 export default new Vuex.Store<State>({
@@ -54,6 +55,9 @@ export default new Vuex.Store<State>({
     },
     setCurrentFoodServiceLoggedIn (state:State, foodService:string) {
       state.currentFoodServiceLoggedIn = foodService
+    },
+    setCurrentDeliveryEmail (state:State, currentDeliveryEmail:string) {
+      state.currentDeliveryEmail = currentDeliveryEmail
     }
   },
   actions: {
@@ -68,6 +72,9 @@ export default new Vuex.Store<State>({
     },
     getFoodServiceByEmail: (state) => (email:string) => {
       return state.foodServices.find(foodService => foodService.email === email)
+    },
+    getFoodServiceByFoodType: (state) => (foodType:string) => {
+      return state.foodServices.filter(foodService => foodType === 'ALL' || foodService.foodType === foodType)
     },
     getFoodServiceByEmailAndPassword: (state) => (email:string, password:string) => {
       return state.foodServices.find(foodService => foodService.email === email && foodService.password === password)

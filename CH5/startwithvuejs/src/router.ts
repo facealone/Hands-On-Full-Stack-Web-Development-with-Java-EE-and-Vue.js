@@ -10,6 +10,9 @@ import FoodServiceView from './components/foodService/FoodServiceView.vue'
 import FoodServiceNew from './components/foodService/FoodServiceNew.vue'
 import FoodServiceUpdate from './components/foodService/FoodServiceUpdate.vue'
 import Login from './views/Login.vue'
+import Delivery from './views/Delivery.vue'
+import DeliveryEmail from './components/delivery/DeliveryEmail.vue'
+import FoodServiceList from './components/delivery/FoodServiceList.vue'
 
 Vue.use(Router)
 
@@ -68,6 +71,23 @@ export default new Router({
           name: 'food_service_view',
           props: (route) => { return { email: route.params.email } },
           component: FoodServiceView
+        }
+      ]
+    },
+    {
+      path: '/delivery',
+      component: Delivery,
+      children: [
+        {
+          path: '',
+          name: 'delivery_email',
+          component: DeliveryEmail
+        },
+        {
+          path: ':email',
+          name: 'food_service_list',
+          props: (route) => { return { email: route.params.email } },
+          component: FoodServiceList
         }
       ]
     },

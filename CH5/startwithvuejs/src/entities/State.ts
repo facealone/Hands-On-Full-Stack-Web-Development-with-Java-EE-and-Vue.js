@@ -5,4 +5,5 @@ export class State {
     foodProducts: FoodProduct[] = [];
     foodServices: FoodService[] = [];
     currentFoodServiceLoggedIn: string = '';
+    currentDeliveryEmail: string = '';
 }
