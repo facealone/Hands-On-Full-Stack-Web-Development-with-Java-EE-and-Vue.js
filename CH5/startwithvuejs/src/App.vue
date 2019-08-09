@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/delivery">Delivery</router-link>
-      <template v-if="!isLoggedIn"> | <router-link to="/login">Login</router-link></template>
-      <template v-if="isLoggedIn"> | <router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template> |
-      <router-link to="/about">About</router-link> |
+    <div class="d-flex justify-content-between">
+      <div class="nav">
+        <router-link to="/">Home |</router-link>
+        <router-link to="/delivery">&nbsp;Delivery |</router-link>
+        <router-link to="/about">&nbsp;About</router-link>
+      </div>
+      <div class="nav" >
+        <template v-if="!isLoggedIn"><router-link to="/login">Login</router-link></template>
+        <template v-if="isLoggedIn">Welcome {{loggedIn}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -32,16 +36,17 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-#nav {
+.nav {
   padding: 30px;
+  padding-left: 30px;
 }
 
-#nav a {
+.nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
+.nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
