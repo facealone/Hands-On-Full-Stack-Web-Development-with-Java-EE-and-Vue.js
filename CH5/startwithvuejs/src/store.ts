@@ -5,6 +5,7 @@ import { FoodService } from './entities/FoodService'
 import { Item } from './entities/Item'
 import { State } from './entities/State'
 import { Cart } from './entities/Cart'
+import { Delivery } from './entities/Delivery'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ const stateBase: State = {
     FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINESE', 3, 'image', 'pass')
   ],
   cart: Cart.emptyCart(),
+  deliveries: [],
   currentFoodServiceLoggedIn: '',
   currentDeliveryEmail: ''
 }
@@ -69,6 +71,9 @@ export default new Vuex.Store<State>({
       const index = state.cart.items.findIndex(item => item.foodProduct.id === itemToRemove.foodProduct.id)
 
       Vue.delete(state.cart.items, index)
+    },
+    addDelivery (state:State, delivery:Delivery) {
+      state.deliveries.push(delivery)
     }
   },
   actions: {
@@ -95,6 +100,9 @@ export default new Vuex.Store<State>({
     },
     getCurrentDeliveryEmail: (state) => () => {
       return state.currentDeliveryEmail
+    },
+    getDeliveryByEmail: (state) => (email:string) => {
+      return state.deliveries.find(delivery => delivery.email === email)
     }
   }
 })

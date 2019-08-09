@@ -50,7 +50,7 @@
               <td>{{item.foodProduct.description}}</td>
               <td>{{item.foodProduct.price}}</td>
               <td>
-                 <div class="input-group mb-3">
+                 <div class="input-group w-50">
                       <input
                           v-model="item.amount"
                           type="number"

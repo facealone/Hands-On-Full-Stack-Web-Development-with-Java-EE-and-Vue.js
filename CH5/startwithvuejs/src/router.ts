@@ -15,6 +15,7 @@ import DeliveryEmail from './components/delivery/DeliveryEmail.vue'
 import FoodServiceList from './components/delivery/FoodServiceList.vue'
 import FoodProductsByService from './components/delivery/FoodProductsByService.vue'
 import CartItems from './components/delivery/CartItems.vue'
+import DeliverySummary from './components/delivery/DeliverySummary.vue'
 
 Vue.use(Router)
 
@@ -101,6 +102,12 @@ export default new Router({
           name: 'cart',
           props: (route) => { return { foodService: route.params.foodService } },
           component: CartItems
+        },
+        {
+          path: 'summary/:email',
+          name: 'delivery_summary',
+          props: (route) => { return { email: route.params.email } },
+          component: DeliverySummary
         }
       ]
     },
