@@ -14,13 +14,23 @@ const stateBase: State = {
     FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 16, 'image', 'email1@email.com'),
     FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 12, 'image', 'email1@email.com'),
     FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 14, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(4, 'Rice', 'Rice double', 11, 'image', 'email2@email.com')
+    FoodProduct.newFoodProduct(4, 'Chicken', 'Chicken small', 11, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(5, 'Chicken huge', 'Chicken huge', 14, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(6, 'Vegan', 'Vegan huge', 15, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(7, 'Hawaiana', 'Hawaiana huge', 14, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(8, 'From House', 'From House', 10, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(9, 'Vegetarian', 'Vegetarian', 14, 'image', 'email1@email.com'),
+    FoodProduct.newFoodProduct(10, 'Rice', 'Rice double', 11, 'image', 'email2@email.com')
   ],
   foodServices: [
     FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'image', 'pass'),
     FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 2, 'image', 'pass'),
     FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 2, 'image', 'pass'),
-    FoodService.newFoodService('email4@email.com', 'Service4', 'Street4', 'CHINESE', 3, 'image', 'pass')
+    FoodService.newFoodService('email4@email.com', 'Service4', 'Street5', 'CHINESE', 3, 'image', 'pass'),
+    FoodService.newFoodService('email5@email.com', 'Service5', 'Street6', 'CHICKEN', 5, 'image', 'pass'),
+    FoodService.newFoodService('email6@email.com', 'Service6', 'Street7', 'CHICKEN', 3, 'image', 'pass'),
+    FoodService.newFoodService('email7@email.com', 'Service7', 'Street8', 'PASTA', 1, 'image', 'pass'),
+    FoodService.newFoodService('email8@email.com', 'Service8', 'Street9', 'PASTA', 3, 'image', 'pass')
   ],
   cart: Cart.emptyCart(),
   deliveries: [],
@@ -83,14 +93,14 @@ export default new Vuex.Store<State>({
     getFoodProductById: (state) => (id:number) => {
       return state.foodProducts.find(foodProduct => foodProduct.id === id)
     },
-    getFoodProductByFoodService: (state) => (foodService:string) => {
-      return state.foodProducts.filter(foodProduct => foodProduct.foodService === foodService)
+    getFoodProductByFoodService: (state) => (foodService:string, page:number, pageSize:number) => {
+      return state.foodProducts.filter(foodProduct => foodProduct.foodService === foodService).slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
     },
     getFoodServiceByEmail: (state) => (email:string) => {
       return state.foodServices.find(foodService => foodService.email === email)
     },
-    getFoodServiceByFoodType: (state) => (foodType:string) => {
-      return state.foodServices.filter(foodService => foodType === 'ALL' || foodService.foodType === foodType)
+    getFoodServiceByFoodType: (state) => (foodType:string, page:number, pageSize:number) => {
+      return state.foodServices.filter(foodService => foodType === 'ALL' || foodService.foodType === foodType).slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
     },
     getFoodServiceByEmailAndPassword: (state) => (email:string, password:string) => {
       return state.foodServices.find(foodService => foodService.email === email && foodService.password === password)

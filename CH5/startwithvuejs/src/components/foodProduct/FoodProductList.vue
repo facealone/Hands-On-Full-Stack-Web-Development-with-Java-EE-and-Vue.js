@@ -6,7 +6,7 @@
        <router-link :to="{ name: 'food_product_new', params: { foodService: foodService }}" class="btn btn-primary">Create New FoodProduct</router-link>
       </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-2" v-if="foodProducts.length>0">
       <div class="col-sm">
         <table class="table  table-dark">
           <thead>
@@ -32,27 +32,42 @@
         </table>
     </div>
     </div>
+    <infinite-loading @infinite="populateFoodProducts"></infinite-loading>
   </div>
 </template>
 
 <script lang="ts">
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import InfiniteLoading from 'vue-infinite-loading'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { FoodProduct } from '../../entities/FoodProduct'
 
-@Component
+@Component({
+  components: {
+    InfiniteLoading
+  }
+})
 export default class FoodProductList extends Vue {
   @Prop() private readonly foodService!: string
-  foodProducts:FoodProduct[] = []
+  private foodProducts:FoodProduct[] = []
+  private page:number = 1
+  private pageSize:number = 4
 
-  // lifecycle hook
-  mounted () {
-    this.getFoodProducts(this.foodService)
+  getFoodProducts (foodService: string, page:number, pageSize:number) {
+    return this.$store.getters.getFoodProductByFoodService(foodService, page, pageSize)
   }
 
-  getFoodProducts (foodService: string) {
-    this.foodProducts = this.$store.getters.getFoodProductByFoodService(foodService)
+  populateFoodProducts (state:any) {
+    let foodProductsLoaded:FoodProduct[] = this.getFoodProducts(this.foodService, this.page, this.pageSize)
+
+    if (foodProductsLoaded.length) {
+      this.foodProducts.push(...foodProductsLoaded)
+      state.loaded()
+      this.page += 1
+    } else {
+      state.complete()
+    }
   }
 
   remove (foodProductToRemove:FoodProduct) {

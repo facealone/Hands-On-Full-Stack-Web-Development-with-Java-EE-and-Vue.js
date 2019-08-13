@@ -29,7 +29,7 @@
         </div>
     </div>
     <h2 class="text-center">Food Products</h2>
-    <div class="row mt-2">
+    <div class="row mt-2" v-if="items.length>0">
       <div class="col-sm">
         <table class="table  table-dark">
           <thead>
@@ -68,35 +68,50 @@
         </table>
     </div>
     </div>
+    <infinite-loading @infinite="populateFoodProducts"></infinite-loading>
   </div>
 </template>
 
 <script lang="ts">
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import InfiniteLoading from 'vue-infinite-loading'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { FoodProduct } from '../../entities/FoodProduct'
 import { FoodService } from '../../entities/FoodService'
 import { Item } from '../../entities/Item'
 
-@Component
+@Component({
+  components: {
+    InfiniteLoading
+  }
+})
 export default class FoodProductsByService extends Vue {
   @Prop() private readonly foodService!: string
-  items:Item[] = []
-  foodServiceData: FoodService = FoodService.emptyFoodService()
+  private items:Item[] = []
+  private foodServiceData: FoodService = FoodService.emptyFoodService()
+  private page:number = 1
+  private pageSize:number = 4
 
-  // lifecycle hook
-  mounted () {
-    this.getFoodProducts(this.foodService)
+  mount () {
+    this.foodServiceData = this.$store.getters.getFoodServiceByEmail(this.foodService)
   }
 
-  getFoodProducts (foodService: string) {
-    this.items = this.$store.getters.getFoodProductByFoodService(foodService).map((foodProduct: FoodProduct) => Item.newItem(foodProduct, 0))
-    this.foodServiceData = this.$store.getters.getFoodServiceByEmail(
-      foodService
-    )
+  getFoodProducts (foodService: string, page:number, pageSize:number) {
+    return this.$store.getters.getFoodProductByFoodService(foodService, page, pageSize).map((foodProduct: FoodProduct) => Item.newItem(foodProduct, 0))
   }
 
+  populateFoodProducts (state:any) {
+    let itemsLoaded:Item[] = this.getFoodProducts(this.foodService, this.page, this.pageSize)
+
+    if (itemsLoaded.length) {
+      this.items.push(...itemsLoaded)
+      state.loaded()
+      this.page += 1
+    } else {
+      state.complete()
+    }
+  }
   addToCart (item: Item) {
     this.$store.commit('saveItemToCart', item)
 
