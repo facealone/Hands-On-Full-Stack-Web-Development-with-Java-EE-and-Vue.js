@@ -3,6 +3,15 @@
     <div class="row">
       <div class="col-sm">
         <div class="form-group">
+          <div>
+            <img class="image img-fluid img-thumbnail mx-auto d-block" :src="foodService.image"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <div class="form-group">
           <label for="email">Email</label>
           <input
             v-model="foodService.email"
@@ -112,3 +121,9 @@ export default class FoodServiceView extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.image{
+  width: 250px;
+}
+</style>

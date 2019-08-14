@@ -83,6 +83,22 @@
             required
           >
         </div>
+        <div class="form-group">
+          <label for="image">Image</label>
+           <file-upload
+            class="btn btn-primary"
+            extensions="gif,jpg,jpeg,png,webp"
+            accept="image/png,image/gif,image/jpeg,image/webp"
+            :size="1024 * 1024 * 10"
+            @input-file="inputFile"
+            ref="upload">
+            <i class="fa fa-plus"></i>
+            Select file
+          </file-upload>
+          <div class="image">
+            <img class="img-fluid img-thumbnail" :src="foodService.image"/>
+          </div>
+        </div>
         <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
       </div>
     </div>
@@ -92,8 +108,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { FoodService } from '../../entities/FoodService'
+import VueUploadComponent from 'vue-upload-component'
 
-@Component
+@Component({
+  components: {
+    'file-upload': VueUploadComponent
+  }
+})
 export default class FoodServiceForm extends Vue {
   @Prop() private readonly type!: string
   @Prop({ default: () => FoodService.emptyFoodService() }) private readonly foodService!: FoodService
@@ -147,6 +168,16 @@ export default class FoodServiceForm extends Vue {
     return true
   }
 
+  inputFile (newFile:any, oldFile:any) {
+    if (newFile && !oldFile) {
+      let reader = new FileReader()
+
+      reader.onload = (e:any) => {
+        this.foodService.image = e.target.result
+      }
+      reader.readAsDataURL(newFile.file)
+    }
+  }
   get updateMode () {
     return this.type === 'update'
   }

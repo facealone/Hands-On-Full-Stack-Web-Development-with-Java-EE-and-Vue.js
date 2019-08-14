@@ -55,14 +55,20 @@
         </div>
         <div class="form-group">
           <label for="image">Image</label>
-          <input
-            v-model="foodProduct.image"
-            type="text"
-            class="form-control"
-            id="image"
-            placeholder="Image"
-            required
-          >
+           <file-upload
+            class="btn btn-primary"
+            extensions="gif,jpg,jpeg,png,webp"
+            accept="image/png,image/gif,image/jpeg,image/webp"
+            :size="1024 * 1024 * 10"
+            v-model="files"
+            @input-file="inputFile"
+            ref="upload">
+            <i class="fa fa-plus"></i>
+            Select file
+          </file-upload>
+          <div class="image">
+            <img class="img-fluid img-thumbnail" :src="foodProduct.image"/>
+          </div>
         </div>
         <div class="form-group">
           <label for="foodService">Food Service</label>
@@ -84,13 +90,18 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { FoodProduct } from '../../entities/FoodProduct'
+import VueUploadComponent from 'vue-upload-component'
 
-@Component
+@Component({
+  components: {
+    'file-upload': VueUploadComponent
+  }
+})
 export default class FoodProductForm extends Vue {
   @Prop() private readonly type!: string
   @Prop() private readonly foodService!: string
   @Prop({ default: () => FoodProduct.emptyFoodProduct() }) private readonly foodProduct!: FoodProduct
-
+  private files:string[] = []
   private errorMessage:string = ''
 
   save () {
@@ -119,13 +130,23 @@ export default class FoodProductForm extends Vue {
       return false
     }
 
-    if (foodProduct.image === '') {
+    if (foodProduct.image === undefined) {
       this.errorMessage = 'Image is required'
 
       return false
     }
-
     return true
+  }
+
+  inputFile (newFile:any, oldFile:any) {
+    if (newFile && !oldFile) {
+      let reader = new FileReader()
+
+      reader.onload = (e:any) => {
+        this.foodProduct.image = e.target.result
+      }
+      reader.readAsDataURL(newFile.file)
+    }
   }
 
   get updateMode () {
@@ -133,3 +154,9 @@ export default class FoodProductForm extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.image{
+  width: 250px;
+}
+</style>

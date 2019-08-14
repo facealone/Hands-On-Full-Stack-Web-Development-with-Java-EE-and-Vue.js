@@ -38,7 +38,7 @@ export default class App extends Vue {
 }
 .nav {
   padding: 30px;
-  padding-left: 30px;
+  padding-left: 30px !important;
 }
 
 .nav a {

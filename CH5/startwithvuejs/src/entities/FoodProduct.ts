@@ -4,7 +4,7 @@ export class FoodProduct {
     name: string = ''
     description: string = ''
     price: number = 0.0
-    image: string = ''
+    image: any = new Image()
     foodService: string = ''
 
     static emptyFoodProduct () {
@@ -13,7 +13,7 @@ export class FoodProduct {
       return foodProduct
     }
 
-    static newFoodProduct (id: number, name: string, description: string, price: number, image: string, foodService: string) {
+    static newFoodProduct (id: number, name: string, description: string, price: number, image: any, foodService: string) {
       let foodProduct:FoodProduct = new FoodProduct()
 
       foodProduct.id = id

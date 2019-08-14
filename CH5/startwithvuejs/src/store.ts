@@ -11,26 +11,26 @@ Vue.use(Vuex)
 
 const stateBase: State = {
   foodProducts: [
-    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 16, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 12, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 14, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(4, 'Chicken', 'Chicken small', 11, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(5, 'Chicken huge', 'Chicken huge', 14, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(6, 'Vegan', 'Vegan huge', 15, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(7, 'Hawaiana', 'Hawaiana huge', 14, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(8, 'From House', 'From House', 10, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(9, 'Vegetarian', 'Vegetarian', 14, 'image', 'email1@email.com'),
-    FoodProduct.newFoodProduct(10, 'Rice', 'Rice double', 11, 'image', 'email2@email.com')
+    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 16, 'http://localhost:8080/images/product/1.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 12, 'http://localhost:8080/images/product/2.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 14, 'http://localhost:8080/images/product/3.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(4, 'Chicken', 'Chicken small', 11, 'http://localhost:8080/images/product/4.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(5, 'Chicken huge', 'Chicken huge', 14, 'http://localhost:8080/images/product/5.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(6, 'Vegan', 'Vegan huge', 15, 'http://localhost:8080/images/product/6.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(7, 'Hawaiana', 'Hawaiana huge', 14, 'http://localhost:8080/images/product/7.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(8, 'From House', 'From House', 10, 'http://localhost:8080/images/product/8.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(9, 'Vegetarian', 'Vegetarian', 14, 'http://localhost:8080/images/product/9.jpeg', 'email1@email.com'),
+    FoodProduct.newFoodProduct(10, 'Rice', 'Rice double', 11, 'http://localhost:8080/images/product/10.jpeg', 'email2@email.com')
   ],
   foodServices: [
-    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'image', 'pass'),
-    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 2, 'image', 'pass'),
-    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 2, 'image', 'pass'),
-    FoodService.newFoodService('email4@email.com', 'Service4', 'Street5', 'CHINESE', 3, 'image', 'pass'),
-    FoodService.newFoodService('email5@email.com', 'Service5', 'Street6', 'CHICKEN', 5, 'image', 'pass'),
-    FoodService.newFoodService('email6@email.com', 'Service6', 'Street7', 'CHICKEN', 3, 'image', 'pass'),
-    FoodService.newFoodService('email7@email.com', 'Service7', 'Street8', 'PASTA', 1, 'image', 'pass'),
-    FoodService.newFoodService('email8@email.com', 'Service8', 'Street9', 'PASTA', 3, 'image', 'pass')
+    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'http://localhost:8080/images/services/1.jpg', 'pass'),
+    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 2, 'http://localhost:8080/images/services/2.jpg', 'pass'),
+    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 2, 'http://localhost:8080/images/services/3.jpg', 'pass'),
+    FoodService.newFoodService('email4@email.com', 'Service4', 'Street5', 'CHINESE', 3, 'http://localhost:8080/images/services/4.jpg', 'pass'),
+    FoodService.newFoodService('email5@email.com', 'Service5', 'Street6', 'CHICKEN', 5, 'http://localhost:8080/images/services/5.jpg', 'pass'),
+    FoodService.newFoodService('email6@email.com', 'Service6', 'Street7', 'CHICKEN', 3, 'http://localhost:8080/images/services/6.jpg', 'pass'),
+    FoodService.newFoodService('email7@email.com', 'Service7', 'Street8', 'PASTA', 1, 'http://localhost:8080/images/services/7.jpg', 'pass'),
+    FoodService.newFoodService('email8@email.com', 'Service8', 'Street9', 'PASTA', 3, 'http://localhost:8080/images/services/8.jpg', 'pass')
   ],
   cart: Cart.emptyCart(),
   deliveries: [],

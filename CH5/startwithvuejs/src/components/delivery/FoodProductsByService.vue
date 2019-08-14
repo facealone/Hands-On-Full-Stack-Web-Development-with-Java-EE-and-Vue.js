@@ -44,7 +44,7 @@
           </thead>
           <tbody>
             <tr v-for="item in items" v-bind:key="item.foodProduct.id">
-              <td>{{item.foodProduct.image}}</td>
+              <td><img class="image img-fluid img-thumbnail" :src="item.foodProduct.image"/></td>
               <td>{{item.foodProduct.id}}</td>
               <td>{{item.foodProduct.name}}</td>
               <td>{{item.foodProduct.description}}</td>
@@ -119,3 +119,9 @@ export default class FoodProductsByService extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.image{
+  width: 250px;
+}
+</style>

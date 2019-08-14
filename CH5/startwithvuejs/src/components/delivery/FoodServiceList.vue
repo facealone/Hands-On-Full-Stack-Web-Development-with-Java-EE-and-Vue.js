@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             <tr v-for="foodService in foodServices" v-bind:key="foodService.email">
-              <td>{{foodService.image}}</td>
+              <td><img class="image img-fluid img-thumbnail" :src="foodService.image"/></td>
               <td><router-link  :to="{ name: 'food_products_by_service', params: { foodService: foodService.email }}">{{foodService.name}}</router-link></td>
               <td>{{foodService.address}}</td>
               <td>{{foodService.foodType}}</td>
@@ -86,3 +86,9 @@ export default class FoodServiceList extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.image{
+  width: 250px;
+}
+</style>

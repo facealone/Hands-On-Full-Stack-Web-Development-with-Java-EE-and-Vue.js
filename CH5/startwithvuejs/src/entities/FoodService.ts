@@ -5,7 +5,7 @@ export class FoodService {
     address: string = ''
     foodType: string = ''
     deliveryFee: number = 0.0
-    image: string = ''
+    image: any = new Image()
     password: string = ''
 
     static emptyFoodService () {
@@ -14,7 +14,7 @@ export class FoodService {
       return foodService
     }
 
-    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: string, password: string) {
+    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, password: string) {
       let foodService:FoodService = new FoodService()
 
       foodService.email = email

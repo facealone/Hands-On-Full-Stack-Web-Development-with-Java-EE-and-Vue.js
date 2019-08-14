@@ -11,20 +11,20 @@
         <table class="table  table-dark">
           <thead>
             <tr>
+              <th></th>
               <th>Id</th>
               <th>Name</th>
               <th>Description</th>
               <th>Price</th>
-              <th>Image</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="foodProduct in foodProducts" v-bind:key="foodProduct.id">
+              <td><img class="image img-fluid img-thumbnail" :src="foodProduct.image"/></td>
               <td>{{foodProduct.id}}</td>
               <td>{{foodProduct.name}}</td>
               <td>{{foodProduct.description}}</td>
               <td>{{foodProduct.price}}</td>
-              <td>{{foodProduct.image}}</td>
               <td><router-link  :to="{ name: 'food_product_update', params: { id: foodProduct.id }}">Update</router-link></td>
               <td><a v-on:click="remove(foodProduct)" href="#">Delete</a></td>
             </tr>
@@ -75,3 +75,9 @@ export default class FoodProductList extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.image{
+  width: 250px;
+}
+</style>
