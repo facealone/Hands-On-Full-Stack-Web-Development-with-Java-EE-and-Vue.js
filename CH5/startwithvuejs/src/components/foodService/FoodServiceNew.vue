@@ -18,7 +18,7 @@ export default class FoodServiceNew extends Vue {
   save (foodService:FoodService) {
     this.$store.commit('saveFoodService', foodService)
 
-    this.$router.push({ name: 'food_service_view', params: { email: foodService.email } })
+    this.$router.push({ name: 'login' })
   }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 class="text-center">Food Service</h2>
     <div class="row">
       <div class="col-sm">
         <div class="form-group">

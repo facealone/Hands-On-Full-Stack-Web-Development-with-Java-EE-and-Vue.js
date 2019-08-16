@@ -44,14 +44,14 @@
           >
         </div>
         <div class="form-group">
-          <label for="foodType">Type of Food</label>
+          <label for="foodType">Food Type</label>
           <select class="custom-select" id="foodType" v-model="foodService.foodType">
             <option selected value="PIZZA">PIZZA</option>
             <option value="CHINESE">CHINESE</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="deliveryFee">Fee for Delivery</label>
+          <label for="deliveryFee">Delivery Fee</label>
           <input
             v-model="foodService.deliveryFee"
             type="text"
@@ -95,8 +95,8 @@
             <i class="fa fa-plus"></i>
             Select file
           </file-upload>
-          <div class="image">
-            <img class="img-fluid img-thumbnail" :src="foodService.image"/>
+          <div>
+            <img class="image img-fluid img-thumbnail" :src="foodService.image"/>
           </div>
         </div>
         <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
@@ -183,3 +183,9 @@ export default class FoodServiceForm extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.image{
+  width: 250px;
+}
+</style>

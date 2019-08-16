@@ -56,7 +56,7 @@
           <label for="foodType">Type of Food</label>
           <select class="custom-select" id="foodType" v-model="foodService.foodType" disabled>
             <option selected value="PIZZA">PIZZA</option>
-            <option value="CHINNIZE">CHINNIZE</option>
+            <option value="CHINESE">CHINESE</option>
           </select>
         </div>
       </div>
