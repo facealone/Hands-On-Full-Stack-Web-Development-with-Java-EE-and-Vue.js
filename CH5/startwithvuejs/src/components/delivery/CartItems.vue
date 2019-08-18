@@ -47,9 +47,9 @@
         <label>Total + Fee: {{foodServiceData.deliveryFee + total}}</label>
     </div>
   </div>
-  <div class="row">
+  <div class="row" v-if="errorMessage">
     <div class="col-sm">
-      <div v-if="errorMessage" class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert">
         {{errorMessage}}
       </div>
     </div>
