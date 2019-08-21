@@ -1,5 +1,7 @@
 package com.packt.delivery.main.restful.delivery;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.packt.delivery.abstraction.entity.*;
 import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ public class ItemDTO implements Serializable {
     private final int amount;
     private final FoodProductDTO foodProduct;
 
-    public ItemDTO(Integer id, int amount, FoodProductDTO foodProduct) {
+    @JsonCreator
+    public ItemDTO(@JsonProperty("id") Integer id, @JsonProperty("amount") int amount, @JsonProperty("foodProduct") FoodProductDTO foodProduct) {
         this.id = id;
         this.amount = amount;
         this.foodProduct = foodProduct;

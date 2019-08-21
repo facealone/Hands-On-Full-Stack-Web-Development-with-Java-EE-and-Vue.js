@@ -1,6 +1,8 @@
 
 package com.packt.delivery.main.restful.delivery;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.packt.delivery.abstraction.entity.Delivery;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +18,8 @@ public class DeliveryDTO {
     private final String state;
     private final List<ItemDTO> itemList;
 
-    public DeliveryDTO(Integer id, String address, String phone, int total, int fee, String email, String state, List<ItemDTO> itemList) {
+    @JsonCreator
+    public DeliveryDTO(@JsonProperty("id") Integer id, @JsonProperty("address") String address, @JsonProperty("phone") String phone, @JsonProperty("total") int total, @JsonProperty("fee") int fee, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("itemList") List<ItemDTO> itemList) {
         this.id = id;
         this.address = address;
         this.phone = phone;
