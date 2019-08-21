@@ -8,7 +8,7 @@ public class FoodProduct implements Serializable {
     private final String name;
     private final int price;
     private final String description;
-    private final boolean active;
+    private boolean active;
     private final String imageUrl;
     private final String foodService;
 
@@ -22,6 +22,10 @@ public class FoodProduct implements Serializable {
         this.foodService = foodService;
     }
 
+    public void deActivate(){
+        this.active = false;
+    }
+    
     public Integer getId() {
         return id;
     }

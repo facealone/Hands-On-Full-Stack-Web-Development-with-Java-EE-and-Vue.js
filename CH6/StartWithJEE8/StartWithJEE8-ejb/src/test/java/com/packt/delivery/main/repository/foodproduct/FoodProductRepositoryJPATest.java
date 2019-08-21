@@ -4,6 +4,7 @@ import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +42,7 @@ public class FoodProductRepositoryJPATest {
         foodProductRepositoryJPA.save(newFoodProduct);
         
         verify(entityManager).persist(foodProductData);
+        verify(entityManager).flush();
     }
     
     @Test
@@ -113,6 +115,29 @@ public class FoodProductRepositoryJPATest {
         List<FoodProduct> foodProducts = foodProductRepositoryJPA.getByFoodService("email1@email.com");
         
         assertThat(foodProducts).isEqualTo(Arrays.asList(newFoodProduct));
+    }
+    
+    @Test
+    public void getById() {
+        FoodProduct foodProductExpected = new FoodProduct(1, "Pizza", 23500, "Cheese Pizza", true, "imageUrl2", "email1@email.com");
+        
+        FoodServiceData foodServiceData = new FoodServiceData();
+        foodServiceData.setEmail(foodProductExpected.getFoodService());
+        
+        FoodProductData foodProductData = new FoodProductData();
+        foodProductData.setActive(foodProductExpected.isActive());
+        foodProductData.setDescription(foodProductExpected.getDescription());
+        foodProductData.setId(foodProductExpected.getId());
+        foodProductData.setImageUrl(foodProductExpected.getImageUrl());
+        foodProductData.setName(foodProductExpected.getName());
+        foodProductData.setPrice(foodProductExpected.getPrice());
+        foodProductData.setFoodService(foodServiceData);
+        
+        when(entityManager.find(FoodProductData.class, 1)).thenReturn(foodProductData);
+                
+        Optional<FoodProduct> foodProduct = foodProductRepositoryJPA.getById(1);
+        
+        assertThat(foodProduct.get()).isEqualTo(foodProductExpected);
     }
     
 }

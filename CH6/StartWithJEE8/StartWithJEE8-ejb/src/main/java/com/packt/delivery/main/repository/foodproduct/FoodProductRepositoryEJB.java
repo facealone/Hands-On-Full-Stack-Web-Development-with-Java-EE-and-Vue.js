@@ -4,6 +4,7 @@ import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.abstraction.repository.FoodProductRepository;
 import com.packt.delivery.main.Infrastructure;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -33,5 +34,10 @@ public class FoodProductRepositoryEJB implements FoodProductRepository{
     @Override
     public List<FoodProduct> getByFoodService(String email) {
         return foodProductRepositoryJPA.getByFoodService(email);
+    }
+
+    @Override
+    public Optional<FoodProduct> getById(Integer id) {
+        return foodProductRepositoryJPA.getById(id);
     }
 }

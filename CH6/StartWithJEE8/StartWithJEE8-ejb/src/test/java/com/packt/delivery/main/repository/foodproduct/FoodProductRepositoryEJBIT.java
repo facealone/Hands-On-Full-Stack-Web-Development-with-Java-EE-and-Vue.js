@@ -5,6 +5,7 @@ import com.packt.delivery.abstraction.repository.FoodProductRepository;
 import com.packt.delivery.main.Infrastructure;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javax.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -84,5 +85,15 @@ public class FoodProductRepositoryEJBIT {
         List<FoodProduct> foodProducts = foodProductRepository.getByFoodService("email1@email.com");
 
         assertThat(foodProducts).isEqualTo(Arrays.asList(foodProduct1, foodProduct2));
+    }
+    
+    @Test
+    @InSequence(5)
+    public void getById_id_ok() {
+        FoodProduct foodProduct1 = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
+         
+        Optional<FoodProduct> foodProduct = foodProductRepository.getById(1);
+
+        assertThat(foodProduct.get()).isEqualTo(foodProduct1);
     }
 }

@@ -4,6 +4,7 @@ import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.abstraction.repository.FoodProductRepository;
 import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
@@ -20,6 +21,7 @@ public class FoodProductRepositoryJPA implements FoodProductRepository {
         FoodProductData foodProductData = convertFoodProductToFoodProductData(foodProduct);
 
         entityManager.persist(foodProductData);
+        entityManager.flush();
 
         return convertFoodProductDataToFoodProduct(foodProductData);
     }
@@ -52,6 +54,12 @@ public class FoodProductRepositoryJPA implements FoodProductRepository {
                 .collect(Collectors.toList());
     }    
 
+    @Override
+    public Optional<FoodProduct> getById(Integer id) {
+        return Optional.ofNullable(entityManager.find(FoodProductData.class, id))
+                .map(this::convertFoodProductDataToFoodProduct);
+    }
+    
     private FoodProductData convertFoodProductToFoodProductData(FoodProduct foodProduct) {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setEmail(foodProduct.getFoodService());
