@@ -7,13 +7,17 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class FoodProductDTO implements Serializable {
-    private final Integer id;
-    private final String name;
-    private final int price;
-    private final String description;
-    private final boolean active;
-    private final String imageUrl;
-    private final String foodService;
+    private Integer id;
+    private String name;
+    private int price;
+    private String description;
+    private boolean active;
+    private String imageUrl;
+    private String foodService;
+    
+    public FoodProductDTO(){
+        
+    }
 
     @JsonCreator
     public FoodProductDTO(@JsonProperty("id") Integer id, @JsonProperty("name") String name, @JsonProperty("price") int price, @JsonProperty("description") String description, @JsonProperty("active") boolean active, @JsonProperty("imageUrl") String imageUrl, @JsonProperty("foodService") String foodService) {
@@ -44,29 +48,59 @@ public class FoodProductDTO implements Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPrice() {
         return price;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isActive() {
         return active;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFoodService() {
         return foodService;
     }
+
+    public void setFoodService(String foodService) {
+        this.foodService = foodService;
+    }
+
+    
 
     @Override
     public int hashCode() {

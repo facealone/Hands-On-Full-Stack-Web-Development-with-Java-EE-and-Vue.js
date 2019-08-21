@@ -9,14 +9,18 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DeliveryDTO {
-    private final Integer id;
-    private final String address;
-    private final String phone;
-    private final int total;
-    private final int fee;
-    private final String email;
-    private final String state;
-    private final List<ItemDTO> itemList;
+    private Integer id;
+    private String address;
+    private String phone;
+    private int total;
+    private int fee;
+    private String email;
+    private String state;
+    private List<ItemDTO> itemList;
+    
+    public DeliveryDTO(){
+        
+    }
 
     @JsonCreator
     public DeliveryDTO(@JsonProperty("id") Integer id, @JsonProperty("address") String address, @JsonProperty("phone") String phone, @JsonProperty("total") int total, @JsonProperty("fee") int fee, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("itemList") List<ItemDTO> itemList) {
@@ -55,33 +59,66 @@ public class DeliveryDTO {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public int getTotal() {
         return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public int getFee() {
         return fee;
     }
 
+    public void setFee(int fee) {
+        this.fee = fee;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getState() {
         return state;
     }
 
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public List<ItemDTO> getItemList() {
         return itemList;
     }
+
+    public void setItemList(List<ItemDTO> itemList) {
+        this.itemList = itemList;
+    }
+
 
     @Override
     public int hashCode() {

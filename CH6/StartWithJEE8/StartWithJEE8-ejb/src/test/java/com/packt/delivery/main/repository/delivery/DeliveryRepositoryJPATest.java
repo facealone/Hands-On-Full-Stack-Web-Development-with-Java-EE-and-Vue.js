@@ -68,6 +68,7 @@ public class DeliveryRepositoryJPATest {
         deliveryRepositoryJPA.save(delivery);
         
         verify(entityManager).persist(deliveryData);
+        verify(entityManager).flush();
     }
     
     @Test

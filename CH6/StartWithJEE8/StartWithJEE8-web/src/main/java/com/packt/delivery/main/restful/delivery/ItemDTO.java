@@ -9,10 +9,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class ItemDTO implements Serializable {
-    private final Integer id;
-    private final int amount;
-    private final FoodProductDTO foodProduct;
+    private Integer id;
+    private int amount;
+    private FoodProductDTO foodProduct;
 
+    public ItemDTO(){
+        
+    }
+    
     @JsonCreator
     public ItemDTO(@JsonProperty("id") Integer id, @JsonProperty("amount") int amount, @JsonProperty("foodProduct") FoodProductDTO foodProduct) {
         this.id = id;
@@ -36,12 +40,24 @@ public class ItemDTO implements Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public int getAmount() {
         return amount;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public FoodProductDTO getFoodProduct() {
         return foodProduct;
+    }
+
+    public void setFoodProduct(FoodProductDTO foodProduct) {
+        this.foodProduct = foodProduct;
     }
 
     @Override

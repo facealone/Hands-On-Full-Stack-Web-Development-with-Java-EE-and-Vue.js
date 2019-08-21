@@ -23,6 +23,7 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
         DeliveryData deliveryData = convertDeliveryToDeliveryData(delivery);
 
         entityManager.persist(deliveryData);
+        entityManager.flush();
 
         return convertDeliveryDataToDelivery(deliveryData);
     }

@@ -1,8 +1,6 @@
 package com.packt.delivery.main.restful.delivery;
 
 import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
-import com.packt.delivery.main.restful.delivery.ItemDTO;
-import com.packt.delivery.main.restful.delivery.DeliveryDTO;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.ws.rs.client.WebTarget;
@@ -20,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.Arrays;
+import javax.ws.rs.client.Entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
@@ -56,10 +55,11 @@ public class DeliveryControllerBasicTest {
         
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
     }
-    /*@Test
+    
+    @Test
     @RunAsClient
-    @InSequence(1)
-    public void request(@ArquillianResteasyResource("api") ResteasyWebTarget webTarget) throws IOException {
+    @InSequence(2)
+    public void request(@ArquillianResteasyResource("api") WebTarget webTarget) {
         FoodProductDTO foodProduct = new FoodProductDTO(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
         
         ItemDTO newItem = new ItemDTO(null, 2, foodProduct);
@@ -68,21 +68,13 @@ public class DeliveryControllerBasicTest {
         ItemDTO expectedItem = new ItemDTO(2, 2, foodProduct);
         DeliveryDTO expectedDelivery = new DeliveryDTO(2, "Street 89", "55587412", 20100, 100, "email10@email.com", "PENDING", Arrays.asList(expectedItem));
 
-        newDelivery = deliveryController.request(newDelivery);
+        Response response = webTarget
+                .path("deliveries")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(newDelivery, MediaType.APPLICATION_JSON));
+        
+        newDelivery = response.readEntity(DeliveryDTO.class);
         
         assertThat(newDelivery).isEqualTo(expectedDelivery);
-    }*/
-
- /*@Test
-    @RunAsClient
-    @InSequence(2)
-    public void getDeliveriesByEmailAndState_emailAndState_list(@ArquillianResteasyResource("api") DeliveryController deliveryController) throws IOException {
-        FoodProductDTO foodProduct = new FoodProductDTO(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
-        ItemDTO item = new ItemDTO(1, 1, foodProduct);
-        DeliveryDTO delivery = new DeliveryDTO(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
-
-        List<DeliveryDTO> deliveries = deliveryController.getByEmailAndState("email5@email.com", "PENDING");
-
-        assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
-    }*/
+    }
 }
