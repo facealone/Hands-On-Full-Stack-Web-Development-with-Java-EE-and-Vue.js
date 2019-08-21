@@ -35,6 +35,10 @@ public class FoodProductDTO implements Serializable {
         this.imageUrl = foodProduct.getImageUrl();
         this.foodService = foodProduct.getFoodService();
     }
+    
+    public FoodProduct toFoodProduct(){
+        return new FoodProduct(this.id, this.name, this.price, this.description, this.active, this.imageUrl, this.foodService);
+    }
 
     public Integer getId() {
         return id;

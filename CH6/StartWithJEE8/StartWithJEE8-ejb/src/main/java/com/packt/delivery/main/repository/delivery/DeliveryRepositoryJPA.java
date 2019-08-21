@@ -20,7 +20,6 @@ public class DeliveryRepositoryJPA implements DeliveryRepository {
 
     @Override
     public Delivery save(Delivery delivery) {
-        System.out.println("Delivery -> " + delivery);
         DeliveryData deliveryData = convertDeliveryToDeliveryData(delivery);
 
         entityManager.persist(deliveryData);

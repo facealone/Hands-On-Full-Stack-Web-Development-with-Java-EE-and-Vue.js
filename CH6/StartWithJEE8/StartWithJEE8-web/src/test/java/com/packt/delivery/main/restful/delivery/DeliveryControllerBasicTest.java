@@ -1,12 +1,14 @@
 package com.packt.delivery.main.restful.delivery;
 
 import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
-import java.io.IOException;
+import com.packt.delivery.main.restful.delivery.ItemDTO;
+import com.packt.delivery.main.restful.delivery.DeliveryDTO;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
@@ -16,6 +18,9 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.List;
+import java.util.Arrays;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 public class DeliveryControllerBasicTest {
@@ -24,6 +29,7 @@ public class DeliveryControllerBasicTest {
     public static WebArchive createDeployment() {
         Path persistence = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/persistence.xml");
         Path deliveryData = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/deliverydata.sql");
+        Path web = Paths.get("src/main/webapp/WEB-INF/web.xml");
 
         return ShrinkWrap.create(WebArchive.class)
                 .addPackages(true, "com.packt.delivery")
@@ -34,7 +40,43 @@ public class DeliveryControllerBasicTest {
     @Test
     @RunAsClient
     @InSequence(1)
-    public void getDeliveriesByEmailAndState_emailAndState_list(@ArquillianResteasyResource("api") /*WebTarget webTarget*/ DeliveryController deliveryController) throws IOException {
+    public void getDeliveriesByEmailAndState_emailAndState_list(@ArquillianResteasyResource("api") WebTarget webTarget) {
+        FoodProductDTO foodProduct = new FoodProductDTO(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
+        ItemDTO item = new ItemDTO(1, 1, foodProduct);
+        DeliveryDTO delivery = new DeliveryDTO(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
+
+        Response response = webTarget
+                .path("deliveries")
+                .path("email5@email.com")
+                .queryParam("state", "PENDING")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        
+        List<DeliveryDTO> deliveries = response.readEntity(new GenericType<List<DeliveryDTO>>() { });
+        
+        assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
+    }
+    /*@Test
+    @RunAsClient
+    @InSequence(1)
+    public void request(@ArquillianResteasyResource("api") ResteasyWebTarget webTarget) throws IOException {
+        FoodProductDTO foodProduct = new FoodProductDTO(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
+        
+        ItemDTO newItem = new ItemDTO(null, 2, foodProduct);
+        DeliveryDTO newDelivery = new DeliveryDTO(null, "Street 89", "55587412", 20100, 100, "email10@email.com", "PENDING", Arrays.asList(newItem));
+        
+        ItemDTO expectedItem = new ItemDTO(2, 2, foodProduct);
+        DeliveryDTO expectedDelivery = new DeliveryDTO(2, "Street 89", "55587412", 20100, 100, "email10@email.com", "PENDING", Arrays.asList(expectedItem));
+
+        newDelivery = deliveryController.request(newDelivery);
+        
+        assertThat(newDelivery).isEqualTo(expectedDelivery);
+    }*/
+
+ /*@Test
+    @RunAsClient
+    @InSequence(2)
+    public void getDeliveriesByEmailAndState_emailAndState_list(@ArquillianResteasyResource("api") DeliveryController deliveryController) throws IOException {
         FoodProductDTO foodProduct = new FoodProductDTO(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
         ItemDTO item = new ItemDTO(1, 1, foodProduct);
         DeliveryDTO delivery = new DeliveryDTO(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
@@ -42,6 +84,5 @@ public class DeliveryControllerBasicTest {
         List<DeliveryDTO> deliveries = deliveryController.getByEmailAndState("email5@email.com", "PENDING");
 
         assertThat(deliveries).isEqualTo(Arrays.asList(delivery));
-    }
-
+    }*/
 }
