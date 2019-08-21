@@ -43,6 +43,13 @@ public class DeliveryDTO {
                 .map(i -> new ItemDTO(i))
                 .collect(Collectors.toList());
     }
+    
+    public Delivery toDelivery(){
+        return new Delivery(this.id, this.address, this.phone, this.total, this.fee, this.email, this.state, this.itemList
+                .stream()
+                .map(ItemDTO::toItem)
+                .collect(Collectors.toList()));
+    }
 
     public Integer getId() {
         return id;
