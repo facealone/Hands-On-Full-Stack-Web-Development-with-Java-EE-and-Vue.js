@@ -60,9 +60,9 @@ public class FoodServiceControllerTest {
     @Test
     @RunAsClient
     @InSequence(2)
-    public void save(@ArquillianResteasyResource("api") WebTarget webTarget) {        
-        UserDTO user = new UserDTO("email1@email.com", "pass1");
-        FoodServiceDTO foodService = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+    public void save(@ArquillianResteasyResource("api") WebTarget webTarget) {    
+        UserDTO user = new UserDTO("chicken@email.com", "pass2");
+        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool", "Street 898", "CHICKEN", 120, true, user, Collections.emptyList());
         
         UserDTO userExpected = new UserDTO("chicken@email.com", "pass2");
         FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool", "Street 898", "CHICKEN", 120, true, userExpected, Collections.emptyList());
@@ -72,7 +72,47 @@ public class FoodServiceControllerTest {
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(foodService, MediaType.APPLICATION_JSON));
         
-        System.out.println(response.readEntity(String.class));
+        foodService = response.readEntity(FoodServiceDTO.class);
+        
+        assertThat(foodService).isEqualTo(foodServiceExpected);
+    }
+    
+    @Test
+    @RunAsClient
+    @InSequence(3)
+    public void update(@ArquillianResteasyResource("api") WebTarget webTarget) {    
+        UserDTO user = new UserDTO("chicken@email.com", "pass2");
+        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, true, user, Collections.emptyList());
+        
+        UserDTO userExpected = new UserDTO("chicken@email.com", "pass2");
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, true, userExpected, Collections.emptyList());
+         
+        Response response = webTarget
+                .path("foodservices")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(foodService, MediaType.APPLICATION_JSON));
+        
+        foodService = response.readEntity(FoodServiceDTO.class);
+        
+        assertThat(foodService).isEqualTo(foodServiceExpected);
+    }
+    
+    @Test
+    @RunAsClient
+    @InSequence(4)
+    public void deActivate(@ArquillianResteasyResource("api") WebTarget webTarget) {        
+        UserDTO user = new UserDTO("chicken@email.com", "pass2");
+        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, true, user, Collections.emptyList());
+        
+        UserDTO userExpected = new UserDTO("chicken@email.com", "pass2");
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, false, userExpected, Collections.emptyList());
+        
+        Response response = webTarget
+                .path("foodservices")
+                .path("chicken@email.com")
+                .request(MediaType.APPLICATION_JSON)
+                .delete();
+        
         foodService = response.readEntity(FoodServiceDTO.class);
         
         assertThat(foodService).isEqualTo(foodServiceExpected);

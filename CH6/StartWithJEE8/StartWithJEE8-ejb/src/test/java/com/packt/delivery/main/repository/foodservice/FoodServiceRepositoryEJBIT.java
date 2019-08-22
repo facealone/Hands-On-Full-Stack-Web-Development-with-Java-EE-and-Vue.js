@@ -80,7 +80,7 @@ public class FoodServiceRepositoryEJBIT {
     
     @Test
     @InSequence(4)
-    public void getDeliveriesByEmailAndState_emailAndState_list() {
+    public void getByFoodType_foodType_list() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
         
