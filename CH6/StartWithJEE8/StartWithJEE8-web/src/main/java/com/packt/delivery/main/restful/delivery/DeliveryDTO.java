@@ -22,8 +22,7 @@ public class DeliveryDTO {
         
     }
 
-    @JsonCreator
-    public DeliveryDTO(@JsonProperty("id") Integer id, @JsonProperty("address") String address, @JsonProperty("phone") String phone, @JsonProperty("total") int total, @JsonProperty("fee") int fee, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("itemList") List<ItemDTO> itemList) {
+    public DeliveryDTO(Integer id, String address, String phone, int total, int fee, String email, String state, List<ItemDTO> itemList) {
         this.id = id;
         this.address = address;
         this.phone = phone;

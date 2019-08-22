@@ -9,6 +9,7 @@ import com.packt.delivery.main.repository.foodproduct.FoodProductRepositoryJPA;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -131,6 +132,31 @@ public class FoodServiceRepositoryJPATest {
         List<FoodService> foodServices = foodServiceRepositoryJPA.getByFoodType("PIZZA");
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
+    }
+    
+    @Test
+    public void getById() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodServiceExpected = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        UserData userData = new UserData();
+        userData.setEmail(user.getEmail());
+        userData.setPassword(user.getPassword());
+        
+        FoodServiceData foodServiceData = new FoodServiceData();
+        foodServiceData.setActive(foodServiceExpected.getActive());
+        foodServiceData.setAddress(foodServiceExpected.getAddress());
+        foodServiceData.setDeliveryFee(foodServiceExpected.getDeliveryFee());
+        foodServiceData.setEmail(foodServiceExpected.getEmail());
+        foodServiceData.setFoodType(foodServiceExpected.getFoodType());
+        foodServiceData.setName(foodServiceExpected.getName());
+        foodServiceData.setUserData(userData);
+        
+        when(entityManager.find(FoodServiceData.class, "email1@email.com")).thenReturn(foodServiceData);
+                
+        Optional<FoodService> foodService = foodServiceRepositoryJPA.getById("email1@email.com");
+        
+        assertThat(foodService.get()).isEqualTo(foodServiceExpected);
     }
     
 }

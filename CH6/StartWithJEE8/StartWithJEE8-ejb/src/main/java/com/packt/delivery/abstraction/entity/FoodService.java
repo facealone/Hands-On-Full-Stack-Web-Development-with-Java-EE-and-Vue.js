@@ -11,7 +11,7 @@ public class FoodService implements Serializable {
     private final String address;
     private final String foodType;
     private final int deliveryFee;
-    private final boolean active;
+    private boolean active;
     private final User user;
     private final List<FoodProduct> foodProductList;
 
@@ -26,6 +26,10 @@ public class FoodService implements Serializable {
         this.user = user;
     }
 
+    public void deActivate(){
+        this.active = false;
+    }
+    
     public String getEmail() {
         return email;
     }

@@ -1,9 +1,6 @@
 
 package com.packt.delivery.main.restful.foodproduct;
 
-import com.packt.delivery.abstraction.entity.FoodProduct;
-import com.packt.delivery.main.restful.delivery.DeliveryDTO;
-import com.packt.delivery.main.restful.delivery.ItemDTO;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;

@@ -5,6 +5,7 @@ import com.packt.delivery.abstraction.entity.User;
 import com.packt.delivery.abstraction.repository.FoodServiceRepository;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
@@ -54,6 +55,12 @@ public class FoodServiceRepositoryJPA implements FoodServiceRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Optional<FoodService> getById(String email) {
+        return Optional.ofNullable(entityManager.find(FoodServiceData.class, email))
+                .map(this::convertFoodServiceDataToFoodService);
+    }
+    
     private FoodService convertFoodServiceDataToFoodService(FoodServiceData foodServiceData) {
         User user = new User(foodServiceData.getUserData().getEmail(), foodServiceData.getUserData().getPassword());
         

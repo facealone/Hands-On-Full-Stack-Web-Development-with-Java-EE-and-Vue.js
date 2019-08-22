@@ -17,8 +17,7 @@ public class ItemDTO implements Serializable {
         
     }
     
-    @JsonCreator
-    public ItemDTO(@JsonProperty("id") Integer id, @JsonProperty("amount") int amount, @JsonProperty("foodProduct") FoodProductDTO foodProduct) {
+    public ItemDTO(Integer id, int amount, FoodProductDTO foodProduct) {
         this.id = id;
         this.amount = amount;
         this.foodProduct = foodProduct;
