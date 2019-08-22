@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class FoodProductControllerTest {
+public class FoodProductControllerIT {
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         Path persistence = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/persistence.xml");

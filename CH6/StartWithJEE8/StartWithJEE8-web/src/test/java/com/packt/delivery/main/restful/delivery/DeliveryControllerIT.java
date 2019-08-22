@@ -22,7 +22,7 @@ import javax.ws.rs.client.Entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
-public class DeliveryControllerBasicTest {
+public class DeliveryControllerIT {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {

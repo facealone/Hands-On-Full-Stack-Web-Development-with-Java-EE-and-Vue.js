@@ -1,9 +1,6 @@
 
 package com.packt.delivery.main.restful.foodservice;
 
-import com.packt.delivery.abstraction.entity.FoodService;
-import com.packt.delivery.abstraction.entity.User;
-import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -26,7 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class FoodServiceControllerTest {
+public class FoodServiceControllerIT {
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         Path persistence = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/persistence.xml");
