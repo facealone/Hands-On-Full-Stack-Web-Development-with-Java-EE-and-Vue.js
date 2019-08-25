@@ -27,7 +27,6 @@ public class FoodProductControllerIT {
     public static WebArchive createDeployment() {
         Path persistence = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/persistence.xml");
         Path deliveryData = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/foodproductdata.sql");
-        Path web = Paths.get("src/main/webapp/WEB-INF/web.xml");
 
         return ShrinkWrap.create(WebArchive.class)
                 .addPackages(true, "com.packt.delivery")
