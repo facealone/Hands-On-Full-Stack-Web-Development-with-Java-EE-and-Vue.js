@@ -1,8 +1,6 @@
 
 package com.packt.delivery.main.restful.delivery;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.packt.delivery.abstraction.entity.Delivery;
 import java.util.List;
 import java.util.Objects;
