@@ -1,7 +1,5 @@
 package com.packt.delivery.main.restful.delivery;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.packt.delivery.abstraction.entity.*;
 import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
 import java.io.Serializable;
