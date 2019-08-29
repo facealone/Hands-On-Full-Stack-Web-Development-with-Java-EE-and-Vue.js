@@ -2,8 +2,10 @@
 package com.packt.delivery.main.restful.delivery;
 
 import com.packt.delivery.abstraction.entity.Delivery;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DeliveryDTO {
@@ -39,14 +41,16 @@ public class DeliveryDTO {
         this.fee = delivery.getFee();
         this.email = delivery.getEmail();
         this.state = delivery.getState();
-        this.itemList = delivery.getItemList()
+        this.itemList = Optional.ofNullable(delivery.getItemList())
+                .orElse(Collections.emptyList())
                 .stream()
                 .map(i -> new ItemDTO(i))
                 .collect(Collectors.toList());
     }
     
     public Delivery toDelivery(){
-        return new Delivery(this.id, this.address, this.phone, this.total, this.fee, this.email, this.state, this.itemList
+        return new Delivery(this.id, this.address, this.phone, this.total, this.fee, this.email, this.state, Optional.ofNullable(this.itemList)
+                .orElse(Collections.emptyList())
                 .stream()
                 .map(ItemDTO::toItem)
                 .collect(Collectors.toList()));

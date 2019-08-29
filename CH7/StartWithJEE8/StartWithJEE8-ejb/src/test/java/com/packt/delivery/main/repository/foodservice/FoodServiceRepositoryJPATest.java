@@ -159,4 +159,32 @@ public class FoodServiceRepositoryJPATest {
         assertThat(foodService.get()).isEqualTo(foodServiceExpected);
     }
     
+    @Test
+    public void getByEmailAndPassword() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodServiceExpected = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        UserData userData = new UserData();
+        userData.setEmail(user.getEmail());
+        userData.setPassword(user.getPassword());
+        
+        FoodServiceData foodServiceData = new FoodServiceData();
+        foodServiceData.setActive(foodServiceExpected.getActive());
+        foodServiceData.setAddress(foodServiceExpected.getAddress());
+        foodServiceData.setDeliveryFee(foodServiceExpected.getDeliveryFee());
+        foodServiceData.setEmail(foodServiceExpected.getEmail());
+        foodServiceData.setFoodType(foodServiceExpected.getFoodType());
+        foodServiceData.setName(foodServiceExpected.getName());
+        foodServiceData.setUserData(userData);
+        
+        when(typedQuery.getResultList()).thenReturn(Arrays.asList(foodServiceData));
+        when(typedQuery.setParameter("email", "email1@email.com")).thenReturn(typedQuery);
+        when(typedQuery.setParameter("password", "pass1")).thenReturn(typedQuery);
+        when(entityManager.createNamedQuery("FoodServiceData.findByEmailAndPassword", FoodServiceData.class)).thenReturn(typedQuery);
+                 
+        Optional<FoodService> foodService = foodServiceRepositoryJPA.getByEmailAndPassword("email1@email.com", "pass1");
+        
+        assertThat(foodService.get()).isEqualTo(foodServiceExpected);
+    }
+    
 }

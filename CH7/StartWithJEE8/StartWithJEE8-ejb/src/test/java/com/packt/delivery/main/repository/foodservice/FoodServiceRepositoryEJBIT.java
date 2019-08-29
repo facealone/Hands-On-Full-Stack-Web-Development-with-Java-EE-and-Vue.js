@@ -7,6 +7,7 @@ import com.packt.delivery.main.Infrastructure;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import javax.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -87,5 +88,27 @@ public class FoodServiceRepositoryEJBIT {
         List<FoodService> foodServices = foodServiceRepository.getByFoodType("PIZZA");
 
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
+    }
+    
+    @Test
+    @InSequence(5)
+    public void getById_email_foodService() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        Optional<FoodService> foodServiceResult = foodServiceRepository.getById("email1@email.com");
+
+        assertThat(foodServiceResult.get()).isEqualTo(foodService);
+    }
+    
+    @Test
+    @InSequence(6)
+    public void getByEmailAndPassword_emailAndPassword_foodService() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        Optional<FoodService> foodServiceResult = foodServiceRepository.getByEmailAndPassword("email1@email.com", "pass1");
+
+        assertThat(foodServiceResult.get()).isEqualTo(foodService);
     }
 }

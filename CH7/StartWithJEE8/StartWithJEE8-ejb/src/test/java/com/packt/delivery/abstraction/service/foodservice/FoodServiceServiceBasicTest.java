@@ -96,4 +96,28 @@ public class FoodServiceServiceBasicTest {
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodServicePizza, foodServiceChicken));
     }
+    
+    @Test
+    public void login_active_foodService(){
+        User userPizza = new User("email1@email.com", "pass1");
+        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, userPizza, Collections.emptyList());
+        
+        when(foodServiceRepository.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodServicePizza));
+        
+        Optional<FoodService> foodService = foodServiceServiceBasic.login(userPizza);
+        
+        assertThat(foodService.get()).isEqualTo(foodServicePizza);
+    }
+    
+    @Test
+    public void login_deActive_empty(){
+        User userPizza = new User("email1@email.com", "pass1");
+        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, false, userPizza, Collections.emptyList());
+        
+        when(foodServiceRepository.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodServicePizza));
+        
+        Optional<FoodService> foodService = foodServiceServiceBasic.login(userPizza);
+        
+        assertThat(foodService.isPresent()).isFalse();
+    }
 }

@@ -40,4 +40,9 @@ public class FoodServiceRepositoryEJB implements FoodServiceRepository{
     public Optional<FoodService> getById(String email) {
         return foodServiceRepositoryJPA.getById(email);
     }
+
+    @Override
+    public Optional<FoodService> getByEmailAndPassword(String email, String password) {
+        return foodServiceRepositoryJPA.getByEmailAndPassword(email, password);
+    }
 }

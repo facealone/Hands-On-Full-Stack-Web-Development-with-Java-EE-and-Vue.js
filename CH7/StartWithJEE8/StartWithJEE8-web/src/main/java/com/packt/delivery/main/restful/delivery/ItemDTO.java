@@ -30,7 +30,9 @@ public class ItemDTO implements Serializable {
     }
     
     public Item toItem(){
-        return new Item(this.id, this.amount, this.foodProduct.toFoodProduct());
+        return new Item(this.id, this.amount, Optional.ofNullable(this.foodProduct)
+                .map(f -> f.toFoodProduct())
+                .orElse(null));
     }
 
     public Integer getId() {

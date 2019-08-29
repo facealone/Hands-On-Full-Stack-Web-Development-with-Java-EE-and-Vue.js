@@ -2,9 +2,11 @@
 package com.packt.delivery.abstraction.service.foodservice;
 
 import com.packt.delivery.abstraction.entity.FoodService;
+import com.packt.delivery.abstraction.entity.User;
 import com.packt.delivery.abstraction.repository.FoodServiceRepository;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodServiceServiceBasic implements FoodServiceService{
@@ -47,6 +49,13 @@ public class FoodServiceServiceBasic implements FoodServiceService{
         return foodServices.stream()
                 .filter(FoodService::getActive)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<FoodService> login(User user) {
+        return foodServiceRepository.getByEmailAndPassword(user.getEmail(), user.getPassword())
+                .filter(FoodService::getActive);
+        
     }
     
 }

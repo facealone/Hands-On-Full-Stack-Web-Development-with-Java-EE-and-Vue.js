@@ -1,3 +1,4 @@
+import { User } from './User'
 
 export class FoodService {
     email: string = ''
@@ -6,7 +7,8 @@ export class FoodService {
     foodType: string = ''
     deliveryFee: number = 0.0
     image: any = new Image()
-    password: string = ''
+    user: User = User.emptyUser()
+    active: boolean = false
 
     static emptyFoodService () {
       let foodService:FoodService = new FoodService()
@@ -14,7 +16,7 @@ export class FoodService {
       return foodService
     }
 
-    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, password: string) {
+    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, user: User, active: boolean) {
       let foodService:FoodService = new FoodService()
 
       foodService.email = email
@@ -23,7 +25,8 @@ export class FoodService {
       foodService.foodType = foodType
       foodService.deliveryFee = deliveryFee
       foodService.image = image
-      foodService.password = password
+      foodService.user = user
+      foodService.active = active
 
       return foodService
     }
@@ -35,6 +38,7 @@ export class FoodService {
       this.foodType = foodServiceToCopy.foodType
       this.deliveryFee = foodServiceToCopy.deliveryFee
       this.image = foodServiceToCopy.image
-      this.password = foodServiceToCopy.password
+      this.user = foodServiceToCopy.user
+      this.active = foodServiceToCopy.active
     }
 }

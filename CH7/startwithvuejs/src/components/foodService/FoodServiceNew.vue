@@ -8,6 +8,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import FoodServiceForm from '@/components/foodService/FoodServiceForm.vue'
 import { FoodService } from '../../entities/FoodService'
+import { FoodServiceService } from '../../services/FoodServiceService'
 
 @Component({
   components: {
@@ -16,9 +17,14 @@ import { FoodService } from '../../entities/FoodService'
 })
 export default class FoodServiceNew extends Vue {
   save (foodService:FoodService) {
-    this.$store.commit('saveFoodService', foodService)
-
-    this.$router.push({ name: 'login' })
+    FoodServiceService.create(foodService)
+      .then(response => {
+        console.log(response)
+        this.$router.push({ name: 'login' })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

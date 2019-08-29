@@ -64,7 +64,7 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input
-            v-model="foodService.password"
+            v-model="foodService.user.password"
             type="password"
             class="form-control"
             id="password"
@@ -153,17 +153,20 @@ export default class FoodServiceForm extends Vue {
       return false
     }
 
-    if (foodService.password === '') {
+    if (foodService.user.password === '') {
       this.errorMessage = 'Password is required'
 
       return false
     }
 
-    if (foodService.password !== this.repeatPassword) {
+    if (foodService.user.password !== this.repeatPassword) {
       this.errorMessage = "Passwords don't match"
 
       return false
     }
+
+    foodService.user.email = foodService.email
+    foodService.active = true
 
     return true
   }

@@ -31,6 +31,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "FoodServiceData.findAll", query = "SELECT f FROM FoodServiceData f"),
     @NamedQuery(name = "FoodServiceData.findByEmail", query = "SELECT f FROM FoodServiceData f WHERE f.email = :email"),
+    @NamedQuery(name = "FoodServiceData.findByEmailAndPassword", query = "SELECT f FROM FoodServiceData f WHERE f.email = :email and f.userData.email = :email and f.userData.password = :password"),
     @NamedQuery(name = "FoodServiceData.findByName", query = "SELECT f FROM FoodServiceData f WHERE f.name = :name"),
     @NamedQuery(name = "FoodServiceData.findByAddress", query = "SELECT f FROM FoodServiceData f WHERE f.address = :address"),
     @NamedQuery(name = "FoodServiceData.findByFoodType", query = "SELECT f FROM FoodServiceData f WHERE f.foodType = :foodType"),

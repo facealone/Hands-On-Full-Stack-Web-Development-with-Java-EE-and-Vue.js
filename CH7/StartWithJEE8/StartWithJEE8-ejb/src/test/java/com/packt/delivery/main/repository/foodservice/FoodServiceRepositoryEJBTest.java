@@ -5,6 +5,7 @@ import com.packt.delivery.abstraction.entity.User;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,7 +56,7 @@ public class FoodServiceRepositoryEJBTest {
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
     }
     
-     @Test
+    @Test
     public void getByFoodType() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
@@ -65,5 +66,29 @@ public class FoodServiceRepositoryEJBTest {
         List<FoodService> foodServices = foodServiceRepositoryEJB.getByFoodType("PIZZA");
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
+    }
+    
+    @Test
+    public void getById() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        when(foodServiceRepositoryJPA.getById("email1@email.com")).thenReturn(Optional.of(foodService));
+                
+        Optional<FoodService> foodServiceResult = foodServiceRepositoryEJB.getById("email1@email.com");
+        
+        assertThat(foodServiceResult.get()).isEqualTo(foodService);
+    }
+    
+    @Test
+    public void getByEmailAndPassword() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        when(foodServiceRepositoryJPA.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodService));
+                
+        Optional<FoodService> foodServiceResult = foodServiceRepositoryEJB.getByEmailAndPassword("email1@email.com", "pass1");
+        
+        assertThat(foodServiceResult.get()).isEqualTo(foodService);
     }
 }

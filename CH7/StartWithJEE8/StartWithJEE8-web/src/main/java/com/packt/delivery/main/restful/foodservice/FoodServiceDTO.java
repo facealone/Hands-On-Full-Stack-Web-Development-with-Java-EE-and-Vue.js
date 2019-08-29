@@ -3,8 +3,10 @@ package com.packt.delivery.main.restful.foodservice;
 import com.packt.delivery.abstraction.entity.FoodService;
 import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodServiceDTO implements Serializable {
@@ -38,7 +40,9 @@ public class FoodServiceDTO implements Serializable {
         this.address = foodService.getAddress();
         this.foodType = foodService.getFoodType();
         this.active = foodService.getActive();
-        this.foodProductList = foodService.getFoodProductList().stream()
+        this.foodProductList = Optional.ofNullable(foodService.getFoodProductList())
+                .orElse(Collections.emptyList())
+                .stream()
                 .map(f -> new FoodProductDTO(f))
                 .collect(Collectors.toList());
         this.deliveryFee = foodService.getDeliveryFee();
@@ -46,7 +50,9 @@ public class FoodServiceDTO implements Serializable {
     }
     
     public FoodService toFoodService(){
-        return new FoodService(this.email, this.name, this.address, this.foodType, this.deliveryFee, this.active, this.user.toUser(), this.foodProductList.stream()
+        return new FoodService(this.email, this.name, this.address, this.foodType, this.deliveryFee, this.active, this.user.toUser(), Optional.ofNullable(this.foodProductList)
+                .orElse(Collections.emptyList())
+                .stream()
                 .map(FoodProductDTO::toFoodProduct)
                 .collect(Collectors.toList()));
     }

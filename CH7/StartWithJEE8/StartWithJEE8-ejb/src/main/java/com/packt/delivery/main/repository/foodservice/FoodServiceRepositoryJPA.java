@@ -61,6 +61,17 @@ public class FoodServiceRepositoryJPA implements FoodServiceRepository {
                 .map(this::convertFoodServiceDataToFoodService);
     }
     
+    @Override
+    public Optional<FoodService> getByEmailAndPassword(String email, String password) {
+        return entityManager.createNamedQuery("FoodServiceData.findByEmailAndPassword", FoodServiceData.class)
+                .setParameter("email", email)
+                .setParameter("password", password)
+                .getResultList()
+                .stream()
+                .map(this::convertFoodServiceDataToFoodService)
+                .findFirst();
+    }
+    
     private FoodService convertFoodServiceDataToFoodService(FoodServiceData foodServiceData) {
         User user = new User(foodServiceData.getUserData().getEmail(), foodServiceData.getUserData().getPassword());
         

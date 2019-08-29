@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface FoodServiceRepository extends Repository<FoodService>{
     List<FoodService> getByFoodType(String foodType);
     Optional<FoodService> getById(String email);
+    Optional<FoodService> getByEmailAndPassword(String email, String password);
 }

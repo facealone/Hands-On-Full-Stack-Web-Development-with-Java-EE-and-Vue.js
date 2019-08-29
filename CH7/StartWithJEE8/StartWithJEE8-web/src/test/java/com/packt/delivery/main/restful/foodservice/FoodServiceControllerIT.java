@@ -113,4 +113,22 @@ public class FoodServiceControllerIT {
         
         assertThat(foodService).isEqualTo(foodServiceExpected);
     }
+    
+    @Test
+    @RunAsClient
+    @InSequence(5)
+    public void login(@ArquillianResteasyResource("api") WebTarget webTarget) {        
+        UserDTO user = new UserDTO("email1@email.com", "pass1");
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        Response response = webTarget
+                .path("foodservices")
+                .path("login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        
+        FoodServiceDTO foodService = response.readEntity(FoodServiceDTO.class);
+        
+        assertThat(foodService).isEqualTo(foodServiceExpected);
+    }
 }

@@ -6,6 +6,7 @@ import { Item } from './entities/Item'
 import { State } from './entities/State'
 import { Cart } from './entities/Cart'
 import { Delivery } from './entities/Delivery'
+import { User } from './entities/User'
 
 Vue.use(Vuex)
 
@@ -23,14 +24,14 @@ const stateBase: State = {
     FoodProduct.newFoodProduct(10, 'Rice', 'Rice double', 11, 'http://localhost:8080/images/product/10.jpeg', 'email2@email.com')
   ],
   foodServices: [
-    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'http://localhost:8080/images/services/1.jpg', 'pass'),
-    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 2, 'http://localhost:8080/images/services/2.jpg', 'pass'),
-    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 2, 'http://localhost:8080/images/services/3.jpg', 'pass'),
-    FoodService.newFoodService('email4@email.com', 'Service4', 'Street5', 'CHINESE', 3, 'http://localhost:8080/images/services/4.jpg', 'pass'),
-    FoodService.newFoodService('email5@email.com', 'Service5', 'Street6', 'CHICKEN', 5, 'http://localhost:8080/images/services/5.jpg', 'pass'),
-    FoodService.newFoodService('email6@email.com', 'Service6', 'Street7', 'CHICKEN', 3, 'http://localhost:8080/images/services/6.jpg', 'pass'),
-    FoodService.newFoodService('email7@email.com', 'Service7', 'Street8', 'PASTA', 1, 'http://localhost:8080/images/services/7.jpg', 'pass'),
-    FoodService.newFoodService('email8@email.com', 'Service8', 'Street9', 'PASTA', 3, 'http://localhost:8080/images/services/8.jpg', 'pass')
+    FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'http://localhost:8080/images/services/1.jpg', User.newUser('email1@email.com', 'pass'), true),
+    FoodService.newFoodService('email2@email.com', 'Service2', 'Street2', 'PIZZA', 2, 'http://localhost:8080/images/services/2.jpg', User.newUser('email2@email.com', 'pass'), true),
+    FoodService.newFoodService('email3@email.com', 'Service3', 'Street3', 'CHINESE', 2, 'http://localhost:8080/images/services/3.jpg', User.newUser('email3@email.com', 'pass'), true),
+    FoodService.newFoodService('email4@email.com', 'Service4', 'Street5', 'CHINESE', 3, 'http://localhost:8080/images/services/4.jpg', User.newUser('email4@email.com', 'pass'), true),
+    FoodService.newFoodService('email5@email.com', 'Service5', 'Street6', 'CHICKEN', 5, 'http://localhost:8080/images/services/5.jpg', User.newUser('email5@email.com', 'pass'), true),
+    FoodService.newFoodService('email6@email.com', 'Service6', 'Street7', 'CHICKEN', 3, 'http://localhost:8080/images/services/6.jpg', User.newUser('email6@email.com', 'pass'), true),
+    FoodService.newFoodService('email7@email.com', 'Service7', 'Street8', 'PASTA', 1, 'http://localhost:8080/images/services/7.jpg', User.newUser('email7@email.com', 'pass'), true),
+    FoodService.newFoodService('email8@email.com', 'Service8', 'Street9', 'PASTA', 3, 'http://localhost:8080/images/services/8.jpg', User.newUser('email8@email.com', 'pass'), true)
   ],
   cart: Cart.emptyCart(),
   deliveries: [],
@@ -103,7 +104,7 @@ export default new Vuex.Store<State>({
       return state.foodServices.filter(foodService => foodType === 'ALL' || foodService.foodType === foodType).slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
     },
     getFoodServiceByEmailAndPassword: (state) => (email:string, password:string) => {
-      return state.foodServices.find(foodService => foodService.email === email && foodService.password === password)
+      return state.foodServices.find(foodService => foodService.email === email && foodService.user.password === password)
     },
     getCurrentFoodServiceLoggedIn: (state) => () => {
       return state.currentFoodServiceLoggedIn
