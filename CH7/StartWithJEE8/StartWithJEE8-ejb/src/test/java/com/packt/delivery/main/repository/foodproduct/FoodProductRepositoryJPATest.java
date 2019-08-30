@@ -110,9 +110,11 @@ public class FoodProductRepositoryJPATest {
         
         when(typedQuery.getResultList()).thenReturn(Arrays.asList(foodProductData));
         when(typedQuery.setParameter("email", "email1@email.com")).thenReturn(typedQuery);
+        when(typedQuery.setFirstResult(20)).thenReturn(typedQuery);
+        when(typedQuery.setMaxResults(20)).thenReturn(typedQuery);
         when(entityManager.createNamedQuery("FoodProductData.findByFoodService", FoodProductData.class)).thenReturn(typedQuery);
                 
-        List<FoodProduct> foodProducts = foodProductRepositoryJPA.getByFoodService("email1@email.com");
+        List<FoodProduct> foodProducts = foodProductRepositoryJPA.getByFoodService("email1@email.com", 2, 20);
         
         assertThat(foodProducts).isEqualTo(Arrays.asList(newFoodProduct));
     }

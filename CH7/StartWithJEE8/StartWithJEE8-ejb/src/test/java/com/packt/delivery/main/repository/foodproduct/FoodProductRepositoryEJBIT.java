@@ -82,7 +82,7 @@ public class FoodProductRepositoryEJBIT {
         
         FoodProduct foodProduct2 = new FoodProduct(2, "Pizza", 23500, "Cheese Pizza Old", true, "imageUrl2", "email1@email.com");
         
-        List<FoodProduct> foodProducts = foodProductRepository.getByFoodService("email1@email.com");
+        List<FoodProduct> foodProducts = foodProductRepository.getByFoodService("email1@email.com", 1, 20);
 
         assertThat(foodProducts).isEqualTo(Arrays.asList(foodProduct1, foodProduct2));
     }

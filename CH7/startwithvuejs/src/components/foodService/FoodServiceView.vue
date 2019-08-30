@@ -113,9 +113,7 @@ export default class FoodServiceView extends Vue {
   }
 
   getFoodService (email: string) {
-    let foodServiceToUpdate: FoodService = this.$store.getters.getFoodServiceByEmail(
-      email
-    )
+    let foodServiceToUpdate: FoodService = this.$store.getters.getCurrentFoodServiceLoggedIn()
 
     this.foodService.copyFoodService(foodServiceToUpdate)
   }

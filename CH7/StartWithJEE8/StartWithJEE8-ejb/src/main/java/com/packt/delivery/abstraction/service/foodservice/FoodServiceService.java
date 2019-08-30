@@ -11,5 +11,5 @@ public interface FoodServiceService {
     FoodService save(FoodService foodService);
     FoodService update(FoodService foodService);
     FoodService deActivate(String email);
-    List<FoodService> getByFoodType(String foodType);
+    List<FoodService> getByFoodType(String foodType, Integer page, Integer pageSize);
 }

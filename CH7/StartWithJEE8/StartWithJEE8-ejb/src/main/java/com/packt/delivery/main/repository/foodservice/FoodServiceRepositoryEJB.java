@@ -22,6 +22,11 @@ public class FoodServiceRepositoryEJB implements FoodServiceRepository{
     }
 
     @Override
+    public List<FoodService> getAll(Integer page, Integer pageSize) {
+        return foodServiceRepositoryJPA.getAll(page, pageSize);
+    }
+    
+    @Override
     public FoodService save(FoodService foodService) {
         return foodServiceRepositoryJPA.save(foodService);
     }
@@ -32,8 +37,8 @@ public class FoodServiceRepositoryEJB implements FoodServiceRepository{
     }
 
     @Override
-    public List<FoodService> getByFoodType(String foodType) {
-        return foodServiceRepositoryJPA.getByFoodType(foodType);
+    public List<FoodService> getByFoodType(String foodType, Integer page, Integer pageSize) {
+        return foodServiceRepositoryJPA.getByFoodType(foodType, page, pageSize);
     }
 
     @Override

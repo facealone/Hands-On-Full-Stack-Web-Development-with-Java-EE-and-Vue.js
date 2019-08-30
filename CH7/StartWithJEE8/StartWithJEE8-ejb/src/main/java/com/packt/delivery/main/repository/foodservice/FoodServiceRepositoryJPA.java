@@ -44,11 +44,23 @@ public class FoodServiceRepositoryJPA implements FoodServiceRepository {
                 .collect(Collectors.toList());
     }
     
+    @Override
+    public List<FoodService> getAll(Integer page, Integer pageSize) {
+        return entityManager.createNamedQuery("FoodServiceData.findAll", FoodServiceData.class)
+                .setFirstResult((page - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList()
+                .stream()
+                .map(this::convertFoodServiceDataToFoodService)
+                .collect(Collectors.toList());
+    }    
 
     @Override
-    public List<FoodService> getByFoodType(String foodType) {
+    public List<FoodService> getByFoodType(String foodType, Integer page, Integer pageSize) {
         return entityManager.createNamedQuery("FoodServiceData.findByFoodType", FoodServiceData.class)
                 .setParameter("foodType", foodType)
+                .setFirstResult((page - 1) * pageSize)
+                .setMaxResults(pageSize)
                 .getResultList()
                 .stream()
                 .map(this::convertFoodServiceDataToFoodService)

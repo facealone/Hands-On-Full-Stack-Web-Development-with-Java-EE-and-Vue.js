@@ -45,6 +45,8 @@ public class FoodServiceControllerIT {
         Response response = webTarget
                 .path("foodservices")
                 .queryParam("foodType", "PIZZA")
+                .queryParam("page", "1")
+                .queryParam("pageSize", "20")
                 .request(MediaType.APPLICATION_JSON)
                 .get();
         

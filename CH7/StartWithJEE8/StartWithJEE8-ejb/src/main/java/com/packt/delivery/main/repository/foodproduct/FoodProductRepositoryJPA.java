@@ -45,9 +45,11 @@ public class FoodProductRepositoryJPA implements FoodProductRepository {
     }
     
     @Override
-    public List<FoodProduct> getByFoodService(String email) {
+    public List<FoodProduct> getByFoodService(String email, Integer page, Integer pageSize) {
         return entityManager.createNamedQuery("FoodProductData.findByFoodService", FoodProductData.class)
                 .setParameter("email", email)
+                .setMaxResults(pageSize)
+                .setFirstResult((page - 1) * pageSize)
                 .getResultList()
                 .stream()
                 .map(this::convertFoodProductDataToFoodProduct)

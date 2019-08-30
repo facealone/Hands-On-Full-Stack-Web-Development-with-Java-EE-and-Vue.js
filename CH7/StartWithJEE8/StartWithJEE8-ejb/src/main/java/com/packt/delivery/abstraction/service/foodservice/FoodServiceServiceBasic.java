@@ -37,13 +37,13 @@ public class FoodServiceServiceBasic implements FoodServiceService{
     }
 
     @Override
-    public List<FoodService> getByFoodType(String foodType) {
+    public List<FoodService> getByFoodType(String foodType, Integer page, Integer pageSize) {
         List<FoodService> foodServices = Collections.emptyList();
         
         if("ALL".equals(foodType)){
-            foodServices = foodServiceRepository.getAll();
+            foodServices = foodServiceRepository.getAll(page, pageSize);
         }else{
-            foodServices = foodServiceRepository.getByFoodType(foodType);            
+            foodServices = foodServiceRepository.getByFoodType(foodType, page, pageSize);            
         }
         
         return foodServices.stream()

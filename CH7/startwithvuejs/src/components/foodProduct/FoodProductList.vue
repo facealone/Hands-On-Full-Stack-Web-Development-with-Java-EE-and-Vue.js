@@ -42,6 +42,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import InfiniteLoading from 'vue-infinite-loading'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { FoodProduct } from '../../entities/FoodProduct'
+import { FoodProductService } from '../../services/FoodProductService'
 
 @Component({
   components: {
@@ -54,20 +55,35 @@ export default class FoodProductList extends Vue {
   private page:number = 1
   private pageSize:number = 4
 
-  getFoodProducts (foodService: string, page:number, pageSize:number) {
+  /* getFoodProducts (foodService: string, page:number, pageSize:number) {
     return this.$store.getters.getFoodProductByFoodService(foodService, page, pageSize)
-  }
+  } */
 
   populateFoodProducts (state:any) {
-    let foodProductsLoaded:FoodProduct[] = this.getFoodProducts(this.foodService, this.page, this.pageSize)
+    FoodProductService.getByFoodService(this.foodService, this.page, this.pageSize)
+      .then(response => {
+        console.log(response)
+        let foodProductsLoaded:FoodProduct[] = response.data
+        console.log(foodProductsLoaded)
+        if (foodProductsLoaded.length) {
+          this.foodProducts.push(...foodProductsLoaded)
+          state.loaded()
+          this.page += 1
+        } else {
+          state.complete()
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
-    if (foodProductsLoaded.length) {
+    /* if (foodProductsLoaded.length) {
       this.foodProducts.push(...foodProductsLoaded)
       state.loaded()
       this.page += 1
     } else {
       state.complete()
-    }
+    } */
   }
 
   remove (foodProductToRemove:FoodProduct) {

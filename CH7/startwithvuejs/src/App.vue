@@ -8,7 +8,7 @@
       </div>
       <div class="nav" >
         <template v-if="!isLoggedIn"><router-link to="/login">Login</router-link></template>
-        <template v-if="isLoggedIn">Welcome {{loggedIn}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template>
+        <template v-if="isLoggedIn">Welcome {{loggedIn.email}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template>
       </div>
     </div>
     <router-view/>
@@ -21,7 +21,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class App extends Vue {
   get isLoggedIn () {
-    return this.$store.getters.getCurrentFoodServiceLoggedIn() !== ''
+    return this.$store.getters.getCurrentFoodServiceLoggedIn().email !== ''
   }
   get loggedIn () {
     return this.$store.getters.getCurrentFoodServiceLoggedIn()

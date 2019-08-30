@@ -72,9 +72,9 @@ public class FoodServiceServiceBasicTest {
         User userPizza = new User("email1@email.com", "pass1");
         FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, userPizza, Collections.emptyList());
        
-        when(foodServiceRepository.getByFoodType("PIZZA")).thenReturn(Arrays.asList(foodServicePizza, foodServicePizzaDeactivated));
+        when(foodServiceRepository.getByFoodType("PIZZA", 2, 20)).thenReturn(Arrays.asList(foodServicePizza, foodServicePizzaDeactivated));
         
-        List<FoodService> foodServices = foodServiceServiceBasic.getByFoodType("PIZZA");
+        List<FoodService> foodServices = foodServiceServiceBasic.getByFoodType("PIZZA", 2, 20);
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodServicePizza));
     }
@@ -90,9 +90,9 @@ public class FoodServiceServiceBasicTest {
         User userChicken = new User("email2@email.com", "pass1");
         FoodService foodServiceChicken = new FoodService("email2@email.com", "Chicken 25", "Street 9", "CHICKEN", 100, true, userChicken, Collections.emptyList());
         
-        when(foodServiceRepository.getAll()).thenReturn(Arrays.asList(foodServicePizza, foodServicePizzaDeactivated, foodServiceChicken));
+        when(foodServiceRepository.getAll(2, 20)).thenReturn(Arrays.asList(foodServicePizza, foodServicePizzaDeactivated, foodServiceChicken));
         
-        List<FoodService> foodServices = foodServiceServiceBasic.getByFoodType("ALL");
+        List<FoodService> foodServices = foodServiceServiceBasic.getByFoodType("ALL", 2, 20);
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodServicePizza, foodServiceChicken));
     }

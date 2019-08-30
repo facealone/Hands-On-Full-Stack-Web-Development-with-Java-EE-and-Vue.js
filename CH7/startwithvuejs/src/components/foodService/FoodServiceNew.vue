@@ -17,6 +17,7 @@ import { FoodServiceService } from '../../services/FoodServiceService'
 })
 export default class FoodServiceNew extends Vue {
   save (foodService:FoodService) {
+    foodService.active = true
     FoodServiceService.create(foodService)
       .then(response => {
         console.log(response)

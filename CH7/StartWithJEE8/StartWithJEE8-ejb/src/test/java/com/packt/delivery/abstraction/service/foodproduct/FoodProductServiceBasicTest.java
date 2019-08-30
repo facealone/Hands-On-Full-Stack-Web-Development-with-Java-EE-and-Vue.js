@@ -28,9 +28,9 @@ public class FoodProductServiceBasicTest {
         
         FoodProduct foodProduct2 = new FoodProduct(2, "Pizza", 23500, "Cheese Pizza Old", false, "imageUrl2", "email1@email.com");
         
-        when(foodProductRepository.getByFoodService("email1@email.com")).thenReturn(Arrays.asList(foodProduct1, foodProduct2));
+        when(foodProductRepository.getByFoodService("email1@email.com", 2, 20)).thenReturn(Arrays.asList(foodProduct1, foodProduct2));
         
-        List<FoodProduct> foodProducts = foodProductServiceBasic.getByFoodService("email1@email.com");
+        List<FoodProduct> foodProducts = foodProductServiceBasic.getByFoodService("email1@email.com", 2, 20);
         
         assertThat(foodProducts).isEqualTo(Arrays.asList(foodProduct1));
     }

@@ -50,8 +50,8 @@ public class FoodProductController{
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public List<FoodProductDTO> getByFoodService(@QueryParam("foodService") String foodService) {
-        return foodProductService.getByFoodService(foodService)
+    public List<FoodProductDTO> getByFoodService(@QueryParam("foodService") String foodService, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
+        return foodProductService.getByFoodService(foodService, page, pageSize)
                 .stream()
                 .map(f -> new FoodProductDTO(f))
                 .collect(Collectors.toList());

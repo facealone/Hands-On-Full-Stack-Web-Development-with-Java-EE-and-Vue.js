@@ -8,6 +8,6 @@ export class State {
     foodServices: FoodService[] = [];
     cart: Cart = Cart.emptyCart()
     deliveries: Delivery [] = []
-    currentFoodServiceLoggedIn: string = '';
+    currentFoodServiceLoggedIn: FoodService = FoodService.emptyFoodService();
     currentDeliveryEmail: string = '';
 }

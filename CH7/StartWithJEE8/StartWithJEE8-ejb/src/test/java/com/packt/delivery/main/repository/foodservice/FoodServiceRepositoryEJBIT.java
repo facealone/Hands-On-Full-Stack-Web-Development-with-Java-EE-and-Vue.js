@@ -49,6 +49,17 @@ public class FoodServiceRepositoryEJBIT {
     
     @Test
     @InSequence(2)
+    public void getAll_pagination_same() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        List<FoodService> foodServices = foodServiceRepository.getAll(1, 20);
+
+        assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
+    }
+    
+    @Test
+    @InSequence(3)
     public void save_new_getAll() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
@@ -64,7 +75,7 @@ public class FoodServiceRepositoryEJBIT {
     }
     
     @Test
-    @InSequence(3)
+    @InSequence(4)
     public void update_state_updated() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
@@ -80,18 +91,18 @@ public class FoodServiceRepositoryEJBIT {
     }
     
     @Test
-    @InSequence(4)
+    @InSequence(5)
     public void getByFoodType_foodType_list() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
         
-        List<FoodService> foodServices = foodServiceRepository.getByFoodType("PIZZA");
+        List<FoodService> foodServices = foodServiceRepository.getByFoodType("PIZZA", 1, 20);
 
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
     }
     
     @Test
-    @InSequence(5)
+    @InSequence(6)
     public void getById_email_foodService() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
@@ -102,7 +113,7 @@ public class FoodServiceRepositoryEJBIT {
     }
     
     @Test
-    @InSequence(6)
+    @InSequence(7)
     public void getByEmailAndPassword_emailAndPassword_foodService() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());

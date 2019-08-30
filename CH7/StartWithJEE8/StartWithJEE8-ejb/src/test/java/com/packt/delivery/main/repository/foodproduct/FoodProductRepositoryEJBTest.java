@@ -54,9 +54,9 @@ public class FoodProductRepositoryEJBTest {
     public void getByEmailAndState() {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
         
-        when(foodProductRepositoryJPA.getByFoodService("email1@email.com")).thenReturn(Arrays.asList(foodProduct));
+        when(foodProductRepositoryJPA.getByFoodService("email1@email.com", 2, 20)).thenReturn(Arrays.asList(foodProduct));
                 
-        List<FoodProduct> foodProducts = foodProductRepositoryEJB.getByFoodService("email1@email.com");
+        List<FoodProduct> foodProducts = foodProductRepositoryEJB.getByFoodService("email1@email.com", 2, 20);
         
         assertThat(foodProducts).isEqualTo(Arrays.asList(foodProduct));
     }

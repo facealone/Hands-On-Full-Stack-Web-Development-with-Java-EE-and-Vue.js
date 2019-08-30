@@ -67,7 +67,7 @@
             Select file
           </file-upload>
           <div class="image">
-            <img class="img-fluid img-thumbnail" :src="foodProduct.image"/>
+            <img class="img-fluid img-thumbnail" :src="foodProduct.imageUrl"/>
           </div>
         </div>
         <div class="form-group">
@@ -130,7 +130,7 @@ export default class FoodProductForm extends Vue {
       return false
     }
 
-    if (foodProduct.image === undefined) {
+    if (foodProduct.imageUrl === undefined) {
       this.errorMessage = 'Image is required'
 
       return false
@@ -143,7 +143,8 @@ export default class FoodProductForm extends Vue {
       let reader = new FileReader()
 
       reader.onload = (e:any) => {
-        this.foodProduct.image = e.target.result
+        // this.foodProduct.imageUrl = e.target.result
+        this.foodProduct.imageUrl = 'imageurl'
       }
       reader.readAsDataURL(newFile.file)
     }

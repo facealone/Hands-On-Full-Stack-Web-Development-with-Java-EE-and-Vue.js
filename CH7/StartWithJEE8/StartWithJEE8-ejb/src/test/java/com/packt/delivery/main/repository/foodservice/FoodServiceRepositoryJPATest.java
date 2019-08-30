@@ -108,6 +108,34 @@ public class FoodServiceRepositoryJPATest {
     }
     
     @Test
+    public void getAllPagination() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        UserData userData = new UserData();
+        userData.setEmail(user.getEmail());
+        userData.setPassword(user.getPassword());
+        
+        FoodServiceData foodServiceData = new FoodServiceData();
+        foodServiceData.setActive(foodService.getActive());
+        foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
+        foodServiceData.setEmail(foodService.getEmail());
+        foodServiceData.setFoodType(foodService.getFoodType());
+        foodServiceData.setName(foodService.getName());
+        foodServiceData.setUserData(userData);
+        
+        when(typedQuery.setFirstResult(20)).thenReturn(typedQuery);
+        when(typedQuery.setMaxResults(20)).thenReturn(typedQuery);
+        when(typedQuery.getResultList()).thenReturn(Arrays.asList(foodServiceData));
+        when(entityManager.createNamedQuery("FoodServiceData.findAll", FoodServiceData.class)).thenReturn(typedQuery);
+                
+        List<FoodService> foodServices = foodServiceRepositoryJPA.getAll(2, 20);
+        
+        assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
+    }
+    
+    @Test
     public void getByFoodType() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
@@ -127,9 +155,11 @@ public class FoodServiceRepositoryJPATest {
         
         when(typedQuery.getResultList()).thenReturn(Arrays.asList(foodServiceData));
         when(typedQuery.setParameter("foodType", "PIZZA")).thenReturn(typedQuery);
+        when(typedQuery.setFirstResult(20)).thenReturn(typedQuery);
+        when(typedQuery.setMaxResults(20)).thenReturn(typedQuery);
         when(entityManager.createNamedQuery("FoodServiceData.findByFoodType", FoodServiceData.class)).thenReturn(typedQuery);
                 
-        List<FoodService> foodServices = foodServiceRepositoryJPA.getByFoodType("PIZZA");
+        List<FoodService> foodServices = foodServiceRepositoryJPA.getByFoodType("PIZZA", 2, 20);
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
     }

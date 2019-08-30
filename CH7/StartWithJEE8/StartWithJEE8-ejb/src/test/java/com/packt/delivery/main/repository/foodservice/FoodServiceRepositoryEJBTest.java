@@ -57,13 +57,25 @@ public class FoodServiceRepositoryEJBTest {
     }
     
     @Test
+    public void getAllPagination() {
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        when(foodServiceRepositoryJPA.getAll(2, 20)).thenReturn(Arrays.asList(foodService));
+                
+        List<FoodService> foodServices = foodServiceRepositoryEJB.getAll(2, 20);
+        
+        assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
+    }
+    
+    @Test
     public void getByFoodType() {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
         
-        when(foodServiceRepositoryJPA.getByFoodType("PIZZA")).thenReturn(Arrays.asList(foodService));
+        when(foodServiceRepositoryJPA.getByFoodType("PIZZA", 2, 20)).thenReturn(Arrays.asList(foodService));
                 
-        List<FoodService> foodServices = foodServiceRepositoryEJB.getByFoodType("PIZZA");
+        List<FoodService> foodServices = foodServiceRepositoryEJB.getByFoodType("PIZZA", 2, 20);
         
         assertThat(foodServices).isEqualTo(Arrays.asList(foodService));
     }

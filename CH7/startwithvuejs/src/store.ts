@@ -12,16 +12,16 @@ Vue.use(Vuex)
 
 const stateBase: State = {
   foodProducts: [
-    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 16, 'http://localhost:8080/images/product/1.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 12, 'http://localhost:8080/images/product/2.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 14, 'http://localhost:8080/images/product/3.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(4, 'Chicken', 'Chicken small', 11, 'http://localhost:8080/images/product/4.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(5, 'Chicken huge', 'Chicken huge', 14, 'http://localhost:8080/images/product/5.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(6, 'Vegan', 'Vegan huge', 15, 'http://localhost:8080/images/product/6.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(7, 'Hawaiana', 'Hawaiana huge', 14, 'http://localhost:8080/images/product/7.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(8, 'From House', 'From House', 10, 'http://localhost:8080/images/product/8.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(9, 'Vegetarian', 'Vegetarian', 14, 'http://localhost:8080/images/product/9.jpeg', 'email1@email.com'),
-    FoodProduct.newFoodProduct(10, 'Rice', 'Rice double', 11, 'http://localhost:8080/images/product/10.jpeg', 'email2@email.com')
+    FoodProduct.newFoodProduct(1, 'Napolitana', 'Napolitana and apple', 16, 'http://localhost:8080/images/product/1.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(2, 'Meat', 'Meat small', 12, 'http://localhost:8080/images/product/2.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(3, 'Cheese', 'Cheese huge', 14, 'http://localhost:8080/images/product/3.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(4, 'Chicken', 'Chicken small', 11, 'http://localhost:8080/images/product/4.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(5, 'Chicken huge', 'Chicken huge', 14, 'http://localhost:8080/images/product/5.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(6, 'Vegan', 'Vegan huge', 15, 'http://localhost:8080/images/product/6.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(7, 'Hawaiana', 'Hawaiana huge', 14, 'http://localhost:8080/images/product/7.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(8, 'From House', 'From House', 10, 'http://localhost:8080/images/product/8.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(9, 'Vegetarian', 'Vegetarian', 14, 'http://localhost:8080/images/product/9.jpeg', 'email1@email.com', true),
+    FoodProduct.newFoodProduct(10, 'Rice', 'Rice double', 11, 'http://localhost:8080/images/product/10.jpeg', 'email2@email.com', true)
   ],
   foodServices: [
     FoodService.newFoodService('email1@email.com', 'Service1', 'Street1', 'PIZZA', 1, 'http://localhost:8080/images/services/1.jpg', User.newUser('email1@email.com', 'pass'), true),
@@ -35,7 +35,7 @@ const stateBase: State = {
   ],
   cart: Cart.emptyCart(),
   deliveries: [],
-  currentFoodServiceLoggedIn: '',
+  currentFoodServiceLoggedIn: FoodService.emptyFoodService(),
   currentDeliveryEmail: ''
 }
 
@@ -69,7 +69,7 @@ export default new Vuex.Store<State>({
 
       foodService!.copyFoodService(foodServiceToUpdate)
     },
-    setCurrentFoodServiceLoggedIn (state:State, foodService:string) {
+    setCurrentFoodServiceLoggedIn (state:State, foodService:FoodService) {
       state.currentFoodServiceLoggedIn = foodService
     },
     setCurrentDeliveryEmail (state:State, currentDeliveryEmail:string) {

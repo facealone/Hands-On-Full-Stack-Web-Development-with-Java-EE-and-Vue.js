@@ -67,9 +67,9 @@ export default class LoginForm extends Vue {
           this.errorMessage = 'Email or Password are wrong'
         } else {
           // let data = JSON.parse(response.data)
-          let foodService: FoodService = Object.assign(FoodService.emptyFoodService(), response.data)
+          let foodService: FoodService = response.data
           console.log(foodService)
-          this.$store.commit('setCurrentFoodServiceLoggedIn', foodService.email)
+          this.$store.commit('setCurrentFoodServiceLoggedIn', foodService)
           this.$router.push({ name: 'food_service_view', params: { email: this.email } })
         }
       })

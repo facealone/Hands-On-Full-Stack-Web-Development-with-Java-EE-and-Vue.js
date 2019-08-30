@@ -43,6 +43,8 @@ public class FoodProductControllerIT {
         Response response = webTarget
                 .path("foodproducts")
                 .queryParam("foodService", "email1@email.com")
+                .queryParam("page", "1")
+                .queryParam("pageSize", "20")
                 .request(MediaType.APPLICATION_JSON)
                 .get();
         

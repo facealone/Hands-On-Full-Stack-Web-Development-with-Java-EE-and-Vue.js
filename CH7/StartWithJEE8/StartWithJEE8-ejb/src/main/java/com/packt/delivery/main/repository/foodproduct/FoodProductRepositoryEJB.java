@@ -32,8 +32,8 @@ public class FoodProductRepositoryEJB implements FoodProductRepository{
     }
 
     @Override
-    public List<FoodProduct> getByFoodService(String email) {
-        return foodProductRepositoryJPA.getByFoodService(email);
+    public List<FoodProduct> getByFoodService(String email, Integer page, Integer pageSize) {
+        return foodProductRepositoryJPA.getByFoodService(email, page, pageSize);
     }
 
     @Override

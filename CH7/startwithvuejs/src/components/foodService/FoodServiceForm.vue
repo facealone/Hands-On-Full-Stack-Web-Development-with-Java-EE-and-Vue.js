@@ -166,7 +166,6 @@ export default class FoodServiceForm extends Vue {
     }
 
     foodService.user.email = foodService.email
-    foodService.active = true
 
     return true
   }
