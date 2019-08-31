@@ -18,4 +18,8 @@ export class FoodServiceService {
   static login (user: User) {
     return axios.post<FoodService>(`http://localhost:8080/StartWithJEE8-web/api/foodservices/login`, user)
   }
+
+  static getByFoodType (foodType:string, page:number, pageSize:number) {
+    return axios.get<Array<FoodService>>(`http://localhost:8080/StartWithJEE8-web/api/foodservices?foodType=${foodType}&page=${page}&pageSize=${pageSize}`)
+  }
 }

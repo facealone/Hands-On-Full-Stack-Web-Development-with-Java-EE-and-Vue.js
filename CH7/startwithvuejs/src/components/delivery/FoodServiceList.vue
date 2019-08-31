@@ -50,6 +50,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import InfiniteLoading from 'vue-infinite-loading'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { FoodService } from '../../entities/FoodService'
+import { FoodServiceService } from '../../services/FoodServiceService'
 
 @Component({
   components: {
@@ -74,15 +75,23 @@ export default class FoodServiceList extends Vue {
   }
 
   populateFoodProducts (state:any) {
-    let foodServicesLoaded:FoodService[] = this.getFoodServices(this.foodType, this.page, this.pageSize)
-
-    if (foodServicesLoaded.length) {
-      this.foodServices.push(...foodServicesLoaded)
-      state.loaded()
-      this.page += 1
-    } else {
-      state.complete()
-    }
+    // let foodServicesLoaded:FoodService[] = this.getFoodServices(this.foodType, this.page, this.pageSize)
+    FoodServiceService.getByFoodType(this.foodType, this.page, this.pageSize)
+      .then(response => {
+        console.log(response)
+        let foodServicesLoaded:FoodService[] = response.data
+        console.log(foodServicesLoaded)
+        if (foodServicesLoaded.length) {
+          this.foodServices.push(...foodServicesLoaded)
+          state.loaded()
+          this.page += 1
+        } else {
+          state.complete()
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

@@ -81,6 +81,8 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { FoodProduct } from '../../entities/FoodProduct'
 import { FoodService } from '../../entities/FoodService'
 import { Item } from '../../entities/Item'
+import { FoodProductService } from '../../services/FoodProductService'
+import { FoodServiceService } from '../../services/FoodServiceService'
 
 @Component({
   components: {
@@ -94,8 +96,17 @@ export default class FoodProductsByService extends Vue {
   private page:number = 1
   private pageSize:number = 4
 
-  mount () {
-    this.foodServiceData = this.$store.getters.getFoodServiceByEmail(this.foodService)
+  mounted () {
+    // this.foodServiceData = this.$store.getters.getFoodServiceByEmail(this.foodService)
+    FoodServiceService.getById(this.foodService)
+      .then(response => {
+        console.log(response)
+
+        this.foodServiceData = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   getFoodProducts (foodService: string, page:number, pageSize:number) {
@@ -103,15 +114,23 @@ export default class FoodProductsByService extends Vue {
   }
 
   populateFoodProducts (state:any) {
-    let itemsLoaded:Item[] = this.getFoodProducts(this.foodService, this.page, this.pageSize)
-
-    if (itemsLoaded.length) {
-      this.items.push(...itemsLoaded)
-      state.loaded()
-      this.page += 1
-    } else {
-      state.complete()
-    }
+    // let itemsLoaded:Item[] = this.getFoodProducts(this.foodService, this.page, this.pageSize)
+    FoodProductService.getByFoodService(this.foodService, this.page, this.pageSize)
+      .then(response => {
+        console.log(response)
+        let foodProductsLoaded:FoodProduct[] = response.data
+        console.log(foodProductsLoaded)
+        if (foodProductsLoaded.length) {
+          this.items.push(...foodProductsLoaded.map((foodProduct: FoodProduct) => Item.newItem(foodProduct, 0)))
+          state.loaded()
+          this.page += 1
+        } else {
+          state.complete()
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
   addToCart (item: Item) {
     this.$store.commit('saveItemToCart', item)

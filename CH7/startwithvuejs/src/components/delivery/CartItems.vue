@@ -97,6 +97,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Item } from '../../entities/Item'
 import { FoodService } from '../../entities/FoodService'
 import { Delivery } from '../../entities/Delivery'
+import { FoodServiceService } from '../../services/FoodServiceService'
+import { DeliveryService } from '../../services/DeliveryService'
 
 @Component
 export default class CartItems extends Vue {
@@ -116,9 +118,15 @@ export default class CartItems extends Vue {
   getCart () {
     this.items = this.$store.state.cart.items
     this.deliveryEmail = this.$store.getters.getCurrentDeliveryEmail()
-    this.foodServiceData = this.$store.getters.getFoodServiceByEmail(
-      this.foodService
-    )
+    FoodServiceService.getById(this.foodService)
+      .then(response => {
+        console.log(response)
+
+        this.foodServiceData = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   remove (itemToRemove:Item) {
@@ -138,8 +146,18 @@ export default class CartItems extends Vue {
       return false
     }
 
-    this.$store.commit('addDelivery', Delivery.newDelivery(this.$store.state.cart, this.address, this.deliveryEmail, this.phone, 'PENDING', this.total + this.foodServiceData.deliveryFee))
-    this.$router.push({ name: 'delivery_summary', params: { email: this.deliveryEmail } })
+    // this.$store.commit('addDelivery', Delivery.newDelivery(this.$store.state.cart, this.address, this.deliveryEmail, this.phone, 'PENDING', this.total + this.foodServiceData.deliveryFee))
+
+    let delivery = Delivery.newDelivery(this.$store.state.cart, this.address, this.deliveryEmail, this.phone, 'PENDING', this.total + this.foodServiceData.deliveryFee)
+
+    DeliveryService.request(delivery)
+      .then(response => {
+        console.log(response)
+        this.$router.push({ name: 'delivery_summary', params: { email: this.deliveryEmail } })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   get total () {

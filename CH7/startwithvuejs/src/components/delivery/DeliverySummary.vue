@@ -22,6 +22,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Delivery } from '../../entities/Delivery'
+import { DeliveryService } from '../../services/DeliveryService'
 
 @Component
 export default class DeliverySummary extends Vue {
@@ -34,7 +35,18 @@ export default class DeliverySummary extends Vue {
   }
 
   getDelivery () {
-    this.delivery = this.$store.getters.getDeliveryByEmail(this.email)
+    // this.delivery = this.$store.getters.getDeliveryByEmail(this.email)
+    DeliveryService.getDeliveriesByEmailAndState(this.email, 'PENDING')
+      .then(response => {
+        console.log(response)
+
+        if (response.data.length) {
+          this.delivery = response.data[0]
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

@@ -94,7 +94,7 @@ export default class FoodProductsByService extends Vue {
   private page:number = 1
   private pageSize:number = 4
 
-  mount () {
+  mounted () {
     this.foodServiceData = this.$store.getters.getFoodServiceByEmail(this.foodService)
   }
 
