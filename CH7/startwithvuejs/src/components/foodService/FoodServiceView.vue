@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-sm text-right">
         <router-link  class="btn btn-primary"
-          :to="{ name: 'food_service_update', params: { email: foodService.email }}"
+          :to="{ name: 'food_service_update', params: { email: email }}"
         >Update</router-link>
     </div>
     </div>
@@ -97,6 +97,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { FoodService } from '../../entities/FoodService'
 import FoodProductList from '@/components/foodProduct/FoodProductList.vue'
+import { FoodServiceService } from '../../services/FoodServiceService'
 
 @Component({
   components: {
@@ -113,9 +114,16 @@ export default class FoodServiceView extends Vue {
   }
 
   getFoodService (email: string) {
-    let foodServiceToUpdate: FoodService = this.$store.getters.getCurrentFoodServiceLoggedIn()
+    // let foodServiceToUpdate: FoodService = this.$store.getters.getCurrentFoodServiceLoggedIn()
+    FoodServiceService.getById(email)
+      .then(response => {
+        console.log(response)
 
-    this.foodService.copyFoodService(foodServiceToUpdate)
+        this.foodService = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

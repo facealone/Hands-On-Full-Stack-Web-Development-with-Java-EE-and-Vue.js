@@ -25,6 +25,18 @@ public class FoodServiceServiceBasicTest {
     private FoodServiceServiceBasic foodServiceServiceBasic;
     
     @Test
+    public void getById_found_ok(){
+        User user = new User("email1@email.com", "pass1");
+        FoodService foodService1 = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        
+        when(foodServiceRepository.getById("email1@email.com")).thenReturn(Optional.of(foodService1));
+        
+        Optional<FoodService> foodService = foodServiceRepository.getById("email1@email.com");
+        
+        assertThat(foodService).isEqualTo(Optional.of(foodService1));
+    }
+    
+    @Test
     public void save_passThrough_ok(){
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());

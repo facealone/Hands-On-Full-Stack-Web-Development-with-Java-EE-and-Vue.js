@@ -36,6 +36,17 @@ public class FoodProductServiceBasicTest {
     }
     
     @Test
+    public void getById_found_ok(){
+        FoodProduct foodProduct1 = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
+        
+        when(foodProductRepository.getById(1)).thenReturn(Optional.of(foodProduct1));
+        
+        Optional<FoodProduct> foodProduct = foodProductServiceBasic.getById(1);
+        
+        assertThat(foodProduct).isEqualTo(Optional.of(foodProduct1));
+    }
+    
+    @Test
     public void save_passThrough_ok(){
         FoodProduct foodProduct1 = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
         

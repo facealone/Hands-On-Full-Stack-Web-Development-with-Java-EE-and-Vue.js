@@ -107,4 +107,21 @@ public class FoodProductControllerIT {
         
         assertThat(updateFoodProduct).isEqualTo(expectedFoodProduct);
     }
+    
+    @Test
+    @RunAsClient
+    @InSequence(5)
+    public void getById(@ArquillianResteasyResource("api") WebTarget webTarget) {
+        FoodProductDTO foodProduct1 = new FoodProductDTO(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
+        
+        Response response = webTarget
+                .path("foodproducts")
+                .path("1")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        
+        FoodProductDTO foodProduct = response.readEntity(FoodProductDTO.class);
+        
+        assertThat(foodProduct).isEqualTo(foodProduct1);
+    }
 }

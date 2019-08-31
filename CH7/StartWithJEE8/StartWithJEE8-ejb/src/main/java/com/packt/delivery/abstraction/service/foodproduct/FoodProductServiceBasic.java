@@ -4,6 +4,7 @@ package com.packt.delivery.abstraction.service.foodproduct;
 import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.abstraction.repository.FoodProductRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodProductServiceBasic implements FoodProductService{
@@ -39,6 +40,11 @@ public class FoodProductServiceBasic implements FoodProductService{
         foodProduct.deActivate();
         
         return foodProductRepository.update(foodProduct);
+    }
+
+    @Override
+    public Optional<FoodProduct> getById(Integer id) {
+        return foodProductRepository.getById(id);
     }
     
 }

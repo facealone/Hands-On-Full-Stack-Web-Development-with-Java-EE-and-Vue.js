@@ -57,5 +57,11 @@ public class FoodServiceServiceBasic implements FoodServiceService{
                 .filter(FoodService::getActive);
         
     }
+
+    @Override
+    public Optional<FoodService> getById(String email) {
+        return foodServiceRepository.getById(email);
+    }
     
 }
+

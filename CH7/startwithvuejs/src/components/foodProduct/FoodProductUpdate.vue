@@ -26,15 +26,29 @@ export default class FoodProductUpdate extends Vue {
   }
 
   getFoodProduct (id:number) {
-    let foodProductToUpdate:FoodProduct = this.$store.getters.getFoodProductById(id)
+    // let foodProductToUpdate:FoodProduct = this.$store.getters.getFoodProductById(id)
+    FoodProductService.getById(id)
+      .then(response => {
+        console.log(response)
 
-    this.foodProduct.copyFoodProduct(foodProductToUpdate)
+        this.foodProduct = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   update (foodProduct:FoodProduct) {
-    this.$store.commit('updateFoodProduct', foodProduct)
+    // this.$store.commit('updateFoodProduct', foodProduct)
+    FoodProductService.update(foodProduct)
+      .then(response => {
+        console.log(response)
 
-    this.$router.push({ name: 'food_service_view', params: { email: foodProduct.foodService } })
+        this.$router.push({ name: 'food_service_view', params: { email: foodProduct.foodService } })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

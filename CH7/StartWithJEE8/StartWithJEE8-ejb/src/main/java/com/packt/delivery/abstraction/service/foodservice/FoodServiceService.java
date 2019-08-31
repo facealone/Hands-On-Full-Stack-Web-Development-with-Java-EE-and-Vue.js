@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface FoodServiceService {
     Optional<FoodService> login(User user);
+    Optional<FoodService> getById(String email);
     FoodService save(FoodService foodService);
     FoodService update(FoodService foodService);
     FoodService deActivate(String email);

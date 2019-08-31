@@ -3,6 +3,10 @@ import { FoodProduct } from '../entities/FoodProduct'
 import { User } from '../entities/User'
 
 export class FoodProductService {
+  static getById (id: number) {
+    return axios.get<FoodProduct>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts/${id}`)
+  }
+
   static create (foodProduct: FoodProduct) {
     return axios.post<FoodProduct>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts`, foodProduct)
   }

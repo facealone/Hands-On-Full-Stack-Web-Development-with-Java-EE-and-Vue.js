@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Stateless
 @LocalBean
@@ -55,5 +56,17 @@ public class FoodProductController{
                 .stream()
                 .map(f -> new FoodProductDTO(f))
                 .collect(Collectors.toList());
+    }
+    
+    @Path("{id}")
+    @GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getById(@PathParam("id") Integer id) {
+        return foodProductService.getById(id)
+                .map(f -> new FoodProductDTO(f))
+                .map(Response::ok)
+                .orElse(Response.status(Response.Status.NOT_FOUND))
+                .build();
     }
 }

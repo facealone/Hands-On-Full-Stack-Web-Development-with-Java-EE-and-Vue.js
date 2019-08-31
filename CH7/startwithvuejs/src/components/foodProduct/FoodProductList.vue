@@ -87,7 +87,19 @@ export default class FoodProductList extends Vue {
   }
 
   remove (foodProductToRemove:FoodProduct) {
-    this.$store.commit('removeFoodProduct', foodProductToRemove)
+    // this.$store.commit('removeFoodProduct', foodProductToRemove)
+
+    FoodProductService.deActivate(foodProductToRemove)
+      .then(response => {
+        console.log(response)
+
+        const index = this.foodProducts.findIndex(foodProduct => foodProduct.id === foodProductToRemove.id)
+
+        Vue.delete(this.foodProducts, index)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

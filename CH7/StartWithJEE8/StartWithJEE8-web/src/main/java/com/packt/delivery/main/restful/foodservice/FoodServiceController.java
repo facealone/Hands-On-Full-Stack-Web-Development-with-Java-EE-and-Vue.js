@@ -2,6 +2,7 @@
 package com.packt.delivery.main.restful.foodservice;
 
 import com.packt.delivery.abstraction.service.foodservice.FoodServiceService;
+import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.LocalBean;
@@ -67,6 +68,18 @@ public class FoodServiceController{
                 .map(f -> new FoodServiceDTO(f))
                 .map(Response::ok)
                 .orElseGet(Response::noContent)
+                .build();
+    }
+    
+    @Path("{email}")
+    @GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getById(@PathParam("email") String email) {
+        return foodServiceService.getById(email)
+                .map(f -> new FoodServiceDTO(f))
+                .map(Response::ok)
+                .orElse(Response.status(Response.Status.NOT_FOUND))
                 .build();
     }
 }
