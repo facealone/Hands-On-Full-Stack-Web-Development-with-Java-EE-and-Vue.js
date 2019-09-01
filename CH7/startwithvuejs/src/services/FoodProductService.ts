@@ -1,25 +1,24 @@
-import axios from 'axios'
+import Vue from 'vue'
 import { FoodProduct } from '../entities/FoodProduct'
-import { User } from '../entities/User'
 
 export class FoodProductService {
   static getById (id: number) {
-    return axios.get<FoodProduct>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts/${id}`)
+    return Vue.axios.get<FoodProduct>(`/foodproducts/${id}`)
   }
 
   static create (foodProduct: FoodProduct) {
-    return axios.post<FoodProduct>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts`, foodProduct)
+    return Vue.axios.post<FoodProduct>(`/foodproducts`, foodProduct)
   }
 
   static update (foodProduct: FoodProduct) {
-    return axios.put<FoodProduct>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts`, foodProduct)
+    return Vue.axios.put<FoodProduct>(`/foodproducts`, foodProduct)
   }
 
   static deActivate (foodProduct: FoodProduct) {
-    return axios.delete<FoodProduct>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts/${foodProduct.id}`)
+    return Vue.axios.delete<FoodProduct>(`/foodproducts/${foodProduct.id}`)
   }
 
   static getByFoodService (foodService: string, page:number, pageSize:number) {
-    return axios.get<Array<FoodProduct>>(`http://localhost:8080/StartWithJEE8-web/api/foodproducts?foodService=${foodService}&page=${page}&pageSize=${pageSize}`)
+    return Vue.axios.get<Array<FoodProduct>>(`/foodproducts?foodService=${foodService}&page=${page}&pageSize=${pageSize}`)
   }
 }
