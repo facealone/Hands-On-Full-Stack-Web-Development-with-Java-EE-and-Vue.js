@@ -11,6 +11,13 @@ const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080/StartWithJEE8-web/api'
 })
 
+axiosInstance.interceptors.response.use(response => {
+  return response
+}, error => {
+  Vue.toasted.error('Ops, an unexpected error occurred')
+  return Promise.reject(error)
+})
+
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(Toasted, { duration: 2000 })
