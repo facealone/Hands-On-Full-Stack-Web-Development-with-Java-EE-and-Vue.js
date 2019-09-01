@@ -1,9 +1,6 @@
 package com.packt.delivery.main.restful;
 
 import java.io.IOException;
-import javax.annotation.ManagedBean;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
