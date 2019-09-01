@@ -47,13 +47,6 @@
         <label>Total + Fee: {{foodServiceData.deliveryFee + total}}</label>
     </div>
   </div>
-  <div class="row" v-if="errorMessage">
-    <div class="col-sm">
-      <div class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-    </div>
-  </div>
   <div class="row">
     <div class="col-sm">
         <div class="form-group">
@@ -108,7 +101,6 @@ export default class CartItems extends Vue {
   private foodServiceData: FoodService = FoodService.emptyFoodService()
   private address: string = ''
   private phone: string = ''
-  private errorMessage:string = ''
 
   // lifecycle hook
   mounted () {
@@ -118,46 +110,44 @@ export default class CartItems extends Vue {
   getCart () {
     this.items = this.$store.state.cart.items
     this.deliveryEmail = this.$store.getters.getCurrentDeliveryEmail()
+
     FoodServiceService.getById(this.foodService)
       .then(response => {
-        console.log(response)
-
         this.foodServiceData = response.data
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 
   remove (itemToRemove:Item) {
     this.$store.commit('removeItemFromCart', itemToRemove)
+
+    this.$toasted.info(`Item deleted successfully`)
   }
 
   requestDelivery () {
-    if (this.address === '') {
-      this.errorMessage = 'Address is required'
+    let valid = true
 
-      return false
+    if (this.address === '') {
+      this.$toasted.error(`Address is required`)
+
+      valid = false
     }
 
     if (this.phone === '') {
-      this.errorMessage = 'Phone is required'
+      this.$toasted.error(`Phone is required`)
 
-      return false
+      valid = false
     }
 
-    // this.$store.commit('addDelivery', Delivery.newDelivery(this.$store.state.cart, this.address, this.deliveryEmail, this.phone, 'PENDING', this.total + this.foodServiceData.deliveryFee))
+    if (valid) {
+      let delivery = Delivery.newDelivery(this.$store.state.cart, this.address, this.deliveryEmail, this.phone, 'PENDING', this.total + this.foodServiceData.deliveryFee)
 
-    let delivery = Delivery.newDelivery(this.$store.state.cart, this.address, this.deliveryEmail, this.phone, 'PENDING', this.total + this.foodServiceData.deliveryFee)
+      DeliveryService.request(delivery)
+        .then(response => {
+          this.$toasted.info(`Delivery requested successfully`)
 
-    DeliveryService.request(delivery)
-      .then(response => {
-        console.log(response)
-        this.$router.push({ name: 'delivery_summary', params: { email: this.deliveryEmail } })
-      })
-      .catch(error => {
-        console.log(error)
-      })
+          this.$router.push({ name: 'delivery_summary', params: { email: this.deliveryEmail } })
+        })
+    }
   }
 
   get total () {

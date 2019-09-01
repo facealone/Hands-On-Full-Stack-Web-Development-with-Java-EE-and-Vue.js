@@ -3,9 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import BootstrapVue from 'bootstrap-vue'
+import Toasted from 'vue-toasted'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
+Vue.use(Toasted, { duration: 2000 })
 
 new Vue({
   router,

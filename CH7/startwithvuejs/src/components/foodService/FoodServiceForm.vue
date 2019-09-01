@@ -2,13 +2,6 @@
 <div>
   <div class="row">
     <div class="col-sm">
-      <div v-if="errorMessage" class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -120,7 +113,6 @@ export default class FoodServiceForm extends Vue {
   @Prop({ default: () => FoodService.emptyFoodService() }) private readonly foodService!: FoodService
 
   private repeatPassword:string = ''
-  private errorMessage:string = ''
 
   save () {
     if (this.isValid(this.foodService)) {
@@ -129,45 +121,47 @@ export default class FoodServiceForm extends Vue {
   }
 
   isValid (foodService:FoodService) {
-    if (foodService.name === '') {
-      this.errorMessage = 'Name is required'
+    let valid = true
 
-      return false
+    if (foodService.name === '') {
+      this.$toasted.error(`Name is required`)
+
+      valid = false
     }
 
     if (foodService.email === '') {
-      this.errorMessage = 'Email is required'
+      this.$toasted.error(`Email is required`)
 
-      return false
+      valid = false
     }
 
     if (foodService.deliveryFee === 0.0) {
-      this.errorMessage = 'Delivery fee is required'
+      this.$toasted.error(`Delivery fee is required`)
 
-      return false
+      valid = false
     }
 
     if (foodService.foodType === '') {
-      this.errorMessage = 'Food type is required'
+      this.$toasted.error(`Food type is required`)
 
-      return false
+      valid = false
     }
 
     if (foodService.user.password === '') {
-      this.errorMessage = 'Password is required'
+      this.$toasted.error(`Password is required`)
 
-      return false
+      valid = false
     }
 
     if (foodService.user.password !== this.repeatPassword) {
-      this.errorMessage = "Passwords don't match"
+      this.$toasted.error(`Passwords don't match`)
 
-      return false
+      valid = false
     }
 
     foodService.user.email = foodService.email
 
-    return true
+    return valid
   }
 
   inputFile (newFile:any, oldFile:any) {

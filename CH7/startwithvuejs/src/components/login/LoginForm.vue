@@ -2,13 +2,6 @@
 <div>
   <div class="row">
     <div class="col-sm">
-      <div v-if="errorMessage" class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -48,33 +41,20 @@ import { User } from '../../entities/User'
 export default class LoginForm extends Vue {
   private email:string = ''
   private password:string = ''
-  private errorMessage:string = ''
 
   login () {
-    /* let foodService:FoodService = this.$store.getters.getFoodServiceByEmailAndPassword(this.email, this.password)
-
-    if (foodService) {
-      this.$store.commit('setCurrentFoodServiceLoggedIn', foodService.email)
-      this.$router.push({ name: 'food_service_view', params: { email: this.email } })
-    } else {
-      this.errorMessage = 'Email or Password are wrong'
-    } */
-
     FoodServiceService.login(User.newUser(this.email, this.password))
       .then(response => {
-        console.log(response)
         if (response.status === 204) {
-          this.errorMessage = 'Email or Password are wrong'
+          this.$toasted.error('Email or Password are wrong')
         } else {
-          // let data = JSON.parse(response.data)
           let foodService: FoodService = response.data
-          console.log(foodService)
+
+          this.$toasted.info(`Welcome ${foodService.name}`)
+
           this.$store.commit('setCurrentFoodServiceLoggedIn', foodService)
           this.$router.push({ name: 'food_service_view', params: { email: this.email } })
         }
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

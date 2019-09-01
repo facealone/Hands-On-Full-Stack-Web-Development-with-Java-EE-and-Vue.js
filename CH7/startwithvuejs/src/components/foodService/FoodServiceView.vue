@@ -114,15 +114,9 @@ export default class FoodServiceView extends Vue {
   }
 
   getFoodService (email: string) {
-    // let foodServiceToUpdate: FoodService = this.$store.getters.getCurrentFoodServiceLoggedIn()
     FoodServiceService.getById(email)
       .then(response => {
-        console.log(response)
-
         this.foodService = response.data
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

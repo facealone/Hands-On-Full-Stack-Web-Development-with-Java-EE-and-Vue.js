@@ -18,13 +18,12 @@ import { FoodServiceService } from '../../services/FoodServiceService'
 export default class FoodServiceNew extends Vue {
   save (foodService:FoodService) {
     foodService.active = true
+
     FoodServiceService.create(foodService)
       .then(response => {
-        console.log(response)
+        this.$toasted.info(`Save successfully`)
+
         this.$router.push({ name: 'login' })
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

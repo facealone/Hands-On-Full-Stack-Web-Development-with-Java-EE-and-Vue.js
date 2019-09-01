@@ -26,28 +26,18 @@ export default class FoodServiceUpdate extends Vue {
   }
 
   getFoodService (email:string) {
-    // let foodServiceToUpdate:FoodService = this.$store.getters.getFoodServiceByEmail(email)
     FoodServiceService.getById(email)
       .then(response => {
-        console.log(response)
-
         this.foodService = response.data
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 
   update (foodService:FoodService) {
-    // this.$store.commit('updateFoodService', foodService)
     FoodServiceService.update(foodService)
       .then(response => {
-        console.log(response)
+        this.$toasted.info(`Update successfully`)
 
         this.$router.push({ name: 'food_service_view' })
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

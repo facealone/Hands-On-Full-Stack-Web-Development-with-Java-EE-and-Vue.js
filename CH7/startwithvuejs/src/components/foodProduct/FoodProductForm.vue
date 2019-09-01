@@ -2,13 +2,6 @@
 <div>
   <div class="row">
     <div class="col-sm">
-      <div v-if="errorMessage" class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
         <div class="form-group" v-if="updateMode">
           <label for="id">Id</label>
           <input
@@ -102,7 +95,6 @@ export default class FoodProductForm extends Vue {
   @Prop() private readonly foodService!: string
   @Prop({ default: () => FoodProduct.emptyFoodProduct() }) private readonly foodProduct!: FoodProduct
   private files:string[] = []
-  private errorMessage:string = ''
 
   save () {
     if (this.isValid(this.foodProduct)) {
@@ -112,30 +104,33 @@ export default class FoodProductForm extends Vue {
   }
 
   isValid (foodProduct:FoodProduct) {
-    if (foodProduct.name === '') {
-      this.errorMessage = 'Name is required'
+    let valid = true
 
-      return false
+    if (foodProduct.name === '') {
+      this.$toasted.error(`Name is required`)
+
+      valid = false
     }
 
     if (foodProduct.description === '') {
-      this.errorMessage = 'Description is required'
+      this.$toasted.error(`Description is required`)
 
-      return false
+      valid = false
     }
 
     if (foodProduct.price === 0.0) {
-      this.errorMessage = 'Price is required'
+      this.$toasted.error(`Price is required`)
 
-      return false
+      valid = false
     }
 
     if (foodProduct.imageUrl === undefined) {
-      this.errorMessage = 'Image is required'
+      this.$toasted.error(`Image is required`)
 
-      return false
+      valid = false
     }
-    return true
+
+    return valid
   }
 
   inputFile (newFile:any, oldFile:any) {

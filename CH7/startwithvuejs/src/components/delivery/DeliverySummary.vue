@@ -35,17 +35,11 @@ export default class DeliverySummary extends Vue {
   }
 
   getDelivery () {
-    // this.delivery = this.$store.getters.getDeliveryByEmail(this.email)
     DeliveryService.getDeliveriesByEmailAndState(this.email, 'PENDING')
       .then(response => {
-        console.log(response)
-
         if (response.data.length) {
           this.delivery = response.data[0]
         }
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

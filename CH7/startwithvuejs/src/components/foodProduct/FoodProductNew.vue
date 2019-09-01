@@ -19,17 +19,13 @@ export default class FoodProductNew extends Vue {
   @Prop() private readonly foodService!: string
 
   save (foodProduct:FoodProduct) {
-    // this.$store.commit('saveFoodProduct', foodProduct)
-
     foodProduct.active = true
+
     FoodProductService.create(foodProduct)
       .then(response => {
-        console.log(response)
+        this.$toasted.info(`Save successfully`)
 
         this.$router.push({ name: 'food_service_view', params: { email: this.foodService } })
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

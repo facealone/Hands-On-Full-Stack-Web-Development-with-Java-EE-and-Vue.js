@@ -75,12 +75,10 @@ export default class FoodServiceList extends Vue {
   }
 
   populateFoodProducts (state:any) {
-    // let foodServicesLoaded:FoodService[] = this.getFoodServices(this.foodType, this.page, this.pageSize)
     FoodServiceService.getByFoodType(this.foodType, this.page, this.pageSize)
       .then(response => {
-        console.log(response)
         let foodServicesLoaded:FoodService[] = response.data
-        console.log(foodServicesLoaded)
+
         if (foodServicesLoaded.length) {
           this.foodServices.push(...foodServicesLoaded)
           state.loaded()
@@ -88,9 +86,6 @@ export default class FoodServiceList extends Vue {
         } else {
           state.complete()
         }
-      })
-      .catch(error => {
-        console.log(error)
       })
   }
 }

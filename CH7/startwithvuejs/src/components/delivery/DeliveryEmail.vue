@@ -2,13 +2,6 @@
 <div>
   <div class="row">
     <div class="col-sm">
-      <div v-if="errorMessage" class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -32,11 +25,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class DeliveryEmail extends Vue {
   private email:string = ''
-  private errorMessage:string = ''
 
   setDeliveryEmail () {
     if (this.email === '') {
-      this.errorMessage = 'The email is required to set your delivery'
+      this.$toasted.error(`The email is required to set your delivery`)
       return
     }
 

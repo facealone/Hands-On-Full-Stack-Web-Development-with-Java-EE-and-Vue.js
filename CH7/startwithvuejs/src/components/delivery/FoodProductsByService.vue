@@ -97,29 +97,17 @@ export default class FoodProductsByService extends Vue {
   private pageSize:number = 4
 
   mounted () {
-    // this.foodServiceData = this.$store.getters.getFoodServiceByEmail(this.foodService)
     FoodServiceService.getById(this.foodService)
       .then(response => {
-        console.log(response)
-
         this.foodServiceData = response.data
       })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
-  getFoodProducts (foodService: string, page:number, pageSize:number) {
-    return this.$store.getters.getFoodProductByFoodService(foodService, page, pageSize).map((foodProduct: FoodProduct) => Item.newItem(foodProduct, 0))
   }
 
   populateFoodProducts (state:any) {
-    // let itemsLoaded:Item[] = this.getFoodProducts(this.foodService, this.page, this.pageSize)
     FoodProductService.getByFoodService(this.foodService, this.page, this.pageSize)
       .then(response => {
-        console.log(response)
         let foodProductsLoaded:FoodProduct[] = response.data
-        console.log(foodProductsLoaded)
+
         if (foodProductsLoaded.length) {
           this.items.push(...foodProductsLoaded.map((foodProduct: FoodProduct) => Item.newItem(foodProduct, 0)))
           state.loaded()
@@ -128,12 +116,11 @@ export default class FoodProductsByService extends Vue {
           state.complete()
         }
       })
-      .catch(error => {
-        console.log(error)
-      })
   }
   addToCart (item: Item) {
     this.$store.commit('saveItemToCart', item)
+
+    this.$toasted.info(`Item added successfully`)
 
     this.$router.push({ name: 'cart', params: { foodService: this.foodService } })
   }
