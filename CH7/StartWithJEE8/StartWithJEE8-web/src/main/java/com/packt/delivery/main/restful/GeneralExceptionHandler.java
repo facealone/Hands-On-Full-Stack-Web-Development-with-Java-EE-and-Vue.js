@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -23,6 +24,7 @@ public class GeneralExceptionHandler implements ExceptionMapper<Exception> {
 
         return Response.status(500)
                 .entity(new ExceptionResponse(e.getMessage(), stringWriter.toString()))
+                .type(MediaType.APPLICATION_JSON)
                 .build();
     }
 

@@ -20,7 +20,7 @@
           </thead>
           <tbody>
             <tr v-for="foodProduct in foodProducts" v-bind:key="foodProduct.id">
-              <td><img class="image img-fluid img-thumbnail" :src="foodProduct.image"/></td>
+              <td><img class="image img-fluid img-thumbnail" :src="foodProduct.imageUrl"/></td>
               <td>{{foodProduct.id}}</td>
               <td>{{foodProduct.name}}</td>
               <td>{{foodProduct.description}}</td>

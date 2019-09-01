@@ -87,13 +87,14 @@ public class FoodServiceRepositoryJPA implements FoodServiceRepository {
     private FoodService convertFoodServiceDataToFoodService(FoodServiceData foodServiceData) {
         User user = new User(foodServiceData.getUserData().getEmail(), foodServiceData.getUserData().getPassword());
         
-        return new FoodService(foodServiceData.getEmail(), foodServiceData.getName(), foodServiceData.getAddress(), foodServiceData.getFoodType(), foodServiceData.getDeliveryFee(), foodServiceData.getActive(), user, Collections.emptyList());
+        return new FoodService(foodServiceData.getEmail(), foodServiceData.getName(), foodServiceData.getAddress(), foodServiceData.getImageUrl(), foodServiceData.getFoodType(), foodServiceData.getDeliveryFee(), foodServiceData.getActive(), user, Collections.emptyList());
     }
     
     private FoodServiceData convertFoodServiceToFoodServiceData(FoodService foodService) {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodService.getActive());
         foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setImageUrl(foodService.getImageUrl());
         foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
         foodServiceData.setEmail(foodService.getEmail());
         foodServiceData.setFoodType(foodService.getFoodType());

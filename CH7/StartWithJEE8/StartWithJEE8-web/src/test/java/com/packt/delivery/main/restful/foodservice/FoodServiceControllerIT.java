@@ -40,7 +40,7 @@ public class FoodServiceControllerIT {
     @InSequence(1)
     public void getByFoodType(@ArquillianResteasyResource("api") WebTarget webTarget) {
         UserDTO user = new UserDTO("email1@email.com", "pass1");
-        FoodServiceDTO foodService = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodServiceDTO foodService = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", "imageURL", 100, true, user, Collections.emptyList());
         
         Response response = webTarget
                 .path("foodservices")
@@ -60,10 +60,10 @@ public class FoodServiceControllerIT {
     @InSequence(2)
     public void save(@ArquillianResteasyResource("api") WebTarget webTarget) {    
         UserDTO user = new UserDTO("chicken@email.com", "pass2");
-        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool", "Street 898", "CHICKEN", 120, true, user, Collections.emptyList());
+        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool", "Street 898", "CHICKEN", "imageURL", 120, true, user, Collections.emptyList());
         
         UserDTO userExpected = new UserDTO("chicken@email.com", "pass2");
-        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool", "Street 898", "CHICKEN", 120, true, userExpected, Collections.emptyList());
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool", "Street 898", "CHICKEN", "imageURL", 120, true, userExpected, Collections.emptyList());
         
         Response response = webTarget
                 .path("foodservices")
@@ -80,10 +80,10 @@ public class FoodServiceControllerIT {
     @InSequence(3)
     public void update(@ArquillianResteasyResource("api") WebTarget webTarget) {    
         UserDTO user = new UserDTO("chicken@email.com", "pass2");
-        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, true, user, Collections.emptyList());
+        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", "imageURL", 120, true, user, Collections.emptyList());
         
         UserDTO userExpected = new UserDTO("chicken@email.com", "pass2");
-        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, true, userExpected, Collections.emptyList());
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", "imageURL", 120, true, userExpected, Collections.emptyList());
          
         Response response = webTarget
                 .path("foodservices")
@@ -100,10 +100,10 @@ public class FoodServiceControllerIT {
     @InSequence(4)
     public void deActivate(@ArquillianResteasyResource("api") WebTarget webTarget) {        
         UserDTO user = new UserDTO("chicken@email.com", "pass2");
-        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, true, user, Collections.emptyList());
+        FoodServiceDTO foodService = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", "imageURL", 120, true, user, Collections.emptyList());
         
         UserDTO userExpected = new UserDTO("chicken@email.com", "pass2");
-        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", 120, false, userExpected, Collections.emptyList());
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("chicken@email.com", "Chicken Cool Other", "Street 898", "CHICKEN", "imageURL", 120, false, userExpected, Collections.emptyList());
         
         Response response = webTarget
                 .path("foodservices")
@@ -121,7 +121,7 @@ public class FoodServiceControllerIT {
     @InSequence(5)
     public void login(@ArquillianResteasyResource("api") WebTarget webTarget) {        
         UserDTO user = new UserDTO("email1@email.com", "pass1");
-        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodServiceDTO foodServiceExpected = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", "imageURL", 100, true, user, Collections.emptyList());
         
         Response response = webTarget
                 .path("foodservices")
@@ -139,7 +139,7 @@ public class FoodServiceControllerIT {
     @InSequence(6)
     public void getById(@ArquillianResteasyResource("api") WebTarget webTarget) {
         UserDTO user = new UserDTO("email1@email.com", "pass1");
-        FoodServiceDTO foodService1 = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodServiceDTO foodService1 = new FoodServiceDTO("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", "imageURL", 100, true, user, Collections.emptyList());
         
         Response response = webTarget
                 .path("foodservices")

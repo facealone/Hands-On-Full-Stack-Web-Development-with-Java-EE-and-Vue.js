@@ -1,8 +1,10 @@
-
 package com.packt.delivery.main.restful.foodservice;
 
 import com.packt.delivery.abstraction.service.foodservice.FoodServiceService;
-import com.packt.delivery.main.restful.foodproduct.FoodProductDTO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.LocalBean;
@@ -19,11 +21,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 @Stateless
 @LocalBean
 @Path("foodservices")
-public class FoodServiceController{
+public class FoodServiceController {
+
     @Inject
     private FoodServiceService foodServiceService;
 
@@ -33,14 +38,14 @@ public class FoodServiceController{
     public FoodServiceDTO save(FoodServiceDTO foodService) {
         return new FoodServiceDTO(foodServiceService.save(foodService.toFoodService()));
     }
-    
+
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public FoodServiceDTO update(FoodServiceDTO foodService) {
         return new FoodServiceDTO(foodServiceService.update(foodService.toFoodService()));
     }
-    
+
     @Path("{email}")
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})
@@ -48,7 +53,7 @@ public class FoodServiceController{
     public FoodServiceDTO deActivate(@PathParam("email") String email) {
         return new FoodServiceDTO(foodServiceService.deActivate(email));
     }
-    
+
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -58,7 +63,7 @@ public class FoodServiceController{
                 .map(f -> new FoodServiceDTO(f))
                 .collect(Collectors.toList());
     }
-    
+
     @Path("login")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -70,7 +75,7 @@ public class FoodServiceController{
                 .orElseGet(Response::noContent)
                 .build();
     }
-    
+
     @Path("{email}")
     @GET
     @Consumes({MediaType.APPLICATION_JSON})

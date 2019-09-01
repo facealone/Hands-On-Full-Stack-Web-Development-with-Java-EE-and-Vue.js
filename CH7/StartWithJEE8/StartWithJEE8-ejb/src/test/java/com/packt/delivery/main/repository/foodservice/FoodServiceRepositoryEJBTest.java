@@ -27,7 +27,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void save() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         foodServiceRepositoryEJB.save(foodService);
         
@@ -37,7 +37,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void update() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         foodServiceRepositoryEJB.update(foodService);
         
@@ -47,7 +47,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void getAll() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepositoryJPA.getAll()).thenReturn(Arrays.asList(foodService));
                 
@@ -59,7 +59,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void getAllPagination() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepositoryJPA.getAll(2, 20)).thenReturn(Arrays.asList(foodService));
                 
@@ -71,7 +71,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void getByFoodType() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepositoryJPA.getByFoodType("PIZZA", 2, 20)).thenReturn(Arrays.asList(foodService));
                 
@@ -83,7 +83,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void getById() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepositoryJPA.getById("email1@email.com")).thenReturn(Optional.of(foodService));
                 
@@ -95,7 +95,7 @@ public class FoodServiceRepositoryEJBTest {
     @Test
     public void getByEmailAndPassword() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepositoryJPA.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodService));
                 

@@ -83,13 +83,14 @@
             extensions="gif,jpg,jpeg,png,webp"
             accept="image/png,image/gif,image/jpeg,image/webp"
             :size="1024 * 1024 * 10"
+            v-model="files"
             @input-file="inputFile"
             ref="upload">
             <i class="fa fa-plus"></i>
             Select file
           </file-upload>
           <div>
-            <img class="image img-fluid img-thumbnail" :src="foodService.image"/>
+            <img class="image img-fluid img-thumbnail" :src="image"/>
           </div>
         </div>
         <button class="btn btn-primary" v-on:click="save">{{updateMode ? 'Update' : 'Save'}}</button>
@@ -111,8 +112,9 @@ import VueUploadComponent from 'vue-upload-component'
 export default class FoodServiceForm extends Vue {
   @Prop() private readonly type!: string
   @Prop({ default: () => FoodService.emptyFoodService() }) private readonly foodService!: FoodService
-
+  private files:any [] = []
   private repeatPassword:string = ''
+  private image: any = new Image()
 
   save () {
     if (this.isValid(this.foodService)) {
@@ -153,6 +155,12 @@ export default class FoodServiceForm extends Vue {
       valid = false
     }
 
+    if (this.files.length !== 1) {
+      this.$toasted.error(`Image is required`)
+
+      valid = false
+    }
+
     if (foodService.user.password !== this.repeatPassword) {
       this.$toasted.error(`Passwords don't match`)
 
@@ -160,6 +168,7 @@ export default class FoodServiceForm extends Vue {
     }
 
     foodService.user.email = foodService.email
+    foodService.image = this.files[0].file
 
     return valid
   }
@@ -169,11 +178,12 @@ export default class FoodServiceForm extends Vue {
       let reader = new FileReader()
 
       reader.onload = (e:any) => {
-        this.foodService.image = e.target.result
+        this.image = e.target.result
       }
       reader.readAsDataURL(newFile.file)
     }
   }
+
   get updateMode () {
     return this.type === 'update'
   }

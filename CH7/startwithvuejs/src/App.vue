@@ -8,7 +8,7 @@
       </div>
       <div class="nav" >
         <template v-if="!isLoggedIn"><router-link to="/login">Login</router-link></template>
-        <template v-if="isLoggedIn">Welcome {{loggedIn.email}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { email: loggedIn }}">Settings</router-link></template>
+        <template v-if="isLoggedIn">Welcome {{loggedIn.email}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { email: loggedIn.email }}">Settings</router-link></template>
       </div>
     </div>
     <router-view/>

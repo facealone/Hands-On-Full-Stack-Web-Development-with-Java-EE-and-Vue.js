@@ -6,7 +6,8 @@ export class FoodService {
     address: string = ''
     foodType: string = ''
     deliveryFee: number = 0.0
-    image: any = new Image()
+    image: any | null = null
+    imageUrl: string = ''
     user: User = User.emptyUser()
     active: boolean = false
 
@@ -16,7 +17,7 @@ export class FoodService {
       return foodService
     }
 
-    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, user: User, active: boolean) {
+    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, imageUrl: string, user: User, active: boolean) {
       let foodService:FoodService = new FoodService()
 
       foodService.email = email
@@ -25,6 +26,7 @@ export class FoodService {
       foodService.foodType = foodType
       foodService.deliveryFee = deliveryFee
       foodService.image = image
+      foodService.imageUrl = imageUrl
       foodService.user = user
       foodService.active = active
 
@@ -38,6 +40,7 @@ export class FoodService {
       this.foodType = foodServiceToCopy.foodType
       this.deliveryFee = foodServiceToCopy.deliveryFee
       this.image = foodServiceToCopy.image
+      this.imageUrl = foodServiceToCopy.imageUrl
       this.user = foodServiceToCopy.user
       this.active = foodServiceToCopy.active
     }

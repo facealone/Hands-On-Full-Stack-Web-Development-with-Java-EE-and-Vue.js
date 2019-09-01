@@ -1,11 +1,8 @@
 
 package com.packt.delivery.main.repository.foodservice;
 
-import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.abstraction.entity.FoodService;
 import com.packt.delivery.abstraction.entity.User;
-import com.packt.delivery.main.repository.foodproduct.FoodProductData;
-import com.packt.delivery.main.repository.foodproduct.FoodProductRepositoryJPA;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +33,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void save() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -45,6 +42,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodService.getActive());
         foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setImageUrl(foodService.getImageUrl());
         foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
         foodServiceData.setEmail(foodService.getEmail());
         foodServiceData.setFoodType(foodService.getFoodType());
@@ -59,7 +57,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void update() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -68,6 +66,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodService.getActive());
         foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setImageUrl(foodService.getImageUrl());
         foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
         foodServiceData.setEmail(foodService.getEmail());
         foodServiceData.setFoodType(foodService.getFoodType());
@@ -84,7 +83,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void getAll() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -93,6 +92,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodService.getActive());
         foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setImageUrl(foodService.getImageUrl());
         foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
         foodServiceData.setEmail(foodService.getEmail());
         foodServiceData.setFoodType(foodService.getFoodType());
@@ -110,7 +110,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void getAllPagination() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -119,6 +119,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodService.getActive());
         foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setImageUrl(foodService.getImageUrl());
         foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
         foodServiceData.setEmail(foodService.getEmail());
         foodServiceData.setFoodType(foodService.getFoodType());
@@ -138,7 +139,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void getByFoodType() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -147,6 +148,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodService.getActive());
         foodServiceData.setAddress(foodService.getAddress());
+        foodServiceData.setImageUrl(foodService.getImageUrl());
         foodServiceData.setDeliveryFee(foodService.getDeliveryFee());
         foodServiceData.setEmail(foodService.getEmail());
         foodServiceData.setFoodType(foodService.getFoodType());
@@ -167,7 +169,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void getById() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodServiceExpected = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodServiceExpected = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -176,6 +178,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodServiceExpected.getActive());
         foodServiceData.setAddress(foodServiceExpected.getAddress());
+        foodServiceData.setImageUrl(foodServiceExpected.getImageUrl());
         foodServiceData.setDeliveryFee(foodServiceExpected.getDeliveryFee());
         foodServiceData.setEmail(foodServiceExpected.getEmail());
         foodServiceData.setFoodType(foodServiceExpected.getFoodType());
@@ -192,7 +195,7 @@ public class FoodServiceRepositoryJPATest {
     @Test
     public void getByEmailAndPassword() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodServiceExpected = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodServiceExpected = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         UserData userData = new UserData();
         userData.setEmail(user.getEmail());
@@ -201,6 +204,7 @@ public class FoodServiceRepositoryJPATest {
         FoodServiceData foodServiceData = new FoodServiceData();
         foodServiceData.setActive(foodServiceExpected.getActive());
         foodServiceData.setAddress(foodServiceExpected.getAddress());
+        foodServiceData.setImageUrl(foodServiceExpected.getImageUrl());
         foodServiceData.setDeliveryFee(foodServiceExpected.getDeliveryFee());
         foodServiceData.setEmail(foodServiceExpected.getEmail());
         foodServiceData.setFoodType(foodServiceExpected.getFoodType());

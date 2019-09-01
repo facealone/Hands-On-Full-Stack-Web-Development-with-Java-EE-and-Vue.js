@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { FoodProduct } from '../entities/FoodProduct'
+import { Image } from '../entities/Image'
 
 export class FoodProductService {
   static getById (id: number) {
@@ -7,11 +8,39 @@ export class FoodProductService {
   }
 
   static create (foodProduct: FoodProduct) {
-    return Vue.axios.post<FoodProduct>(`/foodproducts`, foodProduct)
+    let formData = new FormData()
+
+    formData.append('file', foodProduct.image)
+
+    return Vue.axios.post<Image>(`/files`, formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        foodProduct.imageUrl = response.data.imageUrl
+
+        return Vue.axios.post<FoodProduct>(`/foodproducts`, foodProduct)
+      })
   }
 
   static update (foodProduct: FoodProduct) {
-    return Vue.axios.put<FoodProduct>(`/foodproducts`, foodProduct)
+    let formData = new FormData()
+
+    formData.append('file', foodProduct.image)
+
+    return Vue.axios.post<Image>(`/files`, formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        foodProduct.imageUrl = response.data.imageUrl
+
+        return Vue.axios.put<FoodProduct>(`/foodproducts`, foodProduct)
+      })
   }
 
   static deActivate (foodProduct: FoodProduct) {

@@ -9,16 +9,18 @@ public class FoodService implements Serializable {
     private final String email;
     private final String name;
     private final String address;
+    private final String imageUrl;
     private final String foodType;
     private final int deliveryFee;
     private boolean active;
     private final User user;
     private final List<FoodProduct> foodProductList;
 
-    public FoodService(String email, String name, String address, String foodType, int deliveryFee, boolean active, User user, List<FoodProduct> foodProductList) {
+    public FoodService(String email, String name, String address, String imageUrl, String foodType, int deliveryFee, boolean active, User user, List<FoodProduct> foodProductList) {
         this.email = email;
         this.name = name;
         this.address = address;
+        this.imageUrl = imageUrl;
         this.foodType = foodType;
         this.active = active;
         this.foodProductList = foodProductList;
@@ -40,6 +42,10 @@ public class FoodService implements Serializable {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getFoodType() {
@@ -65,14 +71,15 @@ public class FoodService implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.address);
-        hash = 79 * hash + Objects.hashCode(this.foodType);
-        hash = 79 * hash + this.deliveryFee;
-        hash = 79 * hash + (this.active ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.user);
-        hash = 79 * hash + Objects.hashCode(this.foodProductList);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.address);
+        hash = 89 * hash + Objects.hashCode(this.imageUrl);
+        hash = 89 * hash + Objects.hashCode(this.foodType);
+        hash = 89 * hash + this.deliveryFee;
+        hash = 89 * hash + (this.active ? 1 : 0);
+        hash = 89 * hash + Objects.hashCode(this.user);
+        hash = 89 * hash + Objects.hashCode(this.foodProductList);
         return hash;
     }
 
@@ -103,6 +110,9 @@ public class FoodService implements Serializable {
         if (!Objects.equals(this.address, other.address)) {
             return false;
         }
+        if (!Objects.equals(this.imageUrl, other.imageUrl)) {
+            return false;
+        }
         if (!Objects.equals(this.foodType, other.foodType)) {
             return false;
         }
@@ -117,8 +127,9 @@ public class FoodService implements Serializable {
 
     @Override
     public String toString() {
-        return "FoodService{" + "email=" + email + ", name=" + name + ", address=" + address + ", foodType=" + foodType + ", deliveryFee=" + deliveryFee + ", active=" + active + ", user=" + user + ", foodProductList=" + foodProductList + '}';
+        return "FoodService{" + "email=" + email + ", name=" + name + ", address=" + address + ", imageUrl=" + imageUrl + ", foodType=" + foodType + ", deliveryFee=" + deliveryFee + ", active=" + active + ", user=" + user + ", foodProductList=" + foodProductList + '}';
     }
 
+    
     
 }

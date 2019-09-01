@@ -27,7 +27,7 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void getById_found_ok(){
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService1 = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService1 = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepository.getById("email1@email.com")).thenReturn(Optional.of(foodService1));
         
@@ -39,7 +39,7 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void save_passThrough_ok(){
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepository.save(foodService)).thenReturn(foodService);
         
@@ -51,7 +51,7 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void update_passThrough_ok(){
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         when(foodServiceRepository.update(foodService)).thenReturn(foodService);
         
@@ -63,10 +63,10 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void deActivate_toFalse_ok(){
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         User userDeactivated = new User("email1@email.com", "pass1");
-        FoodService foodServiceDeactivated = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, false, userDeactivated, Collections.emptyList());
+        FoodService foodServiceDeactivated = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, false, userDeactivated, Collections.emptyList());
         
         when(foodServiceRepository.getById("email1@email.com")).thenReturn(Optional.ofNullable(foodService));
         when(foodServiceRepository.update(foodService)).thenReturn(foodService);
@@ -79,10 +79,10 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void getByFoodType_pizza_ok(){
         User userPizzaDeactivated = new User("email3@email.com", "pass1");
-        FoodService foodServicePizzaDeactivated = new FoodService("email3@email.com", "Pizzas 55", "Street 79", "PIZZA", 100, false, userPizzaDeactivated, Collections.emptyList());
+        FoodService foodServicePizzaDeactivated = new FoodService("email3@email.com", "Pizzas 55", "Street 79", "imageURL", "PIZZA", 100, false, userPizzaDeactivated, Collections.emptyList());
         
         User userPizza = new User("email1@email.com", "pass1");
-        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, userPizza, Collections.emptyList());
+        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, userPizza, Collections.emptyList());
        
         when(foodServiceRepository.getByFoodType("PIZZA", 2, 20)).thenReturn(Arrays.asList(foodServicePizza, foodServicePizzaDeactivated));
         
@@ -94,13 +94,13 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void getByFoodType_all_ok(){
         User userPizzaDeactivated = new User("email3@email.com", "pass1");
-        FoodService foodServicePizzaDeactivated = new FoodService("email3@email.com", "Pizzas 55", "Street 79", "PIZZA", 100, false, userPizzaDeactivated, Collections.emptyList());
+        FoodService foodServicePizzaDeactivated = new FoodService("email3@email.com", "Pizzas 55", "Street 79", "imageURL", "PIZZA", 100, false, userPizzaDeactivated, Collections.emptyList());
         
         User userPizza = new User("email1@email.com", "pass1");
-        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, userPizza, Collections.emptyList());
+        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, userPizza, Collections.emptyList());
         
         User userChicken = new User("email2@email.com", "pass1");
-        FoodService foodServiceChicken = new FoodService("email2@email.com", "Chicken 25", "Street 9", "CHICKEN", 100, true, userChicken, Collections.emptyList());
+        FoodService foodServiceChicken = new FoodService("email2@email.com", "Chicken 25", "Street 9", "imageURL", "CHICKEN", 100, true, userChicken, Collections.emptyList());
         
         when(foodServiceRepository.getAll(2, 20)).thenReturn(Arrays.asList(foodServicePizza, foodServicePizzaDeactivated, foodServiceChicken));
         
@@ -112,7 +112,7 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void login_active_foodService(){
         User userPizza = new User("email1@email.com", "pass1");
-        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, true, userPizza, Collections.emptyList());
+        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, userPizza, Collections.emptyList());
         
         when(foodServiceRepository.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodServicePizza));
         
@@ -124,7 +124,7 @@ public class FoodServiceServiceBasicTest {
     @Test
     public void login_deActive_empty(){
         User userPizza = new User("email1@email.com", "pass1");
-        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "PIZZA", 100, false, userPizza, Collections.emptyList());
+        FoodService foodServicePizza = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, false, userPizza, Collections.emptyList());
         
         when(foodServiceRepository.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodServicePizza));
         

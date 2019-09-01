@@ -4,7 +4,7 @@
       <div class="col-sm">
         <div class="form-group">
           <div>
-            <img class="image img-fluid img-thumbnail mx-auto d-block" :src="foodService.image"/>
+            <img class="image img-fluid img-thumbnail mx-auto d-block" :src="foodService.imageUrl"/>
           </div>
         </div>
       </div>

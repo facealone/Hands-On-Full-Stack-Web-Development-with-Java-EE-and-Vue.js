@@ -60,6 +60,11 @@ public class FoodServiceData implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
+    @Column(name = "image_url")
+    private String imageUrl;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "food_type")
     private String foodType;
     @Basic(optional = false)
@@ -101,6 +106,14 @@ public class FoodServiceData implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFoodType() {
