@@ -68,7 +68,7 @@ public class FoodProductData implements Serializable {
     private boolean active;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 300)
     @Column(name = "image_url")
     private String imageUrl;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foodProduct")

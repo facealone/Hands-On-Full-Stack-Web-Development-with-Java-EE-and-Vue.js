@@ -59,7 +59,7 @@ public class FoodServiceData implements Serializable {
     private String address;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 300)
     @Column(name = "image_url")
     private String imageUrl;
     @Basic(optional = false)

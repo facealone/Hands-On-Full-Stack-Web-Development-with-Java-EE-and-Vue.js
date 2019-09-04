@@ -8,7 +8,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/StartWithJEE8-web/api'
+  baseURL: process.env.VUE_APP_RESTFUL_BASE_URL
 })
 
 axiosInstance.interceptors.response.use(response => {
