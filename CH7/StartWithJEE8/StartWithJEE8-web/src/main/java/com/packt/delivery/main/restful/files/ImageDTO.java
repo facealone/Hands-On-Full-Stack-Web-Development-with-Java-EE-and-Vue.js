@@ -4,7 +4,10 @@ package com.packt.delivery.main.restful.files;
 import java.util.Objects;
 
 public class ImageDTO {
-    private final String imageUrl;
+    private String imageUrl;
+
+    public ImageDTO() {
+    }
     
     public ImageDTO(String imageUrl){
         this.imageUrl = imageUrl;
@@ -12,6 +15,10 @@ public class ImageDTO {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
@@ -37,6 +44,11 @@ public class ImageDTO {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ImageDTO{" + "imageUrl=" + imageUrl + '}';
     }
     
     

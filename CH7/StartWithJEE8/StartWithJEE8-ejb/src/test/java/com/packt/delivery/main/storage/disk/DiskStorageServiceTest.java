@@ -2,7 +2,6 @@ package com.packt.delivery.main.storage.disk;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
