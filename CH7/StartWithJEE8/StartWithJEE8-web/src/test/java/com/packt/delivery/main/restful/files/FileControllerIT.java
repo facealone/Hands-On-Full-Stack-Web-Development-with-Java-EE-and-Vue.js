@@ -34,6 +34,8 @@ public class FileControllerIT {
         Path deliveryData = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/foodproductdata.sql");
         Path applicationItProperties = Paths.get("../StartWithJEE8-ejb/src/main/resources/application-it.properties");
 
+        System.setProperty("ENV", "it");
+        
         return ShrinkWrap.create(WebArchive.class)
                 .addPackages(true, "com.packt.delivery")
                 .addAsResource(applicationItProperties.toFile(), "application-it.properties")
