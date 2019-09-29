@@ -21,42 +21,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.wildfly>9.0.2.Final</version.wildfly>
     </properties>
-    
-    <profiles>
-        <profile>
-            <id>glassfish-embedded-3.1</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-                    <version>1.0.2</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.main.extras</groupId>
-                    <artifactId>glassfish-embedded-all</artifactId>
-                    <version>5.0</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>javax.validation</groupId>
-                    <artifactId>validation-api</artifactId>
-                    <version>1.1.0.Final</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <artifactId>servlet-api</artifactId>
-                    <groupId>javax.servlet</groupId>
-                    <version>2.5</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+
     <dependencies>
+        <dependency>
+            <groupId>com.packt</groupId>
+            <artifactId>StartWithJEE8-ejb</artifactId>
+            <type>ejb</type>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>8.0.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
@@ -70,11 +49,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.packt</groupId>
-            <artifactId>StartWithJEE8-ejb</artifactId>
-            <type>ejb</type>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+            <version>1.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>5.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -130,12 +114,6 @@
             <version>2.4.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -172,11 +150,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <systemProperties>
-                        <ENV>it</ENV>
-                    </systemProperties>
-                </configuration>
             </plugin>
         </plugins>
     </build>
