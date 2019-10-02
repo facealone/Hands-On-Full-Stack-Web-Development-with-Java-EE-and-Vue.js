@@ -1,6 +1,7 @@
 package com.packt.delivery.abstraction.service.security;
 
 import com.packt.delivery.abstraction.entity.Token;
+import java.util.Map;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
@@ -12,11 +13,15 @@ public class OpenIdConnectServiceBasic implements OpenIdConnectService {
     private final TokenValidationService tokenValidationService;
     private final Client client;
     private final String identityProviderUrl;
+    private final String clientId;
+    private final String clientSecret;
 
-    public OpenIdConnectServiceBasic(TokenValidationService tokenValidationService, Client client, String identityProviderUrl) {
+    public OpenIdConnectServiceBasic(TokenValidationService tokenValidationService, Client client, String identityProviderUrl, String clientId, String clientSecret) {
         this.tokenValidationService = tokenValidationService;
         this.client = client;
         this.identityProviderUrl = identityProviderUrl;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
     }
 
     @Override
@@ -24,10 +29,11 @@ public class OpenIdConnectServiceBasic implements OpenIdConnectService {
         Form form = new Form()
                 .param("grant_type", grantType)
                 .param("code", code)
-                .param("redirect_url", redirectUrl);
+                .param("redirect_uri", redirectUrl)
+                .param("client_id", clientId)
+                .param("client_secret", clientSecret);
 
         Response response = client.target(identityProviderUrl)
-                .path("token")
                 .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.form(form));
@@ -36,7 +42,9 @@ public class OpenIdConnectServiceBasic implements OpenIdConnectService {
             throw new IllegalStateException("The tokens couldn't be gotten " + response.readEntity(String.class));
         }
 
-        Token token = response.readEntity(Token.class);
+        Map<String, String> map = response.readEntity(Map.class);
+        
+        Token token = new Token("", "", "", "");
 
         if (!tokenValidationService.validate(token.getAccessToken())) {
             throw new IllegalStateException("The tokens was gotten but they are invalid" + response.readEntity(String.class));

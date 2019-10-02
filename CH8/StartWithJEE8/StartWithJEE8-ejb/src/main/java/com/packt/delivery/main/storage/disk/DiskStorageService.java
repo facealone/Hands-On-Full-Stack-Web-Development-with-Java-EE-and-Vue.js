@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 import com.packt.delivery.abstraction.service.file.StorageService;
+import java.nio.file.StandardCopyOption;
 
 public class DiskStorageService implements StorageService{
     private final String rootPath;
@@ -21,7 +22,7 @@ public class DiskStorageService implements StorageService{
         
         Path pathLocation = Paths.get(this.rootPath, fileKey);
        
-        Files.copy(inputStream, pathLocation);
+        Files.copy(inputStream, pathLocation, StandardCopyOption.REPLACE_EXISTING);
         
         return fileKey;
     }

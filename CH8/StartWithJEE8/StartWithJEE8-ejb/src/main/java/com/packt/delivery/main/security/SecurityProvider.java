@@ -8,23 +8,17 @@ import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 import com.nimbusds.jwt.proc.JWTProcessor;
+import com.packt.delivery.abstraction.service.security.TokenValidationService;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Produces;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 
 @Stateless
 @LocalBean
 public class SecurityProvider {
-
-    @Produces
-    public Client getClient() {
-        return ClientBuilder.newClient();
-    }
 
     @Produces
     public JWTProcessor getJWTProcessor(Properties properties) throws MalformedURLException {
@@ -47,5 +41,10 @@ public class SecurityProvider {
         jwtProcessor.setJWSKeySelector(keySelector);
 
         return jwtProcessor;
+    }
+        
+    @Produces
+    public TokenValidationService getTokenValidationService(JWTProcessor jwtProcessor) {
+        return new TokenValidationJWK(jwtProcessor);
     }
 }

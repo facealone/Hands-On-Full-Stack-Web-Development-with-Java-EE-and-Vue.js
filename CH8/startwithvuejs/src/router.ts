@@ -16,10 +16,12 @@ import FoodServiceList from './components/delivery/FoodServiceList.vue'
 import FoodProductsByService from './components/delivery/FoodProductsByService.vue'
 import CartItems from './components/delivery/CartItems.vue'
 import DeliverySummary from './components/delivery/DeliverySummary.vue'
+import AuthorizationCallback from './components/security/AuthorizationCallback.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -30,6 +32,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: AuthorizationCallback
     },
     {
       path: '/food_product',

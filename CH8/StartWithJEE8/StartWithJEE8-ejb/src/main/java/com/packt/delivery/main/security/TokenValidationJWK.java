@@ -2,6 +2,7 @@ package com.packt.delivery.main.security;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.JWTProcessor;
+import com.packt.delivery.abstraction.service.security.AuthorizationException;
 import com.packt.delivery.abstraction.service.security.TokenValidationService;
 
 public class TokenValidationJWK implements TokenValidationService {
@@ -17,7 +18,7 @@ public class TokenValidationJWK implements TokenValidationService {
         try {
             JWTClaimsSet claimsSet = jwtProcessor.process(accessToken, null);
         } catch (Exception ex) {
-            throw new IllegalStateException("Token validation fails", ex);
+            throw new AuthorizationException("Token validation fails", ex);
         }
 
         return true;

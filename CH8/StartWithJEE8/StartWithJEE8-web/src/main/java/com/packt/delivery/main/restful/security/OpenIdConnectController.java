@@ -23,7 +23,7 @@ public class OpenIdConnectController {
     @Path("token")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    public TokenDTO save(@FormParam("grant_type") String grantType, @FormParam("code") String code, @FormParam("redirect_url") String redirectUrl) {
+    public TokenDTO save(@FormParam("grant_type") String grantType, @FormParam("code") String code, @FormParam("redirect_uri") String redirectUrl) {
         return new TokenDTO(openIdConnectService.requestToken(grantType, code, redirectUrl));
     }
 }

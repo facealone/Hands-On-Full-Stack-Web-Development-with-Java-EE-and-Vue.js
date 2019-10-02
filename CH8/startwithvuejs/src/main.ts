@@ -6,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 import Toasted from 'vue-toasted'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { AuthorizationService } from './services/AuthorizationService'
 
 const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_RESTFUL_BASE_URL
@@ -14,7 +15,12 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(response => {
   return response
 }, error => {
-  Vue.toasted.error('Ops, an unexpected error occurred')
+  if (error.status === 401) {
+    AuthorizationService.authorize()
+  } else {
+    Vue.toasted.error('Ops, an unexpected error occurred')
+  }
+
   return Promise.reject(error)
 })
 

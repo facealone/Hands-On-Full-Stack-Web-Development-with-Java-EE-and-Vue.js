@@ -1,10 +1,7 @@
 package com.packt.delivery.main.restful.foodservice;
 
 import com.packt.delivery.abstraction.service.foodservice.FoodServiceService;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.packt.delivery.main.restful.security.AuthorizationNeeded;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.LocalBean;
@@ -21,8 +18,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
 @Stateless
 @LocalBean
@@ -35,6 +30,7 @@ public class FoodServiceController {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+    //@AuthorizationNeeded
     public FoodServiceDTO save(FoodServiceDTO foodService) {
         return new FoodServiceDTO(foodServiceService.save(foodService.toFoodService()));
     }
@@ -42,6 +38,7 @@ public class FoodServiceController {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+    //@AuthorizationNeeded
     public FoodServiceDTO update(FoodServiceDTO foodService) {
         return new FoodServiceDTO(foodServiceService.update(foodService.toFoodService()));
     }
@@ -50,6 +47,7 @@ public class FoodServiceController {
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+    //@AuthorizationNeeded
     public FoodServiceDTO deActivate(@PathParam("email") String email) {
         return new FoodServiceDTO(foodServiceService.deActivate(email));
     }
@@ -80,6 +78,7 @@ public class FoodServiceController {
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+    //@AuthorizationNeeded
     public Response getById(@PathParam("email") String email) {
         return foodServiceService.getById(email)
                 .map(f -> new FoodServiceDTO(f))

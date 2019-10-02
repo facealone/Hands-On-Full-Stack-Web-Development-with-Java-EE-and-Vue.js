@@ -1,4 +1,4 @@
-package com.packt.delivery.main.restful;
+package com.packt.delivery.main.restful.security;
 
 import java.io.IOException;
 import javax.ws.rs.container.ContainerRequestContext;
