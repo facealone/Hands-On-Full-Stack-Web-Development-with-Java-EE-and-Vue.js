@@ -4,20 +4,34 @@ package com.packt.delivery.abstraction.entity;
 import java.util.Objects;
 
 public class Token {
-    private final String idToken;
-    private final String accessToken;
-    private final String refreshToken;
-    private final String expiresIn;
+    private String userName;
+    private String userEmail;
+    private String accessToken;
+    private String refreshToken;
+    private String expiresIn;
 
-    public Token(String idToken, String accessToken, String refreshToken, String expiresIn) {
-        this.idToken = idToken;
+    public Token() {
+    }
+
+    
+    public Token(String userName, String userEmail,String accessToken, String refreshToken, String expiresIn) {
+        this.userName = userName;
+        this.userEmail = userEmail;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.expiresIn = expiresIn;
     }
 
-    public String getIdToken() {
-        return idToken;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public String getAccessToken() {
@@ -32,13 +46,30 @@ public class Token {
         return expiresIn;
     }
 
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public void setExpiresIn(String expiresIn) {
+        this.expiresIn = expiresIn;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.idToken);
-        hash = 79 * hash + Objects.hashCode(this.accessToken);
-        hash = 79 * hash + Objects.hashCode(this.refreshToken);
-        hash = 79 * hash + Objects.hashCode(this.expiresIn);
+        hash = 23 * hash + Objects.hashCode(this.userName);
+        hash = 23 * hash + Objects.hashCode(this.userEmail);
+        hash = 23 * hash + Objects.hashCode(this.accessToken);
+        hash = 23 * hash + Objects.hashCode(this.refreshToken);
+        hash = 23 * hash + Objects.hashCode(this.expiresIn);
         return hash;
     }
 
@@ -54,7 +85,10 @@ public class Token {
             return false;
         }
         final Token other = (Token) obj;
-        if (!Objects.equals(this.idToken, other.idToken)) {
+        if (!Objects.equals(this.userName, other.userName)) {
+            return false;
+        }
+        if (!Objects.equals(this.userEmail, other.userEmail)) {
             return false;
         }
         if (!Objects.equals(this.accessToken, other.accessToken)) {
@@ -68,6 +102,7 @@ public class Token {
         }
         return true;
     }
+    
     
     
 }

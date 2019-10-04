@@ -1,7 +1,8 @@
 
 export class Token {
+    userName: string = ''
+    userEmail: string = ''
     accessToken: string = ''
-    idToken: string = ''
     refreshToken: string = ''
     expiresOn: string = ''
 
@@ -11,11 +12,12 @@ export class Token {
       return delivery
     }
 
-    static newToken (accessToken: string, idToken: string, refreshToken: string, expiresOn: string) {
+    static newToken (userName: string, userEmail: string, accessToken: string, refreshToken: string, expiresOn: string) {
       let token:Token = new Token()
 
+      token.userName = userName
+      token.userEmail = userEmail
       token.accessToken = accessToken
-      token.idToken = idToken
       token.refreshToken = refreshToken
       token.expiresOn = expiresOn
 
@@ -23,8 +25,9 @@ export class Token {
     }
 
     copyToken (tokenToCopy: Token) {
+      this.userName = tokenToCopy.userName
+      this.userEmail = tokenToCopy.userEmail
       this.accessToken = tokenToCopy.accessToken
-      this.idToken = tokenToCopy.idToken
       this.refreshToken = tokenToCopy.refreshToken
       this.expiresOn = tokenToCopy.expiresOn
     }

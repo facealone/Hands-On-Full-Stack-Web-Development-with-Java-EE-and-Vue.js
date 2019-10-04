@@ -1,9 +1,9 @@
 package com.packt.delivery.main.security;
 
-import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.JWTProcessor;
 import com.packt.delivery.abstraction.service.security.AuthorizationException;
 import com.packt.delivery.abstraction.service.security.TokenValidationService;
+import java.util.Map;
 
 public class TokenValidationJWK implements TokenValidationService {
 
@@ -14,14 +14,12 @@ public class TokenValidationJWK implements TokenValidationService {
     }
 
     @Override
-    public boolean validate(String accessToken) {
+    public Map<String, Object> validate(String jwt) {
         try {
-            JWTClaimsSet claimsSet = jwtProcessor.process(accessToken, null);
+            return jwtProcessor.process(jwt, null).getClaims();
         } catch (Exception ex) {
             throw new AuthorizationException("Token validation fails", ex);
         }
-
-        return true;
     }
 
 }

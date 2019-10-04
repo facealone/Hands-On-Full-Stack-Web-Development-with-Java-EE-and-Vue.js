@@ -4,21 +4,19 @@ import { FoodService } from './entities/FoodService'
 import { Item } from './entities/Item'
 import { State } from './entities/State'
 import { Cart } from './entities/Cart'
+import { Token } from './entities/Token'
 
 Vue.use(Vuex)
 
 const stateBase: State = {
   cart: Cart.emptyCart(),
-  currentFoodServiceLoggedIn: FoodService.emptyFoodService(),
-  currentDeliveryEmail: ''
+  currentDeliveryEmail: '',
+  token: Token.emptyToken()
 }
 
 export default new Vuex.Store<State>({
   state: stateBase,
   mutations: {
-    setCurrentFoodServiceLoggedIn (state:State, foodService:FoodService) {
-      state.currentFoodServiceLoggedIn = foodService
-    },
     setCurrentDeliveryEmail (state:State, currentDeliveryEmail:string) {
       state.currentDeliveryEmail = currentDeliveryEmail
     },
@@ -29,17 +27,20 @@ export default new Vuex.Store<State>({
       const index = state.cart.items.findIndex(item => item.foodProduct.id === itemToRemove.foodProduct.id)
 
       Vue.delete(state.cart.items, index)
+    },
+    setToken (state:State, token:Token) {
+      state.token = token
     }
   },
   actions: {
 
   },
   getters: {
-    getCurrentFoodServiceLoggedIn: (state) => () => {
-      return state.currentFoodServiceLoggedIn
-    },
     getCurrentDeliveryEmail: (state) => () => {
       return state.currentDeliveryEmail
+    },
+    getToken: (state) => () => {
+      return state.token
     }
   }
 })

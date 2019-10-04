@@ -1,10 +1,14 @@
 package com.packt.delivery.abstraction.service.security;
 
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.packt.delivery.abstraction.entity.Token;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -42,15 +46,20 @@ public class OpenIdConnectServiceBasic implements OpenIdConnectService {
             throw new IllegalStateException("The tokens couldn't be gotten " + response.readEntity(String.class));
         }
 
-        Map<String, String> map = response.readEntity(Map.class);
+        Map<String, String> map = response.readEntity(new GenericType<HashMap<String, String>>() {
+        });
         
-        Token token = new Token("", "", "", "");
-
-        if (!tokenValidationService.validate(token.getAccessToken())) {
-            throw new IllegalStateException("The tokens was gotten but they are invalid" + response.readEntity(String.class));
-        }
+        Map<String, Object> claims = tokenValidationService.validate(map.get("id_token"));
+        
+        Token token = new Token(getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), getClaim(claims, "email"), map.get("access_token"), map.get("refresh_token"), map.get("expires_in"));
 
         return token;
+    }
+    
+    private String getClaim(Map<String, Object> claims, String name){
+        return Optional.ofNullable(claims.get(name))
+                .map(String.class::cast)
+                .orElseThrow(() -> new IllegalStateException("Claim " + name + " was expected"));
     }
 
 }

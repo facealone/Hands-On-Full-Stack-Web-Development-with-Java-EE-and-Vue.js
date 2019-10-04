@@ -1,6 +1,8 @@
 
 package com.packt.delivery.abstraction.service.security;
 
+import java.util.Map;
+
 public interface TokenValidationService {
-    boolean validate(String accessToken);
+    Map<String, Object> validate(String jwt);
 }

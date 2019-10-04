@@ -15,8 +15,15 @@ export default class AuthorizationCallback extends Vue {
 
     AuthorizationService.getToken('authorization_code', code, process.env.VUE_APP_SSO_REDIRECT_URL)
       .then(response => {
-        console.log(response.data)
-        Vue.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`
+        let token:Token = response.data
+
+        this.$store.commit('setToken', token)
+
+        Vue.axios.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`
+
+        this.$toasted.info(`Welcome ${token.userName}`)
+
+        this.$router.push({ name: 'food_service_view', params: { email: token.userEmail } })
       })
   }
 }

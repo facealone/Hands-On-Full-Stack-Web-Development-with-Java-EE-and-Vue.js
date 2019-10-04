@@ -21,10 +21,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class App extends Vue {
   get isLoggedIn () {
-    return this.$store.getters.getCurrentFoodServiceLoggedIn().email !== ''
+    return this.$store.getters.getToken().userEmail !== ''
   }
   get loggedIn () {
-    return this.$store.getters.getCurrentFoodServiceLoggedIn()
+    return this.$store.getters.getToken().userEmail
   }
 }
 </script>
