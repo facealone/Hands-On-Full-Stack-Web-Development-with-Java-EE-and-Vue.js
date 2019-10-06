@@ -16,17 +16,17 @@ import { FoodServiceService } from '../../services/FoodServiceService'
   }
 })
 export default class FoodServiceUpdate extends Vue {
-  @Prop() private readonly email!: string
+  @Prop() private readonly id!: string
   private type:string = 'update'
 
   private foodService:FoodService = FoodService.emptyFoodService()
 
   mounted () {
-    this.getFoodService(this.email)
+    this.getFoodService(this.id)
   }
 
-  getFoodService (email:string) {
-    FoodServiceService.getById(email)
+  getFoodService (id:string) {
+    FoodServiceService.getById(id)
       .then(response => {
         this.foodService = response.data
       })

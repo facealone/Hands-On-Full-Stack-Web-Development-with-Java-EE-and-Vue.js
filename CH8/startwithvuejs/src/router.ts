@@ -66,9 +66,9 @@ export default new Router({
       component: FoodService,
       children: [
         {
-          path: 'update/:email',
+          path: 'update/:id',
           name: 'food_service_update',
-          props: (route) => { return { email: route.params.email } },
+          props: (route) => { return { id: route.params.id } },
           component: FoodServiceUpdate
         },
         {
@@ -77,9 +77,9 @@ export default new Router({
           component: FoodServiceNew
         },
         {
-          path: ':email',
+          path: ':id',
           name: 'food_service_view',
-          props: (route) => { return { email: route.params.email } },
+          props: (route) => { return { id: route.params.id } },
           component: FoodServiceView
         }
       ]

@@ -23,7 +23,7 @@ export default class AuthorizationCallback extends Vue {
 
         this.$toasted.info(`Welcome ${token.userName}`)
 
-        this.$router.push({ name: 'food_service_view', params: { email: token.userEmail } })
+        this.$router.push({ name: 'food_service_view', params: { id: token.userId } })
       })
   }
 }

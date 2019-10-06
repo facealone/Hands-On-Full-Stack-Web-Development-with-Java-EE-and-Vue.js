@@ -2,7 +2,6 @@ package com.packt.delivery.main.repository.foodservice;
 
 import com.packt.delivery.abstraction.entity.FoodService;
 import com.packt.delivery.abstraction.repository.FoodServiceRepository;
-import com.packt.delivery.main.Infrastructure;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Local;
@@ -11,7 +10,6 @@ import javax.inject.Inject;
 
 @Stateless
 @Local
-@Infrastructure
 public class FoodServiceRepositoryEJB implements FoodServiceRepository{
     @Inject
     private FoodServiceRepositoryJPA foodServiceRepositoryJPA;

@@ -81,13 +81,13 @@
     <div class="row">
         <div class="col-sm text-right">
         <router-link  class="btn btn-primary"
-          :to="{ name: 'food_service_update', params: { email: email }}"
+          :to="{ name: 'food_service_update', params: { id: id }}"
         >Update</router-link>
     </div>
     </div>
     <div class="row">
       <div class="col-sm">
-        <FoodProductList :foodService="email"></FoodProductList>
+        <FoodProductList :foodService="foodService.email"></FoodProductList>
       </div>
     </div>
   </div>
@@ -105,16 +105,16 @@ import { FoodServiceService } from '../../services/FoodServiceService'
   }
 })
 export default class FoodServiceView extends Vue {
-  @Prop() private readonly email!: string
+  @Prop() private readonly id!: string
 
   private foodService: FoodService = FoodService.emptyFoodService()
 
   mounted () {
-    this.getFoodService(this.email)
+    this.getFoodService(this.id)
   }
 
-  getFoodService (email: string) {
-    FoodServiceService.getById(email)
+  getFoodService (id: string) {
+    FoodServiceService.getById(id)
       .then(response => {
         this.foodService = response.data
       })

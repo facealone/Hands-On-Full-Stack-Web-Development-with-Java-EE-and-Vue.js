@@ -23,8 +23,6 @@ public class AuthorizationFilter implements ContainerRequestFilter {
  
         String token = authorizationHeader.substring("Bearer".length()).trim();
         
-        if(!tokenValidationService.validate(token)){
-            throw new AuthorizationException("Token validation fails");
-        }
+        tokenValidationService.validate(token);
     }
 }

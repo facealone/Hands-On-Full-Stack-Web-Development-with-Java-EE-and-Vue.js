@@ -5,6 +5,7 @@ import com.packt.delivery.abstraction.entity.Token;
 import java.util.Objects;
 
 public class TokenDTO {
+    private final String userId;
     private final String userName;
     private final String userEmail;
     private final String accessToken;
@@ -12,11 +13,16 @@ public class TokenDTO {
     private final String expiresIn;
 
     public TokenDTO(Token token) {
+        this.userId = token.getUserId();
         this.userName = token.getUserName();
         this.userEmail = token.getUserEmail();
         this.accessToken = token.getAccessToken();
         this.refreshToken = token.getRefreshToken();
         this.expiresIn = token.getExpiresIn();
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getUserName() {
@@ -41,12 +47,13 @@ public class TokenDTO {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.userName);
-        hash = 59 * hash + Objects.hashCode(this.userEmail);
-        hash = 59 * hash + Objects.hashCode(this.accessToken);
-        hash = 59 * hash + Objects.hashCode(this.refreshToken);
-        hash = 59 * hash + Objects.hashCode(this.expiresIn);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.userId);
+        hash = 83 * hash + Objects.hashCode(this.userName);
+        hash = 83 * hash + Objects.hashCode(this.userEmail);
+        hash = 83 * hash + Objects.hashCode(this.accessToken);
+        hash = 83 * hash + Objects.hashCode(this.refreshToken);
+        hash = 83 * hash + Objects.hashCode(this.expiresIn);
         return hash;
     }
 
@@ -62,6 +69,9 @@ public class TokenDTO {
             return false;
         }
         final TokenDTO other = (TokenDTO) obj;
+        if (!Objects.equals(this.userId, other.userId)) {
+            return false;
+        }
         if (!Objects.equals(this.userName, other.userName)) {
             return false;
         }
@@ -79,6 +89,7 @@ public class TokenDTO {
         }
         return true;
     }
+
 
     
 }

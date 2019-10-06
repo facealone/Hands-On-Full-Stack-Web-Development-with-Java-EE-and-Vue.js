@@ -4,6 +4,7 @@ package com.packt.delivery.abstraction.entity;
 import java.util.Objects;
 
 public class Token {
+    private String userId;
     private String userName;
     private String userEmail;
     private String accessToken;
@@ -14,7 +15,8 @@ public class Token {
     }
 
     
-    public Token(String userName, String userEmail,String accessToken, String refreshToken, String expiresIn) {
+    public Token(String userId, String userName, String userEmail,String accessToken, String refreshToken, String expiresIn) {
+        this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.accessToken = accessToken;
@@ -62,14 +64,23 @@ public class Token {
         this.userEmail = userEmail;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.userName);
-        hash = 23 * hash + Objects.hashCode(this.userEmail);
-        hash = 23 * hash + Objects.hashCode(this.accessToken);
-        hash = 23 * hash + Objects.hashCode(this.refreshToken);
-        hash = 23 * hash + Objects.hashCode(this.expiresIn);
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.userId);
+        hash = 67 * hash + Objects.hashCode(this.userName);
+        hash = 67 * hash + Objects.hashCode(this.userEmail);
+        hash = 67 * hash + Objects.hashCode(this.accessToken);
+        hash = 67 * hash + Objects.hashCode(this.refreshToken);
+        hash = 67 * hash + Objects.hashCode(this.expiresIn);
         return hash;
     }
 
@@ -85,6 +96,9 @@ public class Token {
             return false;
         }
         final Token other = (Token) obj;
+        if (!Objects.equals(this.userId, other.userId)) {
+            return false;
+        }
         if (!Objects.equals(this.userName, other.userName)) {
             return false;
         }
@@ -102,6 +116,8 @@ public class Token {
         }
         return true;
     }
+    
+    
     
     
     
