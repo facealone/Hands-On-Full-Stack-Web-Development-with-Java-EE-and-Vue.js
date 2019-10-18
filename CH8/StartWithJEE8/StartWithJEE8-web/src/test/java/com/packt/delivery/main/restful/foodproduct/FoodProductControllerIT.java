@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,11 +28,13 @@ public class FoodProductControllerIT {
     public static WebArchive createDeployment() {
         Path persistence = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/persistence.xml");
         Path deliveryData = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/foodproductdata.sql");
+        Path beansTest = Paths.get("../StartWithJEE8-ejb/src/test/resources/beans.xml");
 
         return ShrinkWrap.create(WebArchive.class)
                 .addPackages(true, "com.packt.delivery")
                 .addAsResource(persistence.toFile(), "META-INF/persistence.xml")
-                .addAsResource(deliveryData.toFile(), "META-INF/data.sql");
+                .addAsResource(deliveryData.toFile(), "META-INF/data.sql")
+                .addAsManifestResource(beansTest.toFile(), "beans.xml");
     }
 
     @Test
@@ -46,6 +49,7 @@ public class FoodProductControllerIT {
                 .queryParam("page", "1")
                 .queryParam("pageSize", "20")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .get();
         
         List<FoodProductDTO> foodProducts = response.readEntity(new GenericType<List<FoodProductDTO>>() { });
@@ -64,6 +68,7 @@ public class FoodProductControllerIT {
         Response response = webTarget
                 .path("foodproducts")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .post(Entity.entity(newFoodProduct, MediaType.APPLICATION_JSON));
         
         newFoodProduct = response.readEntity(FoodProductDTO.class);
@@ -82,6 +87,7 @@ public class FoodProductControllerIT {
         Response response = webTarget
                 .path("foodproducts")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .put(Entity.entity(updateFoodProduct, MediaType.APPLICATION_JSON));
         
         updateFoodProduct = response.readEntity(FoodProductDTO.class);
@@ -101,6 +107,7 @@ public class FoodProductControllerIT {
                 .path("foodproducts")
                 .path("2")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .delete();
         
         updateFoodProduct = response.readEntity(FoodProductDTO.class);
@@ -118,6 +125,7 @@ public class FoodProductControllerIT {
                 .path("foodproducts")
                 .path("1")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .get();
         
         FoodProductDTO foodProduct = response.readEntity(FoodProductDTO.class);

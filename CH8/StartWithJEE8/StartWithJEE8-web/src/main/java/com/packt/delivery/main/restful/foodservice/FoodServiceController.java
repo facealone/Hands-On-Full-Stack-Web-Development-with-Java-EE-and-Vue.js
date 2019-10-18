@@ -1,7 +1,6 @@
 package com.packt.delivery.main.restful.foodservice;
 
 import com.packt.delivery.abstraction.service.foodservice.FoodServiceService;
-import com.packt.delivery.main.restful.security.AuthorizationNeeded;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.LocalBean;
@@ -18,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import com.packt.delivery.main.restful.security.RequiredAuthorization;
 
 @Stateless
 @LocalBean

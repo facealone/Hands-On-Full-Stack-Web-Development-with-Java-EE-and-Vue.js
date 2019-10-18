@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +49,7 @@ public class FoodServiceControllerIT {
                 .queryParam("page", "1")
                 .queryParam("pageSize", "20")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .get();
         
         List<FoodServiceDTO> foodServices = response.readEntity(new GenericType<List<FoodServiceDTO>>() { });
@@ -68,6 +70,7 @@ public class FoodServiceControllerIT {
         Response response = webTarget
                 .path("foodservices")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .post(Entity.entity(foodService, MediaType.APPLICATION_JSON));
         
         foodService = response.readEntity(FoodServiceDTO.class);
@@ -88,6 +91,7 @@ public class FoodServiceControllerIT {
         Response response = webTarget
                 .path("foodservices")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .put(Entity.entity(foodService, MediaType.APPLICATION_JSON));
         
         foodService = response.readEntity(FoodServiceDTO.class);
@@ -109,6 +113,7 @@ public class FoodServiceControllerIT {
                 .path("foodservices")
                 .path("chicken@email.com")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .delete();
         
         foodService = response.readEntity(FoodServiceDTO.class);

@@ -8,7 +8,9 @@ import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 import com.nimbusds.jwt.proc.JWTProcessor;
+import com.packt.delivery.abstraction.service.security.NullObjectTokenValidation;
 import com.packt.delivery.abstraction.service.security.TokenValidationService;
+import com.packt.delivery.main.Testing;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
@@ -46,5 +48,11 @@ public class SecurityProvider {
     @Produces
     public TokenValidationService getTokenValidationService(JWTProcessor jwtProcessor) {
         return new TokenValidationJWK(jwtProcessor);
+    }
+    
+    @Produces
+    @Testing
+    public TokenValidationService getNullObjectTokenValidation() {
+        return new NullObjectTokenValidation();
     }
 }

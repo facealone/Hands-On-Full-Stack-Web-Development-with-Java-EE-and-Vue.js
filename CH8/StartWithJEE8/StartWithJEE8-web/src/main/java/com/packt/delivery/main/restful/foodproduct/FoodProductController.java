@@ -2,7 +2,6 @@
 package com.packt.delivery.main.restful.foodproduct;
 
 import com.packt.delivery.abstraction.service.foodproduct.FoodProductService;
-import com.packt.delivery.main.restful.security.AuthorizationNeeded;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.LocalBean;
@@ -19,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import com.packt.delivery.main.restful.security.RequiredAuthorization;
 
 @Stateless
 @LocalBean
@@ -30,7 +30,7 @@ public class FoodProductController{
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public FoodProductDTO save(FoodProductDTO foodProduct) {
         return new FoodProductDTO(foodProductService.save(foodProduct.toFoodProduct()));
     }
@@ -38,7 +38,7 @@ public class FoodProductController{
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public FoodProductDTO update(FoodProductDTO foodProduct) {
         return new FoodProductDTO(foodProductService.update(foodProduct.toFoodProduct()));
     }
@@ -47,7 +47,7 @@ public class FoodProductController{
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public FoodProductDTO deActivate(@PathParam("id") Integer id) {
         return new FoodProductDTO(foodProductService.deActivate(id));
     }
@@ -66,7 +66,7 @@ public class FoodProductController{
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public Response getById(@PathParam("id") Integer id) {
         return foodProductService.getById(id)
                 .map(f -> new FoodProductDTO(f))

@@ -1,7 +1,6 @@
 package com.packt.delivery.main.restful.files;
 
 import com.packt.delivery.abstraction.service.file.StorageService;
-import com.packt.delivery.main.restful.security.AuthorizationNeeded;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.ejb.LocalBean;
@@ -18,10 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import com.packt.delivery.main.restful.security.RequiredAuthorization;
 
 @Stateless
 @LocalBean
-//@AuthorizationNeeded
+@RequiredAuthorization
 @Path("files")
 public class FileController {
     @Context

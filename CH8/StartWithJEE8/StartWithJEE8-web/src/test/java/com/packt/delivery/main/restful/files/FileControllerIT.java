@@ -5,9 +5,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,6 +35,7 @@ public class FileControllerIT {
         Path persistence = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/persistence.xml");
         Path deliveryData = Paths.get("../StartWithJEE8-ejb/src/test/resources/META-INF/foodproductdata.sql");
         Path applicationItProperties = Paths.get("../StartWithJEE8-ejb/src/main/resources/application-it.properties");
+        Path beansTest = Paths.get("../StartWithJEE8-ejb/src/test/resources/beans.xml");
 
         System.setProperty("ENV", "it");
         
@@ -40,7 +43,8 @@ public class FileControllerIT {
                 .addPackages(true, "com.packt.delivery")
                 .addAsResource(applicationItProperties.toFile(), "application-it.properties")
                 .addAsResource(persistence.toFile(), "META-INF/persistence.xml")
-                .addAsResource(deliveryData.toFile(), "META-INF/data.sql");
+                .addAsResource(deliveryData.toFile(), "META-INF/data.sql")
+                .addAsManifestResource(beansTest.toFile(), "beans.xml");
     }
 
     @Test
@@ -54,6 +58,7 @@ public class FileControllerIT {
         Response response = webTarget
                 .path("files")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .post(Entity.entity(multiPart, MediaType.MULTIPART_FORM_DATA));
 
         ImageDTO imageDTO = response.readEntity(ImageDTO.class);
@@ -75,11 +80,12 @@ public class FileControllerIT {
                 .path("files")
                 .path(uuid + "-" + testFile)
                 .request(MediaType.TEXT_PLAIN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer XXXXXXXXX")
                 .get();
 
         try (InputStream inputStream = response.readEntity(InputStream.class)) {
 
-            Files.copy(inputStream, Paths.get("target", testFile + "it"));
+            Files.copy(inputStream, Paths.get("target", testFile + "it"), StandardCopyOption.REPLACE_EXISTING);
 
             assertThat(Files.exists(Paths.get("target/", testFile + "it"))).isTrue();
             assertThat(Files.readAllLines(Paths.get("target/", testFile + "it"))).isEqualTo(Files.readAllLines(Paths.get("target/", uuid + "-" + testFile)));
