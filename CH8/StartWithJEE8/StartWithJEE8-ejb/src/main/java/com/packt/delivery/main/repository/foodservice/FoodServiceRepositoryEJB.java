@@ -2,6 +2,7 @@ package com.packt.delivery.main.repository.foodservice;
 
 import com.packt.delivery.abstraction.entity.FoodService;
 import com.packt.delivery.abstraction.repository.FoodServiceRepository;
+import com.packt.delivery.main.Infrastructure;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Local;
@@ -9,43 +10,44 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
+@Infrastructure
 @Local
 public class FoodServiceRepositoryEJB implements FoodServiceRepository{
     @Inject
-    private FoodServiceRepositoryJPA foodServiceRepositoryJPA;
+    private FoodServiceRepository foodServiceRepository;
 
     @Override
     public List<FoodService> getAll() {
-        return foodServiceRepositoryJPA.getAll();
+        return foodServiceRepository.getAll();
     }
 
     @Override
     public List<FoodService> getAll(Integer page, Integer pageSize) {
-        return foodServiceRepositoryJPA.getAll(page, pageSize);
+        return foodServiceRepository.getAll(page, pageSize);
     }
     
     @Override
     public FoodService save(FoodService foodService) {
-        return foodServiceRepositoryJPA.save(foodService);
+        return foodServiceRepository.save(foodService);
     }
 
     @Override
     public FoodService update(FoodService foodService) {
-        return foodServiceRepositoryJPA.update(foodService);
+        return foodServiceRepository.update(foodService);
     }
 
     @Override
     public List<FoodService> getByFoodType(String foodType, Integer page, Integer pageSize) {
-        return foodServiceRepositoryJPA.getByFoodType(foodType, page, pageSize);
+        return foodServiceRepository.getByFoodType(foodType, page, pageSize);
     }
 
     @Override
     public Optional<FoodService> getById(String email) {
-        return foodServiceRepositoryJPA.getById(email);
+        return foodServiceRepository.getById(email);
     }
 
     @Override
     public Optional<FoodService> getByEmailAndPassword(String email, String password) {
-        return foodServiceRepositoryJPA.getByEmailAndPassword(email, password);
+        return foodServiceRepository.getByEmailAndPassword(email, password);
     }
 }

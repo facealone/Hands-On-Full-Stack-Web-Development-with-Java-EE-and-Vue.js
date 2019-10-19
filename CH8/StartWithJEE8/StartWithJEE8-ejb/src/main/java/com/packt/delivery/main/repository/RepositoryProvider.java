@@ -1,9 +1,9 @@
 package com.packt.delivery.main.repository;
 
-import com.packt.delivery.main.Infrastructure;
+import com.packt.delivery.main.Testing;
 import com.packt.delivery.main.repository.delivery.DeliveryRepositoryJPA;
 import com.packt.delivery.main.repository.foodproduct.FoodProductRepositoryJPA;
-import com.packt.delivery.main.repository.foodservice.FoodServiceRepositoryJPA;
+import com.packt.delivery.main.security.foodservice.keycloak.MockFoodServiceRepository;
 import com.packt.delivery.main.security.foodservice.keycloak.KeyCloakFoodServiceRepository;
 import java.util.Properties;
 import javax.ejb.LocalBean;
@@ -11,7 +11,6 @@ import javax.ejb.Stateless;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.client.Client;
 import org.keycloak.admin.client.Keycloak;
 
 @Stateless
@@ -27,11 +26,6 @@ public class RepositoryProvider {
     }
 
     @Produces
-    public FoodServiceRepositoryJPA getFoodServiceRepositoryJPA(EntityManager entityManager) {
-        return new FoodServiceRepositoryJPA(entityManager);
-    }
-
-    @Produces
     public DeliveryRepositoryJPA getDeliveryRepositoryJPA(EntityManager entityManager) {
         return new DeliveryRepositoryJPA(entityManager);
     }
@@ -42,7 +36,6 @@ public class RepositoryProvider {
     }
 
     @Produces
-    @Infrastructure
     public KeyCloakFoodServiceRepository getKeyCloakFoodServiceRepository(Properties properties) {
         Keycloak keycloak = Keycloak.getInstance(
                 properties.getProperty("SSO_AUTH_URL"),
@@ -52,5 +45,11 @@ public class RepositoryProvider {
                 "admin-cli");
         
         return new KeyCloakFoodServiceRepository(keycloak, properties.getProperty("SSO_REALM"));
+    }
+    
+    @Produces
+    @Testing
+    public MockFoodServiceRepository getMockFoodServiceRepository() {
+        return new MockFoodServiceRepository();
     }
 }

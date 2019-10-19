@@ -30,7 +30,7 @@ public class FoodProductRepositoryEJBIT {
                 .addPackages(true, "com.packt.delivery")
                 .addAsResource("META-INF/persistence.xml")
                 .addAsResource("META-INF/foodproductdata.sql", "META-INF/data.sql")
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+                .addAsManifestResource("beans.xml", "beans.xml");
     }
 
     @Test

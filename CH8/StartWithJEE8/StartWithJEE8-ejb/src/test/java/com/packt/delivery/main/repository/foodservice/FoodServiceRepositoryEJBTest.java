@@ -2,6 +2,7 @@ package com.packt.delivery.main.repository.foodservice;
 
 import com.packt.delivery.abstraction.entity.FoodService;
 import com.packt.delivery.abstraction.entity.User;
+import com.packt.delivery.abstraction.repository.FoodServiceRepository;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class FoodServiceRepositoryEJBTest {
     @Mock
-    private FoodServiceRepositoryJPA foodServiceRepositoryJPA;
+    private FoodServiceRepository foodServiceRepository;
     
     @InjectMocks
     private FoodServiceRepositoryEJB foodServiceRepositoryEJB;
@@ -31,7 +32,7 @@ public class FoodServiceRepositoryEJBTest {
         
         foodServiceRepositoryEJB.save(foodService);
         
-        verify(foodServiceRepositoryJPA).save(foodService);
+        verify(foodServiceRepository).save(foodService);
     }
     
     @Test
@@ -41,7 +42,7 @@ public class FoodServiceRepositoryEJBTest {
         
         foodServiceRepositoryEJB.update(foodService);
         
-        verify(foodServiceRepositoryJPA).update(foodService);
+        verify(foodServiceRepository).update(foodService);
     }
     
     @Test
@@ -49,7 +50,7 @@ public class FoodServiceRepositoryEJBTest {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
-        when(foodServiceRepositoryJPA.getAll()).thenReturn(Arrays.asList(foodService));
+        when(foodServiceRepository.getAll()).thenReturn(Arrays.asList(foodService));
                 
         List<FoodService> foodServices = foodServiceRepositoryEJB.getAll();
         
@@ -61,7 +62,7 @@ public class FoodServiceRepositoryEJBTest {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
-        when(foodServiceRepositoryJPA.getAll(2, 20)).thenReturn(Arrays.asList(foodService));
+        when(foodServiceRepository.getAll(2, 20)).thenReturn(Arrays.asList(foodService));
                 
         List<FoodService> foodServices = foodServiceRepositoryEJB.getAll(2, 20);
         
@@ -73,7 +74,7 @@ public class FoodServiceRepositoryEJBTest {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
-        when(foodServiceRepositoryJPA.getByFoodType("PIZZA", 2, 20)).thenReturn(Arrays.asList(foodService));
+        when(foodServiceRepository.getByFoodType("PIZZA", 2, 20)).thenReturn(Arrays.asList(foodService));
                 
         List<FoodService> foodServices = foodServiceRepositoryEJB.getByFoodType("PIZZA", 2, 20);
         
@@ -85,7 +86,7 @@ public class FoodServiceRepositoryEJBTest {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
-        when(foodServiceRepositoryJPA.getById("email1@email.com")).thenReturn(Optional.of(foodService));
+        when(foodServiceRepository.getById("email1@email.com")).thenReturn(Optional.of(foodService));
                 
         Optional<FoodService> foodServiceResult = foodServiceRepositoryEJB.getById("email1@email.com");
         
@@ -97,7 +98,7 @@ public class FoodServiceRepositoryEJBTest {
         User user = new User("email1@email.com", "pass1");
         FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
-        when(foodServiceRepositoryJPA.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodService));
+        when(foodServiceRepository.getByEmailAndPassword("email1@email.com", "pass1")).thenReturn(Optional.of(foodService));
                 
         Optional<FoodService> foodServiceResult = foodServiceRepositoryEJB.getByEmailAndPassword("email1@email.com", "pass1");
         
