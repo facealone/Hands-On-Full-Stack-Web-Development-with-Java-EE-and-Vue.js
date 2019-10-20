@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.UserRepresentation;
 
 public class KeyCloakFoodServiceRepository implements FoodServiceRepository {
@@ -40,14 +41,12 @@ public class KeyCloakFoodServiceRepository implements FoodServiceRepository {
 
     @Override
     public FoodService update(FoodService foodService) {
-        Response response = keycloak
+        UserResource userResource = keycloak
                 .realm(realm)
                 .users()
-                .create(convertFoodServiceToUserRepresentation(foodService));
-
-        if (response.getStatus() != 200) {
-            throw new IllegalArgumentException("Food service " + foodService.getEmail() + " couldn't be updated in KeyCloak: " + response.readEntity(String.class));
-        }
+                .get(foodService.getId());
+        
+        userResource.update(convertFoodServiceToUserRepresentation(foodService));
 
         return foodService;
     }
@@ -68,7 +67,7 @@ public class KeyCloakFoodServiceRepository implements FoodServiceRepository {
         return keycloak
                 .realm(realm)
                 .users()
-                .list(pageSize * page, pageSize)
+                .list((page - 1) * pageSize, pageSize)
                 .stream()
                 .map(this::convertUserRepresentationToFoodService)
                 .collect(Collectors.toList());
@@ -84,16 +83,16 @@ public class KeyCloakFoodServiceRepository implements FoodServiceRepository {
                 .map(this::convertUserRepresentationToFoodService)
                 .filter(foodService -> foodService.getFoodType().equals(foodType))
                 .limit(pageSize)
-                .skip(pageSize * page)
+                .skip((page - 1) * pageSize)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<FoodService> getById(String email) {
+    public Optional<FoodService> getById(String id) {
         return Optional.ofNullable(keycloak
                 .realm(realm)
                 .users()
-                .get(email))
+                .get(id))
                 .map(userResource -> userResource.toRepresentation())
                 .map(this::convertUserRepresentationToFoodService);
     }
@@ -105,7 +104,7 @@ public class KeyCloakFoodServiceRepository implements FoodServiceRepository {
 
     private UserRepresentation convertFoodServiceToUserRepresentation(FoodService foodService) {
         UserRepresentation userRepresentation = new UserRepresentation();
-        userRepresentation.setId(foodService.getEmail());
+        userRepresentation.setId(foodService.getId());
         userRepresentation.setEmail(foodService.getEmail());
         userRepresentation.setUsername(foodService.getEmail());
         userRepresentation.setFirstName(foodService.getName());
@@ -125,7 +124,7 @@ public class KeyCloakFoodServiceRepository implements FoodServiceRepository {
     private FoodService convertUserRepresentationToFoodService(UserRepresentation userRepresentation) {
         User user = new User(userRepresentation.getEmail(), userRepresentation.getEmail());
 
-        return new FoodService(userRepresentation.getEmail(), userRepresentation.getFirstName(), getAttribute(userRepresentation.getAttributes(), "address"), getAttribute(userRepresentation.getAttributes(), "imageUrl"), getAttribute(userRepresentation.getAttributes(), "foodType"), Integer.parseInt(Optional.ofNullable(getAttribute(userRepresentation.getAttributes(), "deliveryFee")).filter(s -> !s.equals("")).orElse("0")), userRepresentation.isEnabled(), user, Collections.emptyList());
+        return new FoodService(userRepresentation.getId(), userRepresentation.getEmail(), userRepresentation.getFirstName(), getAttribute(userRepresentation.getAttributes(), "address"), getAttribute(userRepresentation.getAttributes(), "imageUrl"), getAttribute(userRepresentation.getAttributes(), "foodType"), Integer.parseInt(Optional.ofNullable(getAttribute(userRepresentation.getAttributes(), "deliveryFee")).filter(s -> !s.equals("")).orElse("0")), userRepresentation.isEnabled(), user, Collections.emptyList());
     }
 
     private String getAttribute(Map<String, List<String>> attributes, String name) {

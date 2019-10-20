@@ -66,7 +66,6 @@ public class FoodProductController{
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    @RequiredAuthorization
     public Response getById(@PathParam("id") Integer id) {
         return foodProductService.getById(id)
                 .map(f -> new FoodProductDTO(f))

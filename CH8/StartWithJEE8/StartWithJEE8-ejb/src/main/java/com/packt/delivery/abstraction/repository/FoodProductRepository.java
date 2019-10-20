@@ -5,6 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FoodProductRepository extends Repository<FoodProduct>{
-    List<FoodProduct> getByFoodService(String email, Integer page, Integer pageSize);
+    List<FoodProduct> getByFoodService(String foodService, Integer page, Integer pageSize);
     Optional<FoodProduct> getById(Integer id);
 }

@@ -55,28 +55,6 @@
           >
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            v-model="foodService.user.password"
-            type="password"
-            class="form-control"
-            id="password"
-            placeholder="Password"
-            required
-          >
-        </div>
-        <div class="form-group">
-          <label for="password">Repeat Password</label>
-          <input
-            v-model="repeatPassword"
-            type="password"
-            class="form-control"
-            id="repeatPassword"
-            placeholder="Password"
-            required
-          >
-        </div>
-        <div class="form-group">
           <label for="image">Image</label>
            <file-upload
             class="btn btn-primary"
@@ -113,7 +91,6 @@ export default class FoodServiceForm extends Vue {
   @Prop() private readonly type!: string
   @Prop({ default: () => FoodService.emptyFoodService() }) private readonly foodService!: FoodService
   private files:any [] = []
-  private repeatPassword:string = ''
   private image: any = new Image()
 
   save () {
@@ -149,20 +126,8 @@ export default class FoodServiceForm extends Vue {
       valid = false
     }
 
-    if (foodService.user.password === '') {
-      this.$toasted.error(`Password is required`)
-
-      valid = false
-    }
-
     if (this.files.length !== 1) {
       this.$toasted.error(`Image is required`)
-
-      valid = false
-    }
-
-    if (foodService.user.password !== this.repeatPassword) {
-      this.$toasted.error(`Passwords don't match`)
 
       valid = false
     }

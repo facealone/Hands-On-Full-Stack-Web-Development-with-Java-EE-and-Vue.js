@@ -20,6 +20,7 @@ export default class AuthorizationCallback extends Vue {
         this.$store.commit('setToken', token)
 
         Vue.axios.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`
+        console.log(Vue.axios.defaults.headers)
 
         this.$toasted.info(`Welcome ${token.userName}`)
 

@@ -1,6 +1,7 @@
 import { User } from './User'
 
 export class FoodService {
+    id: string = ''
     email: string = ''
     name: string = ''
     address: string = ''
@@ -17,9 +18,10 @@ export class FoodService {
       return foodService
     }
 
-    static newFoodService (email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, imageUrl: string, user: User, active: boolean) {
+    static newFoodService (id: string, email: string, name: string, address: string, foodType: string, deliveryFee: number, image: any, imageUrl: string, user: User, active: boolean) {
       let foodService:FoodService = new FoodService()
 
+      foodService.id = id
       foodService.email = email
       foodService.name = name
       foodService.address = address
@@ -34,6 +36,7 @@ export class FoodService {
     }
 
     copyFoodService (foodServiceToCopy: FoodService) {
+      this.id = foodServiceToCopy.id
       this.email = foodServiceToCopy.email
       this.name = foodServiceToCopy.name
       this.address = foodServiceToCopy.address

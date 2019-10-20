@@ -15,7 +15,7 @@ public class MockFoodServiceRepository implements FoodServiceRepository{
     @Override
     public List<FoodService> getAll(Integer page, Integer pageSize) {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         return Arrays.asList(foodService);
     }
@@ -23,7 +23,7 @@ public class MockFoodServiceRepository implements FoodServiceRepository{
     @Override
     public List<FoodService> getByFoodType(String foodType, Integer page, Integer pageSize) {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         return Arrays.asList(foodService);
     }
@@ -31,7 +31,7 @@ public class MockFoodServiceRepository implements FoodServiceRepository{
     @Override
     public Optional<FoodService> getById(String email) {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         return Optional.of(foodService);
     }
@@ -44,7 +44,7 @@ public class MockFoodServiceRepository implements FoodServiceRepository{
     @Override
     public List<FoodService> getAll() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         return Arrays.asList(foodService);
     }

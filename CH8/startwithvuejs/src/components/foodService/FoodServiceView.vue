@@ -87,7 +87,7 @@
     </div>
     <div class="row">
       <div class="col-sm">
-        <FoodProductList :foodService="foodService.email"></FoodProductList>
+        <FoodProductList :foodService="id"></FoodProductList>
       </div>
     </div>
   </div>

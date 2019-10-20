@@ -5,7 +5,6 @@
  */
 package com.packt.delivery.main.repository.foodproduct;
 
-import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import com.packt.delivery.main.repository.delivery.ItemData;
 import java.io.Serializable;
 import java.util.List;
@@ -39,7 +38,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "FoodProductData.findByDescription", query = "SELECT f FROM FoodProductData f WHERE f.description = :description"),
     @NamedQuery(name = "FoodProductData.findByImageUrl", query = "SELECT f FROM FoodProductData f WHERE f.imageUrl = :imageUrl"),
     @NamedQuery(name = "FoodProductData.findByActive", query = "SELECT f FROM FoodProductData f WHERE f.active = :active"),
-    @NamedQuery(name = "FoodProductData.findByFoodService", query = "SELECT f FROM FoodProductData f WHERE f.foodService.email = :email")})
+    @NamedQuery(name = "FoodProductData.findByFoodService", query = "SELECT f FROM FoodProductData f WHERE f.foodService = :foodService")})
 public class FoodProductData implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,11 +70,13 @@ public class FoodProductData implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "image_url")
     private String imageUrl;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 300)
+    @Column(name = "food_service")
+    private String foodService;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foodProduct")
     private List<ItemData> itemList;
-    @JoinColumn(name = "food_service", referencedColumnName = "email")
-    @ManyToOne(optional = false)
-    private FoodServiceData foodService;
 
     public FoodProductData() {
     }
@@ -136,11 +137,11 @@ public class FoodProductData implements Serializable {
         this.itemList = itemList;
     }
 
-    public FoodServiceData getFoodService() {
+    public String getFoodService() {
         return foodService;
     }
 
-    public void setFoodService(FoodServiceData foodService) {
+    public void setFoodService(String foodService) {
         this.foodService = foodService;
     }
 

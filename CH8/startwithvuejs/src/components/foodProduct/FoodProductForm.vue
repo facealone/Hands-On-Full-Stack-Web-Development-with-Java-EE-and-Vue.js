@@ -11,6 +11,7 @@
             id="id"
             placeholder="Id"
             required
+            readonly
           >
         </div>
         <div class="form-group">

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodServiceDTO implements Serializable {
+    private String id;
     private String email;
     private String name;
     private String address;
@@ -24,7 +25,8 @@ public class FoodServiceDTO implements Serializable {
         
     }
     
-    public FoodServiceDTO(String email, String name, String address, String foodType, String imageUrl, int deliveryFee, boolean active, UserDTO user, List<FoodProductDTO> foodProductList) {
+    public FoodServiceDTO(String id, String email, String name, String address, String foodType, String imageUrl, int deliveryFee, boolean active, UserDTO user, List<FoodProductDTO> foodProductList) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.address = address;
@@ -37,6 +39,7 @@ public class FoodServiceDTO implements Serializable {
     }
     
     public FoodServiceDTO(FoodService foodService){
+        this.id = foodService.getId();
         this.email = foodService.getEmail();
         this.name = foodService.getName();
         this.address = foodService.getAddress();
@@ -53,11 +56,19 @@ public class FoodServiceDTO implements Serializable {
     }
     
     public FoodService toFoodService(){
-        return new FoodService(this.email, this.name, this.address, this.imageUrl, this.foodType, this.deliveryFee, this.active, this.user.toUser(), Optional.ofNullable(this.foodProductList)
+        return new FoodService(this.id, this.email, this.name, this.address, this.imageUrl, this.foodType, this.deliveryFee, this.active, this.user.toUser(), Optional.ofNullable(this.foodProductList)
                 .orElse(Collections.emptyList())
                 .stream()
                 .map(FoodProductDTO::toFoodProduct)
                 .collect(Collectors.toList()));
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -135,15 +146,16 @@ public class FoodServiceDTO implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.email);
-        hash = 41 * hash + Objects.hashCode(this.name);
-        hash = 41 * hash + Objects.hashCode(this.address);
-        hash = 41 * hash + Objects.hashCode(this.foodType);
-        hash = 41 * hash + Objects.hashCode(this.imageUrl);
-        hash = 41 * hash + this.deliveryFee;
-        hash = 41 * hash + (this.active ? 1 : 0);
-        hash = 41 * hash + Objects.hashCode(this.user);
-        hash = 41 * hash + Objects.hashCode(this.foodProductList);
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.address);
+        hash = 89 * hash + Objects.hashCode(this.foodType);
+        hash = 89 * hash + Objects.hashCode(this.imageUrl);
+        hash = 89 * hash + this.deliveryFee;
+        hash = 89 * hash + (this.active ? 1 : 0);
+        hash = 89 * hash + Objects.hashCode(this.user);
+        hash = 89 * hash + Objects.hashCode(this.foodProductList);
         return hash;
     }
 
@@ -163,6 +175,9 @@ public class FoodServiceDTO implements Serializable {
             return false;
         }
         if (this.active != other.active) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.email, other.email)) {
@@ -191,7 +206,7 @@ public class FoodServiceDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "FoodServiceDTO{" + "email=" + email + ", name=" + name + ", address=" + address + ", foodType=" + foodType + ", imageUrl=" + imageUrl + ", deliveryFee=" + deliveryFee + ", active=" + active + ", user=" + user + ", foodProductList=" + foodProductList + '}';
+        return "FoodServiceDTO{" + "id=" + id + ", email=" + email + ", name=" + name + ", address=" + address + ", foodType=" + foodType + ", imageUrl=" + imageUrl + ", deliveryFee=" + deliveryFee + ", active=" + active + ", user=" + user + ", foodProductList=" + foodProductList + '}';
     }
 
     

@@ -25,8 +25,8 @@ public class FoodProductServiceBasic implements FoodProductService{
     }
 
     @Override
-    public List<FoodProduct> getByFoodService(String email, Integer page, Integer pageSize) {
-        return foodProductRepository.getByFoodService(email, page, pageSize)
+    public List<FoodProduct> getByFoodService(String foodService, Integer page, Integer pageSize) {
+        return foodProductRepository.getByFoodService(foodService, page, pageSize)
                 .stream()
                 .filter(FoodProduct::isActive)
                 .collect(Collectors.toList());

@@ -37,7 +37,7 @@ public class FoodServiceRepositoryEJBIT {
     @InSequence(1)
     public void getAll_basicData_same() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         List<FoodService> foodServices = foodServiceRepository.getAll();
 
@@ -48,7 +48,7 @@ public class FoodServiceRepositoryEJBIT {
     @InSequence(2)
     public void getAll_pagination_same() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         List<FoodService> foodServices = foodServiceRepository.getAll(1, 20);
 
@@ -59,7 +59,7 @@ public class FoodServiceRepositoryEJBIT {
     @InSequence(3)
     public void save_new_getAll() {        
         User userExpected = new User("chicken@email.com", "pass2");
-        FoodService foodServiceExpected = new FoodService("chicken@email.com", "Chicken Cool", "Street 898", "imageURL", "CHICKEN", 120, true, userExpected, Collections.emptyList());
+        FoodService foodServiceExpected = new FoodService("id", "chicken@email.com", "Chicken Cool", "Street 898", "imageURL", "CHICKEN", 120, true, userExpected, Collections.emptyList());
         
         FoodService foodService = foodServiceRepository.save(foodServiceExpected);
 
@@ -70,7 +70,7 @@ public class FoodServiceRepositoryEJBIT {
     @InSequence(4)
     public void update_state_updated() {
         User userExpected = new User("chicken@email.com", "pass2");
-        FoodService foodServiceExpected = new FoodService("chicken@email.com", "Chicken Cool Other", "Street 898", "imageURL", "CHICKEN", 120, true, userExpected, Collections.emptyList());
+        FoodService foodServiceExpected = new FoodService("id", "chicken@email.com", "Chicken Cool Other", "Street 898", "imageURL", "CHICKEN", 120, true, userExpected, Collections.emptyList());
          
         FoodService foodService = foodServiceRepository.update(foodServiceExpected);
 
@@ -81,7 +81,7 @@ public class FoodServiceRepositoryEJBIT {
     @InSequence(5)
     public void getByFoodType_foodType_list() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         List<FoodService> foodServices = foodServiceRepository.getByFoodType("PIZZA", 1, 20);
 
@@ -92,7 +92,7 @@ public class FoodServiceRepositoryEJBIT {
     @InSequence(6)
     public void getById_email_foodService() {
         User user = new User("email1@email.com", "pass1");
-        FoodService foodService = new FoodService("email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
+        FoodService foodService = new FoodService("id", "email1@email.com", "Pizzas 25", "Street 89", "imageURL", "PIZZA", 100, true, user, Collections.emptyList());
         
         Optional<FoodService> foodServiceResult = foodServiceRepository.getById("email1@email.com");
 

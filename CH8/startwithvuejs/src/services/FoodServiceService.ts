@@ -28,7 +28,7 @@ export class FoodServiceService {
 
   static update (foodService: FoodService) {
     let formData = new FormData()
-
+    console.log(Vue.axios.defaults.headers)
     formData.append('file', foodService.image)
 
     return Vue.axios.post<Image>(`/files`, formData,

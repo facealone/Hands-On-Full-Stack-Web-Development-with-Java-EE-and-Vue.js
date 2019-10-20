@@ -4,7 +4,6 @@ import com.packt.delivery.abstraction.entity.Delivery;
 import com.packt.delivery.abstraction.entity.FoodProduct;
 import com.packt.delivery.abstraction.entity.Item;
 import com.packt.delivery.main.repository.foodproduct.FoodProductData;
-import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,9 +35,6 @@ public class DeliveryRepositoryJPATest {
         Item item = new Item(1, 1, foodProduct);
         Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
 
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail("email1@email.com");
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setId(foodProduct.getId());
         foodProductData.setActive(true);
@@ -46,7 +42,7 @@ public class DeliveryRepositoryJPATest {
         foodProductData.setImageUrl(foodProduct.getImageUrl());
         foodProductData.setName(foodProduct.getName());
         foodProductData.setPrice(foodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         ItemData itemData = new ItemData();
         itemData.setAmount(item.getAmount());
@@ -76,9 +72,6 @@ public class DeliveryRepositoryJPATest {
         FoodProduct foodProduct = new FoodProduct(1, "Pizza", 23500, "Pinaple Pizza", true, "imageUrl", "email1@email.com");
         Item item = new Item(1, 1, foodProduct);
         Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
-
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail("email1@email.com");
         
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setId(foodProduct.getId());
@@ -87,7 +80,7 @@ public class DeliveryRepositoryJPATest {
         foodProductData.setImageUrl(foodProduct.getImageUrl());
         foodProductData.setName(foodProduct.getName());
         foodProductData.setPrice(foodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         ItemData itemData = new ItemData();
         itemData.setAmount(item.getAmount());
@@ -118,9 +111,6 @@ public class DeliveryRepositoryJPATest {
         Item item = new Item(1, 1, foodProduct);
         Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
 
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail("email1@email.com");
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setId(foodProduct.getId());
         foodProductData.setActive(true);
@@ -128,7 +118,7 @@ public class DeliveryRepositoryJPATest {
         foodProductData.setImageUrl(foodProduct.getImageUrl());
         foodProductData.setName(foodProduct.getName());
         foodProductData.setPrice(foodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         ItemData itemData = new ItemData();
         itemData.setAmount(item.getAmount());
@@ -161,9 +151,6 @@ public class DeliveryRepositoryJPATest {
         Item item = new Item(1, 1, foodProduct);
         Delivery delivery = new Delivery(1, "Street 50", "555233564", 23600, 100, "email5@email.com", "PENDING", Arrays.asList(item));
 
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail("email1@email.com");
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setId(foodProduct.getId());
         foodProductData.setActive(true);
@@ -171,7 +158,7 @@ public class DeliveryRepositoryJPATest {
         foodProductData.setImageUrl(foodProduct.getImageUrl());
         foodProductData.setName(foodProduct.getName());
         foodProductData.setPrice(foodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         ItemData itemData = new ItemData();
         itemData.setAmount(item.getAmount());

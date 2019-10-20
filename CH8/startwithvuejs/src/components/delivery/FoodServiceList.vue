@@ -31,7 +31,7 @@
           <tbody>
             <tr v-for="foodService in foodServices" v-bind:key="foodService.email">
               <td><img class="image img-fluid img-thumbnail" :src="foodService.imageUrl"/></td>
-              <td><router-link  :to="{ name: 'food_products_by_service', params: { foodService: foodService.email }}">{{foodService.name}}</router-link></td>
+              <td><router-link  :to="{ name: 'food_products_by_service', params: { foodService: foodService.id }}">{{foodService.name}}</router-link></td>
               <td>{{foodService.address}}</td>
               <td>{{foodService.foodType}}</td>
               <td>{{foodService.deliveryFee}}</td>

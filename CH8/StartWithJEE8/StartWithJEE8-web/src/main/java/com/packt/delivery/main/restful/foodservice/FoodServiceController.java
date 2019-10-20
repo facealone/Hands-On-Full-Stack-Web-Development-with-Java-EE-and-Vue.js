@@ -30,7 +30,7 @@ public class FoodServiceController {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public FoodServiceDTO save(FoodServiceDTO foodService) {
         return new FoodServiceDTO(foodServiceService.save(foodService.toFoodService()));
     }
@@ -38,7 +38,7 @@ public class FoodServiceController {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public FoodServiceDTO update(FoodServiceDTO foodService) {
         return new FoodServiceDTO(foodServiceService.update(foodService.toFoodService()));
     }
@@ -47,7 +47,7 @@ public class FoodServiceController {
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
+    @RequiredAuthorization
     public FoodServiceDTO deActivate(@PathParam("email") String email) {
         return new FoodServiceDTO(foodServiceService.deActivate(email));
     }
@@ -78,7 +78,6 @@ public class FoodServiceController {
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    //@AuthorizationNeeded
     public Response getById(@PathParam("email") String email) {
         return foodServiceService.getById(email)
                 .map(f -> new FoodServiceDTO(f))

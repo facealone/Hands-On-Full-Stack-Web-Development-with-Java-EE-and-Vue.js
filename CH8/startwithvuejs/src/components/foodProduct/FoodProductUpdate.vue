@@ -37,7 +37,7 @@ export default class FoodProductUpdate extends Vue {
       .then(response => {
         this.$toasted.info(`Update successfully`)
 
-        this.$router.push({ name: 'food_service_view', params: { email: foodProduct.foodService } })
+        this.$router.push({ name: 'food_service_view', params: { id: foodProduct.foodService } })
       })
   }
 }

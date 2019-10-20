@@ -21,7 +21,6 @@ import com.packt.delivery.main.restful.security.RequiredAuthorization;
 
 @Stateless
 @LocalBean
-@RequiredAuthorization
 @Path("files")
 public class FileController {
     @Context
@@ -32,6 +31,7 @@ public class FileController {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
+    @RequiredAuthorization
     public ImageDTO uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {

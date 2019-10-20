@@ -1,7 +1,6 @@
 package com.packt.delivery.main.repository.foodproduct;
 
 import com.packt.delivery.abstraction.entity.FoodProduct;
-import com.packt.delivery.main.repository.foodservice.FoodServiceData;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -49,9 +48,6 @@ public class FoodProductRepositoryJPATest {
     public void update() {
         FoodProduct newFoodProduct = new FoodProduct(1, "Pizza", 23500, "Cheese Pizza", true, "imageUrl2", "email1@email.com");
         
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail(newFoodProduct.getFoodService());
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setActive(newFoodProduct.isActive());
         foodProductData.setDescription(newFoodProduct.getDescription());
@@ -59,7 +55,7 @@ public class FoodProductRepositoryJPATest {
         foodProductData.setImageUrl(newFoodProduct.getImageUrl());
         foodProductData.setName(newFoodProduct.getName());
         foodProductData.setPrice(newFoodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         when(entityManager.merge(foodProductData)).thenReturn(foodProductData);
         
@@ -72,9 +68,6 @@ public class FoodProductRepositoryJPATest {
     public void getAll() {
         FoodProduct newFoodProduct = new FoodProduct(1, "Pizza", 23500, "Cheese Pizza", true, "imageUrl2", "email1@email.com");
         
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail(newFoodProduct.getFoodService());
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setActive(newFoodProduct.isActive());
         foodProductData.setDescription(newFoodProduct.getDescription());
@@ -82,7 +75,7 @@ public class FoodProductRepositoryJPATest {
         foodProductData.setImageUrl(newFoodProduct.getImageUrl());
         foodProductData.setName(newFoodProduct.getName());
         foodProductData.setPrice(newFoodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         when(typedQuery.getResultList()).thenReturn(Arrays.asList(foodProductData));
         when(entityManager.createNamedQuery("FoodProductData.findAll", FoodProductData.class)).thenReturn(typedQuery);
@@ -96,9 +89,6 @@ public class FoodProductRepositoryJPATest {
     public void getByFoodService() {
         FoodProduct newFoodProduct = new FoodProduct(1, "Pizza", 23500, "Cheese Pizza", true, "imageUrl2", "email1@email.com");
         
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail(newFoodProduct.getFoodService());
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setActive(newFoodProduct.isActive());
         foodProductData.setDescription(newFoodProduct.getDescription());
@@ -106,10 +96,10 @@ public class FoodProductRepositoryJPATest {
         foodProductData.setImageUrl(newFoodProduct.getImageUrl());
         foodProductData.setName(newFoodProduct.getName());
         foodProductData.setPrice(newFoodProduct.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         when(typedQuery.getResultList()).thenReturn(Arrays.asList(foodProductData));
-        when(typedQuery.setParameter("email", "email1@email.com")).thenReturn(typedQuery);
+        when(typedQuery.setParameter("foodService", "email1@email.com")).thenReturn(typedQuery);
         when(typedQuery.setFirstResult(20)).thenReturn(typedQuery);
         when(typedQuery.setMaxResults(20)).thenReturn(typedQuery);
         when(entityManager.createNamedQuery("FoodProductData.findByFoodService", FoodProductData.class)).thenReturn(typedQuery);
@@ -123,9 +113,6 @@ public class FoodProductRepositoryJPATest {
     public void getById() {
         FoodProduct foodProductExpected = new FoodProduct(1, "Pizza", 23500, "Cheese Pizza", true, "imageUrl2", "email1@email.com");
         
-        FoodServiceData foodServiceData = new FoodServiceData();
-        foodServiceData.setEmail(foodProductExpected.getFoodService());
-        
         FoodProductData foodProductData = new FoodProductData();
         foodProductData.setActive(foodProductExpected.isActive());
         foodProductData.setDescription(foodProductExpected.getDescription());
@@ -133,7 +120,7 @@ public class FoodProductRepositoryJPATest {
         foodProductData.setImageUrl(foodProductExpected.getImageUrl());
         foodProductData.setName(foodProductExpected.getName());
         foodProductData.setPrice(foodProductExpected.getPrice());
-        foodProductData.setFoodService(foodServiceData);
+        foodProductData.setFoodService("email1@email.com");
         
         when(entityManager.find(FoodProductData.class, 1)).thenReturn(foodProductData);
                 
