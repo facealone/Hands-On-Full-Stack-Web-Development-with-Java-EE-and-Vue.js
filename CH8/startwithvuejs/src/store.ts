@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { FoodService } from './entities/FoodService'
 import { Item } from './entities/Item'
 import { State } from './entities/State'
 import { Cart } from './entities/Cart'
@@ -11,7 +10,7 @@ Vue.use(Vuex)
 const stateBase: State = {
   cart: Cart.emptyCart(),
   currentDeliveryEmail: '',
-  token: Token.emptyToken()
+  token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) : Token.emptyToken()
 }
 
 export default new Vuex.Store<State>({
@@ -29,6 +28,10 @@ export default new Vuex.Store<State>({
       Vue.delete(state.cart.items, index)
     },
     setToken (state:State, token:Token) {
+      const parsed = JSON.stringify(token)
+
+      localStorage.setItem('token', parsed)
+
       state.token = token
     }
   },

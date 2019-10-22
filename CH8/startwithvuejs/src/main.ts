@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(response => {
   return response
 }, error => {
-  if (error.status === 401) {
+  if (error.response.status === 401) {
     AuthorizationService.authorize()
   } else {
     Vue.toasted.error('Ops, an unexpected error occurred')
@@ -23,6 +23,10 @@ axiosInstance.interceptors.response.use(response => {
 
   return Promise.reject(error)
 })
+
+const token = store.getters.getToken()
+
+axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)

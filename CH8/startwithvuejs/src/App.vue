@@ -8,7 +8,7 @@
       </div>
       <div class="nav" >
         <template v-if="!isLoggedIn"><router-link to="/login">Login</router-link></template>
-        <template v-if="isLoggedIn">Welcome {{loggedIn.email}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { email: loggedIn.email }}">Settings</router-link></template>
+        <template v-if="isLoggedIn">Welcome {{loggedIn.userEmail}} |&nbsp;<router-link :to="{ name: 'food_service_view', params: { id: loggedIn.userId }}">Settings</router-link></template>
       </div>
     </div>
     <router-view/>
@@ -24,7 +24,7 @@ export default class App extends Vue {
     return this.$store.getters.getToken().userEmail !== ''
   }
   get loggedIn () {
-    return this.$store.getters.getToken().userEmail
+    return this.$store.getters.getToken()
   }
 }
 </script>
