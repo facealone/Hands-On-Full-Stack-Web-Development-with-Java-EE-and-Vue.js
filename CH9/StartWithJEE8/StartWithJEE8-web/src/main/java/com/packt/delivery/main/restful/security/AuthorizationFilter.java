@@ -22,7 +22,6 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        System.out.println("Headers " + requestContext.getHeaders());
         String authorizationHeader = Optional.ofNullable(requestContext.getHeaderString(HttpHeaders.AUTHORIZATION))
                 .orElseThrow(() -> new NotAuthorizedException("Authorization header not found"));
  
