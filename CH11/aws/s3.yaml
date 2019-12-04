@@ -1,0 +1,10 @@
+Parameters:
+  Environment:
+    Description: Environment
+    Type: String
+    Default: dev
+Resources:
+  NewPacktDeliveryCodePipeline:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub newpacktdeliverypipeline-${Environment}
