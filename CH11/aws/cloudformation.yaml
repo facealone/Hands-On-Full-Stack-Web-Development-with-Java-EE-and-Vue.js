@@ -1,0 +1,48 @@
+Parameters:
+  Environment:
+    Description: Environment
+    Type: String
+    Default: dev
+Resources:
+  PacktDeliveryCodePipelineRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codebuild.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: AWS-NewPacktDelivery
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+  PacktDeliveryCodePipelineBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub packt-delivery-pipeline-${Environment}
+  PacktDeliveryJavaCodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub packt-delivery-java-code-build-${Environment}
+      Description: CodeBuild for Jakarta side
+      ServiceRole: !GetAtt PacktDeliveryCodePipelineRole.Arn
+      Artifacts:
+        Type: no_artifacts
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/java:openjdk-8
+      Source:
+        Location: !Sub packt-delivery-pipeline-${Environment}/packtdelivery.zip
+        Type: S3
+      TimeoutInMinutes: 10
+    DependsOn:
+      - PacktDeliveryCodePipelineBucket
