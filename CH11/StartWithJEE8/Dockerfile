@@ -6,6 +6,6 @@ RUN curl -o ${INSTALL_DIR}/mysql-connector-java-8.0.18.zip -L https://dev.mysql.
     && cp ${INSTALL_DIR}/mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar ${GLASSFISH_HOME}/domains/${DOMAIN_NAME}/lib/mysql-connector-java-8.0.16.jar \ 
     && rm -R ${INSTALL_DIR}/mysql-connector-java-8.0.18
 
-COPY target/StartWithJEE8-ear-1.0-SNAPSHOT.ear .
+COPY StartWithJEE8-ear/target/StartWithJEE8-ear-1.0-SNAPSHOT.ear .
 COPY docker .
 ENTRYPOINT sh docker-entrypoint.sh

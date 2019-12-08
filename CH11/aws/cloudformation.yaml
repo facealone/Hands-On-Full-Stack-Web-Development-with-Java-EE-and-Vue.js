@@ -3,6 +3,18 @@ Parameters:
     Description: Environment
     Type: String
     Default: dev
+  ECRName:
+    Description: ECR name
+    Type: String
+    Default: newpacktdelivery
+  DefaultTag:
+    Description: Tag name for docker images
+    Type: String
+    Default: dev
+  AWSAccountId:
+    Description: Account Id
+    Type: String
+    Default: myaccountid
 Resources:
   PacktDeliveryCodePipelineRole:
     Type: 'AWS::IAM::Role'
@@ -28,10 +40,10 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub packt-delivery-pipeline-${Environment}
-  PacktDeliveryJavaCodeBuild:
+  PacktDeliveryJakartaeeCodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: !Sub packt-delivery-java-code-build-${Environment}
+      Name: !Sub packt-delivery-jakartaee-code-build-${Environment}
       Description: CodeBuild for Jakarta side
       ServiceRole: !GetAtt PacktDeliveryCodePipelineRole.Arn
       Artifacts:
@@ -39,7 +51,15 @@ Resources:
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: aws/codebuild/java:openjdk-8
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
+        PrivilegedMode: true
+        EnvironmentVariables:
+         - Name: IMAGE_REPO_NAME
+           Value: !Sub ${ECRName}
+         - Name: IMAGE_TAG
+           Value: !Sub ${DefaultTag}
+         - Name: AWS_ACCOUNT_ID
+           Value: !Sub ${AWSAccountId}
       Source:
         Location: !Sub packt-delivery-pipeline-${Environment}/packtdelivery.zip
         Type: S3
