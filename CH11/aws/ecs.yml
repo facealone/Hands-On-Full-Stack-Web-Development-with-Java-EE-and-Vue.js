@@ -1,0 +1,148 @@
+Parameters:
+  Environment:
+    Description: Environment
+    Type: String
+    Default: dev
+  ECRName:
+    Description: ECR name
+    Type: String
+    Default: newpacktdelivery
+  DefaultTag:
+    Description: Tag name for docker images
+    Type: String
+    Default: dev
+  AWSAccountId:
+    Description: Account Id
+    Type: String
+    Default: myaccountid
+Resources:
+  PacktDeliveryJakartaInternetGateway:
+    Type: AWS::EC2::InternetGateway
+  PacktDeliveryJakartaVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+  PacktDeliveryJakartaAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      InternetGatewayId: !Ref PacktDeliveryJakartaInternetGateway
+  PacktDeliveryJakartaSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: "us-east-1a"
+  PacktDeliveryJakartaSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: "us-east-1b"
+  PacktDeliveryJakartaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub packt-delivery-jakartaee-sg-${Environment}
+      GroupDescription: Security group for loadbalancer
+      VpcId: !Ref PacktDeliveryJakartaVPC
+  PacktDeliveryJakartaLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub packt-delivery-jakartaee-lb-${Environment}
+      Subnets:
+        - !Ref PacktDeliveryJakartaSubnet1
+        - !Ref PacktDeliveryJakartaSubnet2
+      SecurityGroups:
+        - !Ref PacktDeliveryJakartaSecurityGroup
+  PacktDeliveryJakartaLoadBalancerTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub packt-delivery-jakartaee-tg-${Environment}
+      Protocol: HTTP
+      Port: 80
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      TargetType: ip
+  PacktDeliveryJakartaLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref PacktDeliveryJakartaLoadBalancer
+      Protocol: HTTP
+      Port: 8080
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref PacktDeliveryJakartaLoadBalancerTargetGroup
+          
+  #ECS
+  PacktDeliveryJakartaECSCloudWatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/ecs/packt-delivery-jakartaee-ecs-${Environment}
+      RetentionInDays: 7
+  PacktDeliveryJakartaECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties: 
+      ClusterName: !Sub packt-delivery-jakartaee-ecs-${Environment}
+  PacktDeliveryJakartaECSTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties: 
+      Memory: 1024
+      Cpu: 512
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - 'FARGATE'
+      TaskRoleArn: !Ref PacktDeliveryECSRole
+      ExecutionRoleArn: !Ref PacktDeliveryECSRole
+      ContainerDefinitions:
+        - Name: !Sub packt-delivery-jakartaee-cd-${Environment}
+          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRName}:${DefaultTag}
+          PortMappings:
+            - ContainerPort: 8080
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref PacktDeliveryJakartaECSCloudWatchLogsGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: packt-delivery
+  PacktDeliveryJakartaECSService:
+    Type: AWS::ECS::Service
+    DependsOn:
+    - PacktDeliveryJakartaLoadBalancer
+    Properties:
+      ServiceName: !Sub packt-delivery-jakartaee-ser-${Environment}
+      TaskDefinition: !Ref PacktDeliveryJakartaECSTaskDefinition
+      LaunchType: FARGATE
+      DesiredCount: 1
+      LoadBalancers:
+      - TargetGroupArn: !Ref PacktDeliveryJakartaLoadBalancerTargetGroup
+        ContainerPort: 8080
+        ContainerName: !Sub packt-delivery-jakartaee-cd-${Environment}
+      Cluster: !Ref PacktDeliveryJakartaECSCluster
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          Subnets:
+            - !Ref PacktDeliveryJakartaSubnet1
+            - !Ref PacktDeliveryJakartaSubnet2
+          SecurityGroups:
+            - !Ref PacktDeliveryJakartaSecurityGroup
+  PacktDeliveryECSRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub packt-delivery-jakartaee-po-${Environment}
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+
