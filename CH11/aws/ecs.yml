@@ -16,17 +16,25 @@ Parameters:
     Type: String
     Default: myaccountid
 Resources:
+
+#---------------------INFRASTRUCTURE
   PacktDeliveryJakartaInternetGateway:
     Type: AWS::EC2::InternetGateway
+    
   PacktDeliveryJakartaVPC:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      
   PacktDeliveryJakartaAttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId: !Ref PacktDeliveryJakartaVPC
       InternetGatewayId: !Ref PacktDeliveryJakartaInternetGateway
+
+      
   PacktDeliveryJakartaSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -39,12 +47,44 @@ Resources:
       VpcId: !Ref PacktDeliveryJakartaVPC
       CidrBlock: 10.0.1.0/24
       AvailabilityZone: "us-east-1b"
+      
+  PacktDeliveryJakartaRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      
+  PacktDeliveryJakartaInternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: PacktDeliveryJakartaAttachGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref PacktDeliveryJakartaInternetGateway
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      
+  PacktDeliveryJakartaSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnet1
+  PacktDeliveryJakartaSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnet2
+      
   PacktDeliveryJakartaSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub packt-delivery-jakartaee-sg-${Environment}
       GroupDescription: Security group for loadbalancer
       VpcId: !Ref PacktDeliveryJakartaVPC
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+          
   PacktDeliveryJakartaLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
@@ -111,15 +151,18 @@ Resources:
       ServiceName: !Sub packt-delivery-jakartaee-ser-${Environment}
       TaskDefinition: !Ref PacktDeliveryJakartaECSTaskDefinition
       LaunchType: FARGATE
-      DesiredCount: 1
+      DesiredCount: 0
       LoadBalancers:
       - TargetGroupArn: !Ref PacktDeliveryJakartaLoadBalancerTargetGroup
         ContainerPort: 8080
         ContainerName: !Sub packt-delivery-jakartaee-cd-${Environment}
       Cluster: !Ref PacktDeliveryJakartaECSCluster
+      DeploymentConfiguration:
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
+          AssignPublicIp: ENABLED
           Subnets:
             - !Ref PacktDeliveryJakartaSubnet1
             - !Ref PacktDeliveryJakartaSubnet2
@@ -145,4 +188,4 @@ Resources:
               - Effect: Allow
                 Action: '*'
                 Resource: '*'
-
+#---------------------INFRASTRUCTURE
