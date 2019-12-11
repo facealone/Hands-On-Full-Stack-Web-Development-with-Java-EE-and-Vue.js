@@ -185,6 +185,52 @@ Resources:
               - Effect: Allow
                 Action: '*'
                 Resource: '*'
+                
+#DB
+  PacktDeliveryJakartaSubnetDBMaster:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: "us-east-1c"
+      MapPublicIpOnLaunch: true
+  PacktDeliveryJakartaSubnetDBReplica:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: "us-east-1b"
+      MapPublicIpOnLaunch: true
+  PacktDeliveryJakartaSubnetDBMasterRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnetDBMaster
+  PacktDeliveryJakartaSubnetDBReplicaRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnetDBReplica
+  PacktDeliveryJakartaDBMasterSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: DBSubnetGroup for RDS instances
+      SubnetIds:
+        - Ref: PacktDeliveryJakartaSubnetDBMaster
+        - Ref: PacktDeliveryJakartaSubnetDBReplica
+  PacktDeliveryMySQL:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      VPCSecurityGroups:
+      - Ref: PacktDeliveryJakartaSecurityGroup
+      AllocatedStorage: '5'
+      DBInstanceClass: db.m3.medium
+      Engine: MySQL
+      EngineVersion: 8.0
+      MasterUsername: MyName
+      MasterUserPassword: MyPassword
+      DBSubnetGroupName: !Ref PacktDeliveryJakartaDBMasterSubnetGroup
+    DeletionPolicy: Delete
 #---------------------INFRASTRUCTURE
 #---------------------PIPELINE
 
@@ -256,8 +302,15 @@ Resources:
            Value: !Sub ${DefaultTag}
          - Name: AWS_ACCOUNT_ID
            Value: !Sub ${AWS::AccountId}
+         - Name: GLASSFISH_PASSWORD
+           Value: glassfish
+         - Name: DATABASE_USER
+           Value: MyName
+         - Name: DATABASE_PASSWORD
+           Value: MyPassword
+         - Name: DATABASE_URL
+           Value: !GetAtt PacktDeliveryMySQL.Endpoint.Address
       Source:
-       # Location: !Sub packt-delivery-pipeline-${Environment}/packtdelivery.zip
         Type: CODEPIPELINE
       TimeoutInMinutes: 10
     DependsOn:

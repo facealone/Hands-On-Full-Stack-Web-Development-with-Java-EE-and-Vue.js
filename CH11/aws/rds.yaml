@@ -1,0 +1,90 @@
+Parameters:
+  Environment:
+    Description: Environment
+    Type: String
+    Default: dev
+  ECRName:
+    Description: ECR name
+    Type: String
+    Default: newpacktdelivery
+  DefaultTag:
+    Description: Tag name for docker images
+    Type: String
+    Default: dev
+Resources:
+  PacktDeliveryJakartaInternetGateway:
+    Type: AWS::EC2::InternetGateway
+  PacktDeliveryJakartaVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+  PacktDeliveryJakartaAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      InternetGatewayId: !Ref PacktDeliveryJakartaInternetGateway
+  PacktDeliveryJakartaSubnetDBMaster:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: "us-east-1c"
+      MapPublicIpOnLaunch: true
+  PacktDeliveryJakartaSubnetDBReplica:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: "us-east-1b"
+      MapPublicIpOnLaunch: true
+  PacktDeliveryJakartaRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+  PacktDeliveryJakartaInternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: PacktDeliveryJakartaAttachGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref PacktDeliveryJakartaInternetGateway
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+  PacktDeliveryJakartaSubnetDBMasterRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnetDBMaster
+  PacktDeliveryJakartaDBMasterSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: DBSubnetGroup for RDS instances
+      SubnetIds:
+        - Ref: PacktDeliveryJakartaSubnetDBMaster
+        - Ref: PacktDeliveryJakartaSubnetDBReplica
+  PacktDeliveryJakartaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub packt-delivery-jakartaee-sg-${Environment}
+      GroupDescription: Security group for loadbalancer
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+  PacktDeliveryMySQL:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      VPCSecurityGroups:
+      - Ref: PacktDeliveryJakartaSecurityGroup
+      AllocatedStorage: '5'
+      DBInstanceClass: db.m3.medium
+      Engine: MySQL
+      EngineVersion: 8.0
+      MasterUsername: MyName
+      MasterUserPassword: MyPassword
+      DBSubnetGroupName: !Ref PacktDeliveryJakartaDBMasterSubnetGroup
+    DeletionPolicy: Delete
+    DependsOn:
+      - PacktDeliveryJakartaSecurityGroup

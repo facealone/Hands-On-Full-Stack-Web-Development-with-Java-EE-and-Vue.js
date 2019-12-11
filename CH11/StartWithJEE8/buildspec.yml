@@ -1,5 +1,15 @@
 version: 0.2
 
+env:
+  variables:
+    IMAGE_REPO_NAME: "newpacktdelivery"
+    IMAGE_TAG: "dev"
+    AWS_ACCOUNT_ID: "947206706666"
+    DATABASE_USER: "MyName"
+    DATABASE_PASSWORD: "MyPassword"
+    DATABASE_NAME: "packtdelivery"
+    DATABASE_URL: "jdbc:mysql://ipwwjbqvv48p16.cc80rg7cnp9j.us-east-1.rds.amazonaws.com:3306/packtdelivery?zeroDateTimeBehavior=convertToNull"
+
 phases:
   install:
     runtime-versions:
@@ -11,9 +21,18 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
+      - echo $IMAGE_REPO_NAME
+      - echo $IMAGE_TAG
+      - echo $AWS_ACCOUNT_ID
+      - echo $DATABASE_USER
+      - echo $DATABASE_PASSWORD
+      - echo $DATABASE_PASSWORD
+      - echo $DATABASE_URL
       - echo Build started on `date`
       - mvn clean install -P docker
-      - echo Building the Docker image...          
+      - echo Building the Docker image...
+      - echo --- Setup glassfish resources ---
+      - sed -e "s,\${user},${DATABASE_USER}," -e "s,\${password},${DATABASE_PASSWORD}," -e "s,\${url},${DATABASE_URL}," -e "s,\${databaseName},${DATABASE_NAME}," docker/glassfish-resources.xml> docker/new-glassfish-resources.xml
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
