@@ -206,7 +206,7 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <excludes>
-                            <exclude>**/*.xml</exclude>
+                            <exclude>**/persistence*.xml</exclude>
                         </excludes>
                     </resource>
                 </resources>

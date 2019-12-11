@@ -1,4 +1,7 @@
 PASSWORD=glassfish
+DATABASE_URL=DATABASE_URL
+DATABASE_USER=DATABASE_USER
+DATABASE_PASSWORD=DATABASE_PASSWORD
 
 echo "--- Setup the password file ---" && \
     echo "AS_ADMIN_PASSWORD=" > /tmp/glassfishpwd && \
@@ -16,8 +19,12 @@ echo "AS_ADMIN_PASSWORD=${PASSWORD}" > /tmp/glassfishpwd && \
     asadmin --user=admin --passwordfile=/tmp/glassfishpwd enable-secure-admin
 
 echo "-------------------------------------"
-echo "asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources glassfish-resources.xml"
-asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources glassfish-resources.xml
+sed -e "s/\${user}/${DATABASE_USER}/" -e "s/\${password}/${DATABASE_PASSWORD}/" -e "s/\${url}/${DATABASE_URL}/" glassfish-resources.xml> new-glassfish-resources.xml
+
+echo $(<new-glassfish-resources.xml)
+
+echo "asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources new-glassfish-resources.xml"
+asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources new-glassfish-resources.xml
 
 echo "-------------------------------------"
 echo "asadmin --user=admin --passwordfile=/tmp/glassfishpwd stop-domain ${DOMAIN_NAME}"
