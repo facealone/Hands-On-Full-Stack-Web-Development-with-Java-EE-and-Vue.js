@@ -1,0 +1,282 @@
+Parameters:
+  Environment:
+    Description: Environment
+    Type: String
+    Default: dev
+  ECRName:
+    Description: ECRName
+    Type: String
+    Default: newpacktdelivery
+Resources:
+  PacktDeliveryJakartaInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+    
+  PacktDeliveryJakartaVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+      
+  PacktDeliveryJakartaAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      InternetGatewayId: !Ref PacktDeliveryJakartaInternetGateway
+      
+  PacktDeliveryJakartaSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: "us-east-1a"
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: "us-east-1b"
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+      
+  PacktDeliveryJakartaRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+      
+  PacktDeliveryJakartaInternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: PacktDeliveryJakartaAttachGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref PacktDeliveryJakartaInternetGateway
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      
+  PacktDeliveryJakartaSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnet1
+      
+  PacktDeliveryJakartaSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnet2
+      
+  PacktDeliveryJakartaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for loadbalancer
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets:
+        - !Ref PacktDeliveryJakartaSubnet1
+        - !Ref PacktDeliveryJakartaSubnet2
+      SecurityGroups:
+        - !Ref PacktDeliveryJakartaSecurityGroup
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaLoadBalancerTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Protocol: HTTP
+      Port: 80
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      TargetType: ip
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref PacktDeliveryJakartaLoadBalancer
+      Protocol: HTTP
+      Port: 8080
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref PacktDeliveryJakartaLoadBalancerTargetGroup
+          
+  #ECS
+  PacktDeliveryJakartaECSCloudWatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/ecs/packt-delivery-jakartaee-ecs-${Environment}
+      RetentionInDays: 7
+      
+  PacktDeliveryJakartaECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties: 
+      ClusterName: !Sub packt-delivery-jakartaee-ecs-${Environment}
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaECSTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties: 
+      Memory: 1024
+      Cpu: 512
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - 'FARGATE'
+      TaskRoleArn: !Ref PacktDeliveryECSRole
+      ExecutionRoleArn: !Ref PacktDeliveryECSRole
+      ContainerDefinitions:
+        - Name: !Sub packt-delivery-jakartaee-cd-${Environment}
+          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRName}:${Environment}
+          PortMappings:
+            - ContainerPort: 8080
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref PacktDeliveryJakartaECSCloudWatchLogsGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: packt-delivery
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaECSService:
+    Type: AWS::ECS::Service
+    DependsOn:
+    - PacktDeliveryJakartaLoadBalancer
+    - PacktDeliveryJakartaLoadBalancerTargetGroup
+    Properties:
+      ServiceName: !Sub packt-delivery-jakartaee-ser-${Environment}
+      TaskDefinition: !Ref PacktDeliveryJakartaECSTaskDefinition
+      LaunchType: FARGATE
+      DesiredCount: 1
+      LoadBalancers:
+      - TargetGroupArn: !Ref PacktDeliveryJakartaLoadBalancerTargetGroup
+        ContainerPort: 8080
+        ContainerName: !Sub packt-delivery-jakartaee-cd-${Environment}
+      Cluster: !Ref PacktDeliveryJakartaECSCluster
+      DeploymentConfiguration:
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - !Ref PacktDeliveryJakartaSubnet1
+            - !Ref PacktDeliveryJakartaSubnet2
+          SecurityGroups:
+            - !Ref PacktDeliveryJakartaSecurityGroup
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryECSRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub packt-delivery-jakartaee-po-${Environment}
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+                
+#DB
+  PacktDeliveryJakartaSubnetDBMaster:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: "us-east-1c"
+      MapPublicIpOnLaunch: true
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+      
+  PacktDeliveryJakartaSubnetDBReplica:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref PacktDeliveryJakartaVPC
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: "us-east-1b"
+      MapPublicIpOnLaunch: true
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+          
+  PacktDeliveryJakartaSubnetDBMasterRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnetDBMaster
+      
+  PacktDeliveryJakartaSubnetDBReplicaRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PacktDeliveryJakartaRouteTable
+      SubnetId: !Ref PacktDeliveryJakartaSubnetDBReplica
+      
+  PacktDeliveryJakartaDBMasterSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: DBSubnetGroup for RDS instances
+      SubnetIds:
+        - Ref: PacktDeliveryJakartaSubnetDBMaster
+        - Ref: PacktDeliveryJakartaSubnetDBReplica
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+        
+  PacktDeliveryMySQL:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      VPCSecurityGroups:
+      - Ref: PacktDeliveryJakartaSecurityGroup
+      AllocatedStorage: '5'
+      DBInstanceClass: db.m3.medium
+      Engine: MySQL
+      EngineVersion: 8.0
+      MasterUsername: MyName
+      MasterUserPassword: MyPassword
+      DBSubnetGroupName: !Ref PacktDeliveryJakartaDBMasterSubnetGroup
+      Tags: 
+        - Key: "env"
+          Value: !Sub ${Environment}
+    DeletionPolicy: Delete

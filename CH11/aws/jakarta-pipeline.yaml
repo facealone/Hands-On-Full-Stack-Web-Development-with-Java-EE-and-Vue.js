@@ -1,0 +1,152 @@
+Resources:
+  PacktDeliveryCodePipelineRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codepipeline.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: AWS-NewPacktDelivery
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+  PacktDeliveryCodeBuildRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codebuild.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: AWS-NewPacktDelivery
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+
+  PacktDeliveryCodePipelineBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub packt-delivery-pipeline    
+      VersioningConfiguration:
+        Status: Enabled
+      
+  PacktDeliveryJakartaeeCodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Description: CodeBuild for Jakarta side
+      ServiceRole: !GetAtt PacktDeliveryCodeBuildRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
+        PrivilegedMode: true
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 10
+    DependsOn:
+      - PacktDeliveryCodePipelineBucket
+        
+  PacktDeliveryJakartaeeDeployPipeline:
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties:
+      Name: !Sub packt-delivery-jakartaee-code-pipe
+      RoleArn: !GetAtt PacktDeliveryCodePipelineRole.Arn
+      ArtifactStore: 
+        Type: S3 
+        Location: !Ref PacktDeliveryCodePipelineBucket 
+      Stages: 
+        - 
+          Name: Source 
+          Actions: 
+            - 
+              Name: SourceAction
+              ActionTypeId: 
+                Category: Source 
+                Owner: AWS 
+                Version: 1 
+                Provider: S3 
+              OutputArtifacts: 
+                - Name: SourceOutput 
+              Configuration: 
+                S3Bucket: !Ref PacktDeliveryCodePipelineBucket 
+                S3ObjectKey: packtdelivery.zip
+              RunOrder: 1 
+        - Name: BuildDev
+          Actions: 
+            - 
+              Name: CodeBuildDev
+              InputArtifacts:
+                - Name: SourceOutput
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              OutputArtifacts: 
+                - Name: BuildDevOutput 
+              Configuration:
+                ProjectName: !Ref PacktDeliveryJakartaeeCodeBuild
+                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ACCOUNT_ID","value":" not set","type":"PLAINTEXT"},{"name":"GLASSFISH_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"IMAGE_TAG","value":"dev","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":" not set","type":"PLAINTEXT"}]'
+              RunOrder: 1
+        - Name: DeployDev
+          Actions:
+            - Name: DeployDev
+              RunOrder: 1
+              InputArtifacts:
+                - Name: BuildDevOutput
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: ECS
+              Configuration:
+                ClusterName: not set
+                ServiceName: not set
+        - Name: ApprovalProd
+          Actions:
+            - Name: ApprovalProd
+              RunOrder: 1
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Version: 1
+                Provider: Manual
+              Configuration:
+                CustomData: Do you want to deploy to production?
+        - Name: BuildProd
+          Actions: 
+            - 
+              Name: CodeBuildProd
+              InputArtifacts:
+                - Name: SourceOutput
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              OutputArtifacts: 
+                - Name: BuildProdOutput 
+              Configuration:
+                ProjectName: !Ref PacktDeliveryJakartaeeCodeBuild
+                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ACCOUNT_ID","value":" not set","type":"PLAINTEXT"},{"name":"GLASSFISH_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"IMAGE_TAG","value":"prod","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":" not set","type":"PLAINTEXT"}]'
+              RunOrder: 1
+

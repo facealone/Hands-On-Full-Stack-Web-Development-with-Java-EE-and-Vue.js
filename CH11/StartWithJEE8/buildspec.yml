@@ -1,15 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    IMAGE_REPO_NAME: "newpacktdelivery"
-    IMAGE_TAG: "dev"
-    AWS_ACCOUNT_ID: "947206706666"
-    DATABASE_USER: "MyName"
-    DATABASE_PASSWORD: "MyPassword"
-    DATABASE_NAME: "packtdelivery"
-    DATABASE_URL: "jdbc:mysql://ipwwjbqvv48p16.cc80rg7cnp9j.us-east-1.rds.amazonaws.com:3306/packtdelivery?zeroDateTimeBehavior=convertToNull"
-
 phases:
   install:
     runtime-versions:
@@ -21,13 +11,6 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - echo $IMAGE_REPO_NAME
-      - echo $IMAGE_TAG
-      - echo $AWS_ACCOUNT_ID
-      - echo $DATABASE_USER
-      - echo $DATABASE_PASSWORD
-      - echo $DATABASE_PASSWORD
-      - echo $DATABASE_URL
       - echo Build started on `date`
       - mvn clean install -P docker
       - echo Building the Docker image...
