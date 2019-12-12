@@ -43,11 +43,11 @@ Resources:
   PacktDeliveryCodePipelineBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub packt-delivery-jakarta-pipeline    
+      BucketName: !Sub packt-delivery-vue-pipeline    
       VersioningConfiguration:
         Status: Enabled
       
-  PacktDeliveryJakartaeeCodeBuild:
+  PacktDeliveryVuejsCodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
       Description: CodeBuild for Jakarta side
@@ -58,17 +58,16 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
-        PrivilegedMode: true
       Source:
         Type: CODEPIPELINE
       TimeoutInMinutes: 10
     DependsOn:
       - PacktDeliveryCodePipelineBucket
         
-  PacktDeliveryJakartaeeDeployPipeline:
+  PacktDeliveryVuejsDeployPipeline:
     Type: "AWS::CodePipeline::Pipeline"
     Properties:
-      Name: !Sub packt-delivery-jakartaee-code-pipe
+      Name: !Sub packt-delivery-vuejs-code-pipe
       RoleArn: !GetAtt PacktDeliveryCodePipelineRole.Arn
       ArtifactStore: 
         Type: S3 
@@ -88,7 +87,7 @@ Resources:
                 - Name: SourceOutput 
               Configuration: 
                 S3Bucket: !Ref PacktDeliveryCodePipelineBucket 
-                S3ObjectKey: packtdeliveryjakarta.zip
+                S3ObjectKey: packtdeliveryvuejs.zip
               RunOrder: 1 
         - Name: BuildDev
           Actions: 
@@ -104,8 +103,8 @@ Resources:
               OutputArtifacts: 
                 - Name: BuildDevOutput 
               Configuration:
-                ProjectName: !Ref PacktDeliveryJakartaeeCodeBuild
-                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ACCOUNT_ID","value":" not set","type":"PLAINTEXT"},{"name":"GLASSFISH_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"IMAGE_TAG","value":"dev","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":" not set","type":"PLAINTEXT"}]'
+                ProjectName: !Ref PacktDeliveryVuejsCodeBuild
+                EnvironmentVariables: '[{"name":"VUE_APP_RESTFUL_BASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"VUE_APP_SSO_AUTHORIZATION","value":" not set","type":"PLAINTEXT"},{"name":"VUE_APP_SSO_CLIENT_ID","value":" not set","type":"PLAINTEXT"},{"name":"VUE_APP_SSO_REDIRECT_URL","value":" not set","type":"PLAINTEXT"}]'
               RunOrder: 1
         - Name: DeployDev
           Actions:
@@ -117,10 +116,10 @@ Resources:
                 Category: Deploy
                 Owner: AWS
                 Version: 1
-                Provider: ECS
+                Provider: S3
               Configuration:
-                ClusterName: not set
-                ServiceName: not set
+                BucketName: not set
+                Extract: true
         - Name: ApprovalProd
           Actions:
             - Name: ApprovalProd
@@ -146,7 +145,7 @@ Resources:
               OutputArtifacts: 
                 - Name: BuildProdOutput 
               Configuration:
-                ProjectName: !Ref PacktDeliveryJakartaeeCodeBuild
-                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ACCOUNT_ID","value":" not set","type":"PLAINTEXT"},{"name":"GLASSFISH_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"IMAGE_TAG","value":"prod","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":" not set","type":"PLAINTEXT"}]'
+                ProjectName: !Ref PacktDeliveryVuejsCodeBuild
+                EnvironmentVariables: '[{"name":"VUE_APP_RESTFUL_BASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"VUE_APP_SSO_AUTHORIZATION","value":" not set","type":"PLAINTEXT"},{"name":"VUE_APP_SSO_CLIENT_ID","value":" not set","type":"PLAINTEXT"},{"name":"VUE_APP_SSO_REDIRECT_URL","value":" not set","type":"PLAINTEXT"}]'
               RunOrder: 1
 
