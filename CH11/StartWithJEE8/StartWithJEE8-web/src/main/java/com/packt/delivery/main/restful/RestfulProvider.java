@@ -1,5 +1,6 @@
 package com.packt.delivery.main.restful;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.packt.delivery.abstraction.repository.DeliveryRepository;
 import com.packt.delivery.abstraction.repository.FoodProductRepository;
 import com.packt.delivery.abstraction.repository.FoodServiceRepository;
@@ -13,8 +14,11 @@ import com.packt.delivery.abstraction.service.foodservice.FoodServiceServiceBasi
 import com.packt.delivery.abstraction.service.security.OpenIdConnectService;
 import com.packt.delivery.abstraction.service.security.OpenIdConnectServiceBasic;
 import com.packt.delivery.abstraction.service.security.TokenValidationService;
+import com.packt.delivery.main.AWSEnvironment;
 import com.packt.delivery.main.Infrastructure;
 import com.packt.delivery.main.storage.disk.DiskStorageService;
+import com.packt.delivery.main.storage.s3.S3StorageService;
+import java.util.Optional;
 import java.util.Properties;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -44,8 +48,14 @@ public class RestfulProvider {
     }
     
     @Produces
-    public StorageService getStorageService(Properties properties) {
+    public StorageService getDiskStorageService(Properties properties) {
         return new DiskStorageService(properties.getProperty("STORAGE_PATH"));
+    }
+    
+    @Produces
+    @AWSEnvironment
+    public StorageService getS3StorageService(Properties properties, AmazonS3 s3Client) {
+        return new S3StorageService(properties.getProperty("IMAGES_S3_BUCKET"), properties.getProperty("IMAGES_S3_REGION"), s3Client);
     }
     
     @Produces

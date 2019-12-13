@@ -1,5 +1,8 @@
 FROM airhacks/glassfish
 
+ARG ENV_ARG
+ENV ENV=$ENV_ARG
+
 RUN curl -o ${INSTALL_DIR}/mysql-connector-java-8.0.18.zip -L https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.18.zip \ 
     && unzip ${INSTALL_DIR}/mysql-connector-java-8.0.18.zip -d ${INSTALL_DIR} \ 
     && rm ${INSTALL_DIR}/mysql-connector-java-8.0.18.zip \ 

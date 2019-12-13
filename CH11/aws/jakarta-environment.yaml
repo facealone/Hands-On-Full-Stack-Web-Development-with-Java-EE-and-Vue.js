@@ -8,6 +8,11 @@ Parameters:
     Type: String
     Default: newpacktdelivery
 Resources:
+  PacktDeliveryImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub packt-delivery-images-${Environment}
+      
   PacktDeliveryJakartaInternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:

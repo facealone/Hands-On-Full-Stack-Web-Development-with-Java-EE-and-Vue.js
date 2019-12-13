@@ -15,10 +15,13 @@ sleep 20s
 echo "AS_ADMIN_PASSWORD=${PASSWORD}" > /tmp/glassfishpwd && \
     asadmin --user=admin --passwordfile=/tmp/glassfishpwd enable-secure-admin
 
-echo $(<new-glassfish-resources.xml)
+echo $(<glassfish-resources.xml)
 
-echo "asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources new-glassfish-resources.xml"
-asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources new-glassfish-resources.xml
+echo "asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources glassfish-resources.xml"
+asadmin --user=admin --passwordfile=/tmp/glassfishpwd add-resources glassfish-resources.xml
+
+echo "asadmin create-jvm-options -DENV=${ENV}"
+asadmin --user=admin --passwordfile=/tmp/glassfishpwd create-jvm-options -DENV=${ENV}
 
 echo "-------------------------------------"
 echo "asadmin --user=admin --passwordfile=/tmp/glassfishpwd stop-domain ${DOMAIN_NAME}"

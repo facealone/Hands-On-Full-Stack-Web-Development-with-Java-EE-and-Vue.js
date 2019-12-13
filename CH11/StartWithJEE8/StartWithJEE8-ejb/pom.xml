@@ -72,6 +72,11 @@
             <version>3.7.0.Final</version>
         </dependency>
         <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.11.691</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -207,6 +212,7 @@
                         <directory>src/main/resources</directory>
                         <excludes>
                             <exclude>**/persistence*.xml</exclude>
+                            <exclude>**/beans*.xml</exclude>
                         </excludes>
                     </resource>
                 </resources>
@@ -217,7 +223,7 @@
                         <version>1.0</version>
                         <executions>
                             <execution>
-                                <id>copy-file</id>
+                                <id>copy-file-persistence</id>
                                 <phase>generate-sources</phase>
                                 <goals>
                                     <goal>copy</goal>
@@ -225,6 +231,18 @@
                                 <configuration>
                                     <sourceFile>${project.basedir}/src/main/resources/META-INF/persistence-docker.xml</sourceFile>
                                     <destinationFile>${project.build.outputDirectory}/META-INF/persistence.xml</destinationFile>
+                                </configuration>
+                            </execution>
+                            
+                            <execution>
+                                <id>copy-file-beans</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${project.basedir}/src/main/resources/META-INF/beans-docker.xml</sourceFile>
+                                    <destinationFile>${project.build.outputDirectory}/META-INF/beans.xml</destinationFile>
                                 </configuration>
                             </execution>
                         </executions>

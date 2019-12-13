@@ -1,4 +1,6 @@
 package com.packt.delivery.main;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
@@ -29,5 +31,12 @@ public class GeneralProvider {
     @Produces
     public Client getClient(){
         return ClientBuilder.newClient();
+    }
+    
+    @Produces
+    public AmazonS3 getS3Client(Properties properties){
+        return AmazonS3ClientBuilder.standard()
+                    .withRegion(properties.getProperty("IMAGES_S3_REGION"))
+                    .build();
     }
 }
