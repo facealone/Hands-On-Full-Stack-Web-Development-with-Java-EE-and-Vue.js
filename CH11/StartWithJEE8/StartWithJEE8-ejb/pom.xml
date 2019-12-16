@@ -77,6 +77,11 @@
             <version>1.11.691</version>
         </dependency>
         <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-cognitoidp</artifactId>
+            <version>1.11.693</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -229,7 +234,7 @@
                                     <goal>copy</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceFile>${project.basedir}/src/main/resources/META-INF/persistence-docker.xml</sourceFile>
+                                    <sourceFile>${project.basedir}/../docker/persistence.xml</sourceFile>
                                     <destinationFile>${project.build.outputDirectory}/META-INF/persistence.xml</destinationFile>
                                 </configuration>
                             </execution>
@@ -241,7 +246,7 @@
                                     <goal>copy</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceFile>${project.basedir}/src/main/resources/META-INF/beans-docker.xml</sourceFile>
+                                    <sourceFile>${project.basedir}/../docker/beans.xml</sourceFile>
                                     <destinationFile>${project.build.outputDirectory}/META-INF/beans.xml</destinationFile>
                                 </configuration>
                             </execution>

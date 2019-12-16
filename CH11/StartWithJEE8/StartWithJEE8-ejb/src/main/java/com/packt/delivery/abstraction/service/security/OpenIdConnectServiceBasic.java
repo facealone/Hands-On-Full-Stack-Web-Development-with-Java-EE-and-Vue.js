@@ -19,13 +19,15 @@ public class OpenIdConnectServiceBasic implements OpenIdConnectService {
     private final String identityProviderUrl;
     private final String clientId;
     private final String clientSecret;
+    private final String claimIdName;
 
-    public OpenIdConnectServiceBasic(TokenValidationService tokenValidationService, Client client, String identityProviderUrl, String clientId, String clientSecret) {
+    public OpenIdConnectServiceBasic(TokenValidationService tokenValidationService, Client client, String identityProviderUrl, String clientId, String clientSecret, String claimIdName) {
         this.tokenValidationService = tokenValidationService;
         this.client = client;
         this.identityProviderUrl = identityProviderUrl;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.claimIdName = claimIdName;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class OpenIdConnectServiceBasic implements OpenIdConnectService {
         
         Map<String, Object> claims = tokenValidationService.validate(map.get("id_token"));
         
-        Token token = new Token(getClaim(claims, "sub"), getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), getClaim(claims, "email"), map.get("access_token"), map.get("refresh_token"), map.get("expires_in"));
+        Token token = new Token(getClaim(claims, claimIdName), getClaim(claims, "given_name") + " " + getClaim(claims, "family_name"), getClaim(claims, "email"), map.get("access_token"), map.get("refresh_token"), map.get("expires_in"));
 
         return token;
     }

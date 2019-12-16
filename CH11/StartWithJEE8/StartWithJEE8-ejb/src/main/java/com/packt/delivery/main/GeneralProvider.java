@@ -1,4 +1,6 @@
 package com.packt.delivery.main;
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import java.io.IOException;
@@ -38,5 +40,13 @@ public class GeneralProvider {
         return AmazonS3ClientBuilder.standard()
                     .withRegion(properties.getProperty("IMAGES_S3_REGION"))
                     .build();
+    }
+    
+    @Produces
+    public AWSCognitoIdentityProvider getCognitoClient(Properties properties){
+        return AWSCognitoIdentityProviderClientBuilder
+                .standard()
+                .withRegion(properties.getProperty("COGNITO_REGION"))
+                .build();
     }
 }

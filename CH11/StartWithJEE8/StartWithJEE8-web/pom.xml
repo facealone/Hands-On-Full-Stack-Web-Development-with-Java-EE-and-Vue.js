@@ -159,4 +159,38 @@
         </plugins>
     </build>
 
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.2.3</version>
+                        <configuration>                            
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <filtering>true</filtering>
+                                    <excludes>
+                                        <exclude>**/beans*.xml</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/../docker</directory>
+                                    <targetPath>WEB-INF</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/beans*.xml</include>
+                                    </includes>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

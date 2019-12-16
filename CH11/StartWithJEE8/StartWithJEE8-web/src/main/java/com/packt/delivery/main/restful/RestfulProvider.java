@@ -55,11 +55,11 @@ public class RestfulProvider {
     @Produces
     @AWSEnvironment
     public StorageService getS3StorageService(Properties properties, AmazonS3 s3Client) {
-        return new S3StorageService(properties.getProperty("IMAGES_S3_BUCKET"), properties.getProperty("IMAGES_S3_REGION"), s3Client);
+        return new S3StorageService(properties.getProperty("IMAGES_S3_REGION"), properties.getProperty("IMAGES_S3_BUCKET"), s3Client);
     }
     
     @Produces
     public OpenIdConnectService getOpenIdConnectService(TokenValidationService tokenValidationService, Client client, Properties properties) {
-        return new OpenIdConnectServiceBasic(tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"), properties.getProperty("SSO_CLIENT_ID"), properties.getProperty("SSO_CLIENT_SECRET"));
+        return new OpenIdConnectServiceBasic(tokenValidationService, client, properties.getProperty("SSO_TOKEN_URL"), properties.getProperty("SSO_CLIENT_ID"), properties.getProperty("SSO_CLIENT_SECRET"), properties.getProperty("SSO_CLAIM_ID_NAME"));
     }
 }

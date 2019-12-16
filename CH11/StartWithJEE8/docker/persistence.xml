@@ -8,7 +8,7 @@
         <class>com.packt.delivery.main.repository.foodservice.UserData</class>
         <class>com.packt.delivery.main.repository.foodproduct.FoodProductData</class>
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>

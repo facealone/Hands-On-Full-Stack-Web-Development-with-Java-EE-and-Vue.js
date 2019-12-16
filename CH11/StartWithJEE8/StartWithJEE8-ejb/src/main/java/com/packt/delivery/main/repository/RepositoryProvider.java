@@ -1,8 +1,11 @@
 package com.packt.delivery.main.repository;
 
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
+import com.packt.delivery.main.AWSEnvironment;
 import com.packt.delivery.main.Testing;
 import com.packt.delivery.main.repository.delivery.DeliveryRepositoryJPA;
 import com.packt.delivery.main.repository.foodproduct.FoodProductRepositoryJPA;
+import com.packt.delivery.main.security.foodservice.cognito.CognitoFoodServiceRepository;
 import com.packt.delivery.main.security.foodservice.keycloak.MockFoodServiceRepository;
 import com.packt.delivery.main.security.foodservice.keycloak.KeyCloakFoodServiceRepository;
 import java.util.Properties;
@@ -45,6 +48,12 @@ public class RepositoryProvider {
                 "admin-cli");
         
         return new KeyCloakFoodServiceRepository(keycloak, properties.getProperty("SSO_REALM"));
+    }
+    
+    @Produces
+    @AWSEnvironment
+    public CognitoFoodServiceRepository getCognitoFoodServiceRepository(Properties properties, AWSCognitoIdentityProvider awsCognitoIdentityProvider) {
+        return new CognitoFoodServiceRepository(awsCognitoIdentityProvider, properties.getProperty("COGNITO_POOL_ID"));
     }
     
     @Produces
