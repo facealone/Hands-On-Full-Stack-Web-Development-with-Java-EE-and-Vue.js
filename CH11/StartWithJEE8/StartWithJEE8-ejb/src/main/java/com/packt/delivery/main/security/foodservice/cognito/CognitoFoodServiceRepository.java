@@ -131,7 +131,7 @@ public class CognitoFoodServiceRepository implements FoodServiceRepository {
         imageUrl.setValue(foodService.getImageUrl());
 
         AttributeType address = new AttributeType();
-        address.setName("custom:address");
+        address.setName("address");
         address.setValue(foodService.getAddress());
 
         return Arrays.asList(foodType, deliveryFee, imageUrl, address);
@@ -144,7 +144,7 @@ public class CognitoFoodServiceRepository implements FoodServiceRepository {
     private FoodService convertUserRepresentationToFoodService(String userName, List<AttributeType> attributes, Boolean enabled) {
         User user = new User(userName, userName);
 
-        return new FoodService(userName, userName, getAttribute(attributes, "given_name"), getAttribute(attributes, "custom:address"), getAttribute(attributes, "custom:imageUrl"), getAttribute(attributes, "custom:foodType"), Integer.parseInt(Optional.ofNullable(getAttribute(attributes, "custom:deliveryFee")).filter(s -> !s.equals("")).orElse("0")), enabled, user, Collections.emptyList());
+        return new FoodService(userName, userName, getAttribute(attributes, "given_name"), getAttribute(attributes, "address"), getAttribute(attributes, "custom:imageUrl"), getAttribute(attributes, "custom:foodType"), Integer.parseInt(Optional.ofNullable(getAttribute(attributes, "custom:deliveryFee")).filter(s -> !s.equals("")).orElse("0")), enabled, user, Collections.emptyList());
     }
 
     private String getAttribute(List<AttributeType> attributes, String name) {
