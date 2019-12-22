@@ -14,27 +14,22 @@ phases:
       - echo Build started on `date`
       - mvn clean install -P docker
       - echo Building the Docker image...
-      - AS_ADMIN_NEWPASSWORD=glassfish
-      - echo --- Setup the password file ---
-      - sed -e "s,\${AS_ADMIN_NEWPASSWORD},${AS_ADMIN_NEWPASSWORD}," docker/glassfishpwd.file> docker/glassfishpwd.file
       - echo --- Setup glassfish resources ---
-      - sed -e "s,\${DATABASE_USER},${DATABASE_USER}," docker/glassfish-resources.xml> docker/glassfish-resources.xml
-      - sed -e "s,\${DATABASE_PASSWORD},${DATABASE_PASSWORD}," docker/glassfish-resources.xml> docker/glassfish-resources.xml
-      - sed -e "s,\${DATABASE_URL},${DATABASE_URL}," docker/glassfish-resources.xml> docker/glassfish-resources.xml
-      - sed -e "s,\${DATABASE_NAME},${DATABASE_NAME}," docker/glassfish-resources.xml> docker/glassfish-resources.xml
+      - sed -i -e "s,\${DATABASE_USER},${DATABASE_USER}," docker/glassfish-resources.xml
+      - sed -i -e "s,\${DATABASE_PASSWORD},${DATABASE_PASSWORD}," docker/glassfish-resources.xml
+      - sed -i -e "s,\${DATABASE_URL},${DATABASE_URL}," docker/glassfish-resources.xml
+      - sed -i -e "s,\${DATABASE_NAME},${DATABASE_NAME}," docker/glassfish-resources.xml
       - echo --- Setup application.properties ---
-      - sed -e "s,\${SSO_AUTH_USER},${SSO_AUTH_USER}," StartWithJEE8-ejb/src/main/resources/application-${IMAGE_TAG}.properties> StartWithJEE8-ejb/src/main/resources/application-${IMAGE_TAG}.properties
-      - sed -e "s,\${SSO_AUTH_PASSWORD},${SSO_AUTH_PASSWORD}," StartWithJEE8-ejb/src/main/resources/application-${IMAGE_TAG}.properties> StartWithJEE8-ejb/src/main/resources/application-${IMAGE_TAG}.properties
-      - sed -e "s,\${SSO_CLIENT_SECRET},${SSO_CLIENT_SECRET}," StartWithJEE8-ejb/src/main/resources/application-${IMAGE_TAG}.properties> StartWithJEE8-ejb/src/main/resources/application-${IMAGE_TAG}.properties
-      - docker build --build-arg ENV_ARG=${IMAGE_TAG} -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - sed -i -e "s,\${SSO_CLIENT_SECRET},${SSO_CLIENT_SECRET}," StartWithJEE8-ejb/src/main/resources/application-${ENVIRONMENT}.properties
+      - docker build --build-arg ENV_ARG=${ENVIRONMENT} -t $IMAGE_REPO_NAME:$ENVIRONMENT .
+      - docker tag $IMAGE_REPO_NAME:$ENVIRONMENT $AWS_ECR_URL/$IMAGE_REPO_NAME:$ENVIRONMENT
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker push $AWS_ECR_URL/$IMAGE_REPO_NAME:$ENVIRONMENT
       - echo Creating imagedefinitions.json...
-      - printf '[{"name":"%s","imageUri":"%s"}]' packt-delivery-jakartaee-cd-$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' packt-delivery-jakartaee-cd-$ENVIRONMENT $AWS_ECR_URL/$IMAGE_REPO_NAME:$ENVIRONMENT > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json

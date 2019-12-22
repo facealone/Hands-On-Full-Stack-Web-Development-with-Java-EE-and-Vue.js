@@ -105,7 +105,7 @@ Resources:
                 - Name: BuildDevOutput 
               Configuration:
                 ProjectName: !Ref PacktDeliveryJakartaeeCodeBuild
-                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ACCOUNT_ID","value":" not set","type":"PLAINTEXT"},{"name":"GLASSFISH_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"IMAGE_TAG","value":"dev","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":" not set","type":"PLAINTEXT"}]'
+                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ECR_URL","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":"packtdelivery","type":"PLAINTEXT"},{"name":"ENVIRONMENT","value":"dev","type":"PLAINTEXT"}]'
               RunOrder: 1
         - Name: DeployDev
           Actions:
@@ -147,6 +147,20 @@ Resources:
                 - Name: BuildProdOutput 
               Configuration:
                 ProjectName: !Ref PacktDeliveryJakartaeeCodeBuild
-                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ACCOUNT_ID","value":" not set","type":"PLAINTEXT"},{"name":"GLASSFISH_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"IMAGE_TAG","value":"prod","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":" not set","type":"PLAINTEXT"}]'
+                EnvironmentVariables: '[{"name":"IMAGE_REPO_NAME","value":" not set","type":"PLAINTEXT"},{"name":"AWS_ECR_URL","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_USER","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_PASSWORD","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_URL","value":" not set","type":"PLAINTEXT"},{"name":"DATABASE_NAME","value":"packtdelivery","type":"PLAINTEXT"},{"name":"ENVIRONMENT","value":"prod","type":"PLAINTEXT"}]'
               RunOrder: 1
+        - Name: DeployProd
+          Actions:
+            - Name: DeployProd
+              RunOrder: 1
+              InputArtifacts:
+                - Name: BuildProdOutput
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: ECS
+              Configuration:
+                ClusterName: not set
+                ServiceName: not set
 

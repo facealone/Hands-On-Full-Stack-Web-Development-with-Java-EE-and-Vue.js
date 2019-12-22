@@ -3,10 +3,18 @@ Parameters:
     Description: Environment
     Type: String
     Default: dev
-  ECRName:
-    Description: ECRName
+  ECRUrl:
+    Description: ECRUrl
     Type: String
-    Default: newpacktdelivery
+    Default: ecrurl
+  DBUser:
+    Description: DBUser
+    Type: String
+    Default: MyName
+  DBPassword:
+    Description: DBPassword
+    Type: String
+    Default: MyPassword
 Resources:
   PacktDeliveryImagesBucket:
     Type: AWS::S3::Bucket
@@ -159,7 +167,7 @@ Resources:
       ExecutionRoleArn: !Ref PacktDeliveryECSRole
       ContainerDefinitions:
         - Name: !Sub packt-delivery-jakartaee-cd-${Environment}
-          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRName}:${Environment}
+          Image: !Sub ${ECRUrl}:${Environment}
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
@@ -278,9 +286,11 @@ Resources:
       DBInstanceClass: db.m3.medium
       Engine: MySQL
       EngineVersion: 8.0
-      MasterUsername: MyName
-      MasterUserPassword: MyPassword
+      MasterUsername: !Sub ${DBUser}
+      MasterUserPassword: !Sub ${DBPassword}
       DBSubnetGroupName: !Ref PacktDeliveryJakartaDBMasterSubnetGroup
+      DBInstanceIdentifier: !Sub packt-delivery-db-${Environment}
+      DBName: packtdelivery
       Tags: 
         - Key: "env"
           Value: !Sub ${Environment}
