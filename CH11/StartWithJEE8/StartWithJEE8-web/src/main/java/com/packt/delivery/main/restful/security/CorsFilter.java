@@ -23,7 +23,7 @@ public class CorsFilter implements ContainerResponseFilter {
     public void filter(ContainerRequestContext requestContext,
             ContainerResponseContext responseContext) throws IOException {
         responseContext.getHeaders().add(
-                "Access-Control-Allow-Origin", "*");
+                "Access-Control-Allow-Origin", properties.get("SSO_CORS_ALLOW"));
         responseContext.getHeaders().add(
                 "Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add(

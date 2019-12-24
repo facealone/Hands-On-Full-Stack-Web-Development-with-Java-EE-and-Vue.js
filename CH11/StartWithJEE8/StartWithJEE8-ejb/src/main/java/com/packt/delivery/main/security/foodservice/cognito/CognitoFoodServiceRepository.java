@@ -108,7 +108,7 @@ public class CognitoFoodServiceRepository implements FoodServiceRepository {
 
         AdminGetUserResult response = awsCognitoIdentityProvider.adminGetUser(adminGetUserRequest);
 
-        return Optional.of(convertUserRepresentationToFoodService(response.getUsername(), response.getUserAttributes(), response.isEnabled()));
+        return Optional.of(convertUserRepresentationToFoodService(id, response.getUserAttributes(), response.isEnabled()));
     }
 
     @Override
@@ -138,7 +138,7 @@ public class CognitoFoodServiceRepository implements FoodServiceRepository {
     }
 
     private FoodService convertUserRepresentationToFoodService(UserType userType) {
-        return convertUserRepresentationToFoodService(userType.getUsername(), userType.getAttributes(), userType.getEnabled());
+        return convertUserRepresentationToFoodService(getAttribute(userType.getAttributes(), "email"), userType.getAttributes(), userType.getEnabled());
     }
     
     private FoodService convertUserRepresentationToFoodService(String userName, List<AttributeType> attributes, Boolean enabled) {

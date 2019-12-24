@@ -123,9 +123,11 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       Protocol: HTTP
-      Port: 80
+      Port: 8080
       VpcId: !Ref PacktDeliveryJakartaVPC
       TargetType: ip
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 10
       Tags: 
         - Key: "env"
           Value: !Sub ${Environment}
